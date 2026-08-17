@@ -9,6 +9,9 @@ import I18nProvider from '@components/Contexts/I18nContext'
 import DirectionProvider from '@components/Contexts/DirectionProvider'
 import { BackgroundTasksProvider } from '@components/Contexts/BackgroundTasksContext'
 import BackgroundTasksPanel from '@components/BackgroundTasks/BackgroundTasksPanel'
+import ServiceWorkerManager from '@components/PWA/ServiceWorkerManager'
+import InstallPrompt from '@components/PWA/InstallPrompt'
+import OfflineIndicator from '@components/PWA/OfflineIndicator'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { makeQueryClient } from '@/lib/query/client'
@@ -28,6 +31,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                 <BackgroundTasksProvider>
                   {children}
                   <BackgroundTasksPanel />
+                  {/* PWA layer. Mounted last so its fixed-position surfaces
+                      stack above the app chrome, and inside I18nProvider so
+                      their copy follows the active language. */}
+                  <OfflineIndicator />
+                  <ServiceWorkerManager />
+                  <InstallPrompt />
                 </BackgroundTasksProvider>
               </DirectionProvider>
             </I18nProvider>

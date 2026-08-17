@@ -16,6 +16,15 @@ export async function generateMetadata({
   params: Promise<{ orgslug: string }>
 }): Promise<Metadata> {
   const { orgslug } = await params
+
+  // Scope the manifest to this tenant so an install started from inside the org
+  // adopts the org's name, start_url and branding instead of the platform
+  // defaults linked by the root layout. This must be returned even when the
+  // favicon lookup below fails, so it is resolved first.
+  const metadata: Metadata = {
+    manifest: `/api/manifest?org=${encodeURIComponent(orgslug)}`,
+  }
+
   try {
     const org = await getOrganizationContextInfo(orgslug, {
       revalidate: 86400,
@@ -23,14 +32,13 @@ export async function generateMetadata({
     })
     const faviconImage = org?.config?.config?.customization?.general?.favicon_image || org?.config?.config?.general?.favicon_image
     if (faviconImage) {
-      return {
-        icons: { icon: getOrgFaviconMediaDirectory(org.org_uuid, faviconImage) },
-      }
+      metadata.icons = { icon: getOrgFaviconMediaDirectory(org.org_uuid, faviconImage) }
     }
   } catch {
     // A favicon lookup failure must not break the page's metadata.
   }
-  return {}
+
+  return metadata
 }
 
 export default async function RootLayout(props: {

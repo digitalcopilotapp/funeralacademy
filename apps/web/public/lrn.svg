@@ -1,3 +1,4 @@
-<svg width="304" height="152" viewBox="0 0 304 152" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" fill="black" d="M0.00,152.00 A152.00,152.00 0 0 1 304.00,152.00 L252.00,152.00 A100.00,100.00 0 0 0 52.00,152.00 Z"/>
+<svg width="304" height="304" viewBox="0 0 304 304" fill="none"
+ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<image x="0" y="0" width="304" height="304" xlink:href="/sindef-icon.png"/>
 </svg>

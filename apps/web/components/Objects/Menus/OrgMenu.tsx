@@ -25,7 +25,11 @@ import {
   SquaresFour,
   ChalkboardSimple,
   Signpost,
+  MagnifyingGlass,
+  List,
 } from '@phosphor-icons/react'
+import OrgMobileMenuSheet from './OrgMobileMenuSheet'
+import MobileSearchSheet from '@components/Objects/Search/MobileSearchSheet'
 import { DiscordIcon } from '@components/Objects/Icons/DiscordIcon'
 import {
   DropdownMenu,
@@ -55,6 +59,8 @@ export const OrgMenu = (props: any) => {
   const _access_token = session?.data?.tokens?.access_token;
   const org = useOrg() as any;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false)
+  const menuTriggerRef = React.useRef<HTMLButtonElement>(null)
   const [isFocusMode, setIsFocusMode] = useState(false)
   const pathname = usePathname()
   const { t } = useTranslation()
@@ -134,6 +140,14 @@ export const OrgMenu = (props: any) => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  // Close the mobile surfaces whenever the route changes. Without this, tapping
+  // a link inside the sheet navigates the page underneath and leaves the sheet
+  // sitting open over the destination.
+  useEffect(() => {
+    setIsMenuOpen(false)
+    setIsMobileSearchOpen(false)
+  }, [pathname])
+
   // Only hide menu if we're in an activity page and focus mode is enabled
   if (pathname?.includes('/activity/') && isFocusMode) {
     return null;
@@ -152,8 +166,11 @@ export const OrgMenu = (props: any) => {
         }}
       >
         <div className="flex items-center justify-between w-full max-w-(--breakpoint-2xl) mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex items-center space-x-5 md:w-auto w-full">
-            <div className="logo flex md:w-auto w-full justify-center">
+          {/* On mobile the logo is start-aligned rather than centred: centring it
+              pushed the only two controls into the far corner and left a wide
+              dead zone in the middle of the bar. */}
+          <div className="flex items-center space-x-5 md:w-auto min-w-0">
+            <div className="logo flex md:w-auto justify-start">
               <Link href={getUriWithOrg(orgslug, '/')}>
                 <div className="flex w-auto h-9 rounded-md items-center m-auto py-1 justify-center">
                   {org?.logo_image ? (
@@ -164,7 +181,7 @@ export const OrgMenu = (props: any) => {
                       className="rounded-md"
                     />
                   ) : (
-                    <FuneralAcademyLogo logoFilter={colors.logoFilter} />
+                    <FuneralAcademyLogo logoFilter={colors.logoFilter} logoSrc={colors.logoSrc} />
                   )}
                 </div>
               </Link>
@@ -362,45 +379,103 @@ export const OrgMenu = (props: any) => {
             <div className="hidden md:flex">
               <HeaderProfileBox primaryColor={primaryColor} />
             </div>
+            {/* Search is promoted out of the hamburger and onto the bar itself.
+                Finding a course is the most common thing a learner does here;
+                it should never have been two taps behind a menu icon. */}
             <button
-              className={`md:hidden focus:outline-hidden ${colors.text}`}
-              onClick={toggleMenu}
+              type="button"
+              onClick={() => setIsMobileSearchOpen(true)}
+              aria-label={t('search.search_placeholder')}
+              className={`md:hidden -me-1 rounded-full p-3 transition-colors ${colors.text}`}
             >
-              {isMenuOpen ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              <MagnifyingGlass size={22} weight="bold" />
+            </button>
+            <button
+              ref={menuTriggerRef}
+              type="button"
+              className={`md:hidden rounded-full p-3 transition-colors ${colors.text}`}
+              onClick={toggleMenu}
+              aria-label={t('common.menu', { defaultValue: 'Menu' })}
+              aria-expanded={isMenuOpen}
+              aria-haspopup="dialog"
+            >
+              {/* The icon no longer swaps to an X: the sheet carries its own
+                  close button, and a trigger that changes meaning while hidden
+                  behind the sheet it opened is a state nobody can act on. */}
+              <List size={22} weight="bold" />
             </button>
           </div>
         </div>
       </nav>
-      <div
-        className={`fixed inset-x-0 bg-white/80 backdrop-blur-lg md:hidden shadow-lg transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'opacity-100' : '-top-full opacity-0'
-        }`}
-        style={{
-          zIndex: 'var(--z-nav-menu)',
-          top: isMenuOpen ? topOffset + 60 : undefined
-        }}
+      <OrgMobileMenuSheet
+        open={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        triggerRef={menuTriggerRef}
       >
-        <div className="flex flex-col px-4 py-3 space-y-4 justify-center items-center">
-          {/* Mobile Search */}
-          <div className="w-full px-2">
-            <SearchBar orgslug={orgslug} isMobile={true} />
+        <div className="flex flex-col">
+          <div className="px-2 py-2">
+            <MenuLinks orgslug={orgslug} variant="stack" />
           </div>
-          <div className='py-4'>
-            <MenuLinks orgslug={orgslug} />
-          </div>
-          <div className="border-t border-gray-200">
+
+          {/* Learner shortcuts that were previously desktop-only. Hiding
+              progress and Copilot behind a breakpoint meant the mobile app was
+              missing features the desktop one had, rather than presenting the
+              same ones differently. */}
+          <AuthenticatedClientElement checkMethod="authentication">
+            <div className="border-t border-black/[0.06] px-2 py-2">
+              <SheetLink
+                href={getUriWithOrg(orgslug, '/trail')}
+                icon={<Signpost size={18} weight="fill" />}
+                label={t('courses.progress')}
+              />
+              {rf?.boards?.enabled && (
+                <SheetLink
+                  href={getUriWithOrg(orgslug, '/boards')}
+                  icon={<ChalkboardSimple size={18} weight="fill" />}
+                  label="Boards"
+                />
+              )}
+              {rf?.ai?.enabled && config?.admin_toggles?.ai?.copilot_enabled !== false && (
+                <SheetLink
+                  href={getUriWithOrg(orgslug, '/copilot')}
+                  icon={<ChatCircle size={18} weight="fill" className="text-violet-500" />}
+                  label="Copilot"
+                />
+              )}
+            </div>
+          </AuthenticatedClientElement>
+
+          {session?.status === 'authenticated' && rights?.dashboard?.action_access && (
+            <div className="border-t border-black/[0.06] px-2 py-2">
+              <p className="px-3 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wide text-black/35">
+                {t('common.dashboard')}
+              </p>
+              {visibleDashboardItems.map((item) => {
+                const IconComponent = item.icon
+                return (
+                  <SheetLink
+                    key={item.id}
+                    href={item.href}
+                    icon={<IconComponent size={18} weight="fill" />}
+                    label={t(item.labelKey)}
+                    onClick={() => track(AnalyticsEvent.DashboardEntered, { source: 'org_menu_mobile' })}
+                  />
+                )
+              })}
+            </div>
+          )}
+
+          <div className="mt-auto border-t border-black/[0.06] px-4 py-3">
             <HeaderProfileBox />
           </div>
         </div>
-      </div>
+      </OrgMobileMenuSheet>
+
+      <MobileSearchSheet
+        open={isMobileSearchOpen}
+        onOpenChange={setIsMobileSearchOpen}
+        orgslug={orgslug}
+      />
 
       {/* Feedback Modal */}
       <FeedbackModal
@@ -423,6 +498,28 @@ export const OrgMenu = (props: any) => {
     </>
   )
 }
+
+/** A row in the mobile menu sheet. min-h-12 keeps every row past the touch floor. */
+const SheetLink = ({
+  href,
+  icon,
+  label,
+  onClick,
+}: {
+  href: string
+  icon: React.ReactNode
+  label: string
+  onClick?: () => void
+}) => (
+  <Link
+    href={href}
+    onClick={onClick}
+    className="flex min-h-12 items-center gap-3 rounded-lg px-3 text-[15px] font-medium text-black/75 transition-colors active:bg-black/[0.05]"
+  >
+    <span className="shrink-0 text-black/45">{icon}</span>
+    <span className="truncate">{label}</span>
+  </Link>
+)
 
 const CopilotMenuButton = ({
   orgslug,
@@ -557,11 +654,11 @@ const CopilotMenuButton = ({
   )
 }
 
-const FuneralAcademyLogo = ({ logoFilter }: { logoFilter: string }) => {
+const FuneralAcademyLogo = ({ logoFilter, logoSrc }: { logoFilter: string; logoSrc?: string }) => {
   return (
     <Image
-      src="/lrn-text.svg"
-      alt="Funeral Academy logo"
+      src={logoSrc || '/lrn-text.svg'}
+      alt="SINDEF Academy"
       width={133}
       height={40}
       style={{ height: 'auto', filter: logoFilter }}

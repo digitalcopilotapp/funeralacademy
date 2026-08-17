@@ -1,0 +1,164 @@
+<!doctype html>
+<!--
+  Served by the service worker when a navigation fails with no cached copy.
+
+  It is a standalone static file on purpose: it must render with zero network,
+  zero JS bundle and zero webfont. So the type stack is system-only and every
+  style is inline. The visual language mirrors the installed-app chrome
+  (#111113 ground, white/opacity scale, rounded-full controls) so hitting this
+  page inside the installed app does not feel like leaving the product.
+-->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111113" />
+    <title>Sem conexão · SINDEF Academy</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      body {
+        background: #111113;
+        color: #fff;
+        font-family:
+          'Wix Madefor Text',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        letter-spacing: -0.02em;
+        -webkit-font-smoothing: antialiased;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Safe-area padding so the content clears the notch and the home
+           indicator when this renders inside the installed standalone app. */
+        padding: calc(env(safe-area-inset-top) + 2rem) calc(env(safe-area-inset-right) + 1.5rem)
+          calc(env(safe-area-inset-bottom) + 2rem) calc(env(safe-area-inset-left) + 1.5rem);
+      }
+      main {
+        width: 100%;
+        max-width: 22rem;
+        text-align: center;
+      }
+      .mark {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 1.75rem;
+        border-radius: 16px;
+        display: block;
+      }
+      h1 {
+        font-size: 1.375rem;
+        line-height: 1.25;
+        font-weight: 600;
+        margin: 0 0 0.625rem;
+        text-wrap: balance;
+      }
+      p {
+        font-size: 0.9375rem;
+        line-height: 1.55;
+        /* Tinted from the ground's own hue rather than a flat gray, and kept
+           above 4.5:1 on #111113. */
+        color: #a1a1a8;
+        margin: 0 0 2rem;
+        text-wrap: pretty;
+      }
+      button {
+        font: inherit;
+        font-weight: 500;
+        font-size: 0.9375rem;
+        letter-spacing: -0.01em;
+        color: #111113;
+        background: #fff;
+        border: 0;
+        border-radius: 999px;
+        /* Comfortably above the 44px touch-target floor. */
+        min-height: 48px;
+        padding: 0 1.75rem;
+        width: 100%;
+        cursor: pointer;
+        transition:
+          transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.18s ease;
+      }
+      button:hover {
+        opacity: 0.92;
+      }
+      button:active {
+        transform: scale(0.975);
+      }
+      button:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 3px;
+      }
+      .status {
+        margin: 1.25rem 0 0;
+        font-size: 0.8125rem;
+        color: #6e6e78;
+        min-height: 1.2em;
+      }
+      .status[data-online='true'] {
+        color: #4ade80;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        button {
+          transition: none;
+        }
+        button:active {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img class="mark" src="/icons/icon-192.png" alt="" width="56" height="56" />
+      <h1>Você está sem conexão</h1>
+      <p>
+        Esta página ainda não foi baixada para leitura offline. Assim que a
+        internet voltar, ela carrega normalmente.
+      </p>
+      <button type="button" id="retry">Tentar novamente</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </main>
+
+    <script>
+      // Progressive enhancement only — the page is fully readable without this.
+      (function () {
+        var status = document.getElementById('status')
+        var retry = document.getElementById('retry')
+
+        retry.addEventListener('click', function () {
+          location.reload()
+        })
+
+        // Reloading the moment the network returns is the behaviour people
+        // expect from an installed app, but doing it silently mid-read is
+        // jarring — so we announce it and let them tap.
+        window.addEventListener('online', function () {
+          status.textContent = 'Conexão restabelecida.'
+          status.setAttribute('data-online', 'true')
+        })
+        window.addEventListener('offline', function () {
+          status.textContent = ''
+          status.removeAttribute('data-online')
+        })
+        if (navigator.onLine) {
+          status.textContent = 'Conexão restabelecida.'
+          status.setAttribute('data-online', 'true')
+        }
+      })()
+    </script>
+  </body>
+</html>

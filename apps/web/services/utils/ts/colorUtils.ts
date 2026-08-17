@@ -52,6 +52,7 @@ export function getMenuColorClasses(primaryColor: string) {
       profileName: 'text-gray-900',
       profileMuted: 'text-gray-500',
       logoFilter: 'none',
+      logoSrc: '/lrn-text.svg',
     }
   }
 
@@ -72,6 +73,7 @@ export function getMenuColorClasses(primaryColor: string) {
       profileName: 'text-gray-900',
       profileMuted: 'text-gray-700',
       logoFilter: 'none',
+      logoSrc: '/lrn-text.svg',
     }
   }
 
@@ -88,6 +90,7 @@ export function getMenuColorClasses(primaryColor: string) {
     profileHover: 'hover:bg-white/10',
     profileName: 'text-white',
     profileMuted: 'text-white/70',
-    logoFilter: 'brightness(0) invert(1)',
+    logoFilter: 'none',
+    logoSrc: '/lrn-text-light.svg',
   }
 }

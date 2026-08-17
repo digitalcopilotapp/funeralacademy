@@ -218,8 +218,13 @@ export const config = {
      * 7. /embed (activity embeds)
      * 8. /ingest (PostHog reverse proxy — must reach the next.config rewrite
      *    untouched; otherwise the middleware mis-routes it and ingestion 404s)
+     * 9. /icons (inside /public) — the PWA icon set. The root-file escape in
+     *    this pattern only matches a single segment, so nested static assets
+     *    would otherwise be swallowed by the tenant catch-all and 404. The
+     *    manifest, the apple-touch-icon link and the service worker all
+     *    reference these paths, so installability depends on them resolving.
      */
-    '/((?!api|_next|fonts|umami|ingest|examples|embed|monitoring|[\\w-]+\\.\\w+).*)',
+    '/((?!api|_next|fonts|icons|umami|ingest|examples|embed|monitoring|[\\w-]+\\.\\w+).*)',
     '/sitemap.xml',
     '/robots.txt',
     '/payments/stripe/connect/oauth',

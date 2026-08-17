@@ -1,7 +1,64 @@
 import '../styles/globals.css'
 import React from 'react'
+import type { Metadata, Viewport } from 'next'
 import Providers from '@components/Providers'
 import { Wix_Madefor_Text, Tajawal } from 'next/font/google'
+
+/**
+ * `viewport-fit=cover` is the switch that makes every `env(safe-area-inset-*)`
+ * in the codebase resolve to a real value. Without it those insets compute to
+ * 0px, so the safe-area handling already written into the mobile chrome (the
+ * floating dashboard pill, the bottom bars) silently did nothing on notched
+ * devices and sat under the home indicator.
+ *
+ * `interactiveWidget: 'resizes-content'` keeps the layout viewport shrinking
+ * when the on-screen keyboard opens, so a focused input in a form is scrolled
+ * into view instead of being covered by the keyboard.
+ *
+ * `maximumScale` and `userScalable` are deliberately left at their defaults —
+ * blocking pinch-zoom is an accessibility failure, and iOS ignores it anyway.
+ */
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#111113' },
+  ],
+}
+
+export const metadata: Metadata = {
+  // Per-page `generateMetadata` still overrides all of this; these are the
+  // defaults for the routes that define none of their own.
+  title: {
+    default: 'SINDEF Academy',
+    template: '%s · SINDEF Academy',
+  },
+  description: 'Formação e certificação para as empresas funerárias da Bahia. Uma iniciativa do SINDEF-BA.',
+  applicationName: 'SINDEF Academy',
+  // Linked without an `org` param here: the apex and hub routes are not inside a
+  // tenant. `app/orgs/[orgslug]/layout.tsx` re-links it with the slug so an
+  // install started from within an org carries that org's name and start_url.
+  manifest: '/api/manifest',
+  appleWebApp: {
+    capable: true,
+    title: 'SINDEF Academy',
+    // 'default' would paint an opaque bar; 'black-translucent' lets the app draw
+    // under the status bar, which is why the safe-area insets above matter.
+    statusBarStyle: 'black-translucent',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
+  },
+  formatDetection: {
+    // Stops iOS Safari from turning course codes, durations and lesson numbers
+    // into blue tappable "phone numbers" inside lesson content.
+    telephone: false,
+  },
+}
 
 const wixMadeforText = Wix_Madefor_Text({
   subsets: ['latin'],
