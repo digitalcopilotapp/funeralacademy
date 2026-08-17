@@ -236,7 +236,8 @@
     "move_up": "Move up",
     "move_down": "Move down",
     "less": "Less",
-    "more": "More"
+    "more": "More",
+    "menu": "Menu"
   },
   "banner": {
     "viewing_as_guest": "You're viewing {{name}} as a guest.",
@@ -1580,7 +1581,9 @@
       "podcasts": "Podcasts"
     },
     "course": "Course",
-    "user": "Member"
+    "user": "Member",
+    "no_results": "No results found",
+    "no_results_hint": "Try another term or check the spelling."
   },
   "ai": {
     "ask_ai": "Ask AI",
@@ -6167,5 +6170,19 @@
       "signed_in_as": "Signed in as {{email}}",
       "sign_in_to_org": "Sign in to this organization"
     }
+  },
+  "pwa": {
+    "offline": "No internet connection",
+    "back_online": "Back online",
+    "update_available": "New version available",
+    "update_now": "Update",
+    "updating": "Updating…",
+    "install_title": "Install the app",
+    "install_body": "Open straight from your home screen, full screen and faster to launch.",
+    "install_ios_body": "Add to your home screen to open full screen, without the browser bar.",
+    "install_action": "Install",
+    "install_ios_step_tap": "Tap",
+    "install_ios_step_then": "then",
+    "install_ios_step_add": "Add to Home Screen"
   }
 }

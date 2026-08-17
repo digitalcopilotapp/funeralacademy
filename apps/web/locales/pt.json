@@ -228,7 +228,8 @@
     "leave_organization_title": "Sair da organização?",
     "leave_organization_desc": "Você perderá o acesso a {{org}} e será removido dos membros. Poderá entrar novamente depois se receber um convite.",
     "leave_organization_error": "Não foi possível sair desta organização. Tente novamente.",
-    "leaving": "Saindo…"
+    "leaving": "Saindo…",
+    "menu": "Menu"
   },
   "banner": {
     "viewing_as_guest": "Você está visualizando {{name}} como convidado.",
@@ -1095,7 +1096,9 @@
       "discussions": "Discussões",
       "playgrounds": "Playgrounds",
       "podcasts": "Podcasts"
-    }
+    },
+    "no_results": "Nenhum resultado encontrado",
+    "no_results_hint": "Tente outro termo ou verifique a ortografia."
   },
   "ai": {
     "ask_ai": "Perguntar à IA",
@@ -3006,19 +3009,97 @@
         "failed_load": "Falha ao carregar o dossiê do aluno.",
         "back_to_students": "Voltar aos alunos",
         "no_behavioral": "Sem dados comportamentais (as análises podem não estar configuradas para este período).",
-        "ranges": { "d30": "30 dias", "d90": "90 dias", "y1": "1 ano" },
-        "kpi": { "courses": "Cursos", "completed": "{{count}} concluídos", "avg_progress": "Progresso médio", "time_spent": "Tempo gasto", "assignments": "Tarefas", "avg_grade": "média {{grade}}", "certificates": "Certificados", "connections": "Conexões", "last": "última {{date}}" },
-        "tabs": { "connections": "Conexões", "courses": "Cursos", "assignments": "Tarefas", "code": "Código", "community": "Comunidade", "certificates": "Certificados", "behavior": "Comportamento" },
-        "identity": { "verified": "Verificado", "unverified": "Não verificado", "via": "via {{method}}" },
-        "connections": { "title": "Conexões", "empty": "Nenhuma conexão registrada ainda." },
-        "courses": { "title": "Progresso do curso", "empty": "Não inscrito em nenhum curso.", "activities": "{{done}}/{{total}} atividades", "enrolled": "Inscrito em {{date}}" },
-        "assignments": { "title": "Tarefas", "empty": "Nenhuma entrega de tarefa.", "attempt": "tentativa {{number}}", "feedback": "Feedback:" },
-        "code": { "title": "Exercícios de código", "empty": "Nenhuma entrega de código.", "activity": "Atividade", "result": "Resultado", "tests": "Testes", "time": "Tempo", "when": "Quando", "passed": "Aprovado", "failed": "Reprovado" },
-        "community": { "title": "Participação na comunidade", "empty": "Nenhuma atividade na comunidade.", "discussions": "Discussões", "comments": "Comentários" },
-        "certificates": { "title": "Certificados obtidos", "empty": "Nenhum certificado obtido." },
-        "behavior": { "title": "Análises comportamentais", "time_by_course": "Tempo gasto por curso", "searches": "Pesquisas" },
-        "status": { "completed": "concluído", "in_progress": "em andamento", "paused": "pausado", "cancelled": "cancelado", "graded": "avaliado", "submitted": "enviado", "pending": "pendente", "late": "atrasado", "not_submitted": "não enviado" },
-        "comparison": { "student": "Aluno", "enrolled": "Inscrito", "completed": "Concluído", "certificates": "Certificados", "last_connection": "Última conexão", "view": "Ver" }
+        "ranges": {
+          "d30": "30 dias",
+          "d90": "90 dias",
+          "y1": "1 ano"
+        },
+        "kpi": {
+          "courses": "Cursos",
+          "completed": "{{count}} concluídos",
+          "avg_progress": "Progresso médio",
+          "time_spent": "Tempo gasto",
+          "assignments": "Tarefas",
+          "avg_grade": "média {{grade}}",
+          "certificates": "Certificados",
+          "connections": "Conexões",
+          "last": "última {{date}}"
+        },
+        "tabs": {
+          "connections": "Conexões",
+          "courses": "Cursos",
+          "assignments": "Tarefas",
+          "code": "Código",
+          "community": "Comunidade",
+          "certificates": "Certificados",
+          "behavior": "Comportamento"
+        },
+        "identity": {
+          "verified": "Verificado",
+          "unverified": "Não verificado",
+          "via": "via {{method}}"
+        },
+        "connections": {
+          "title": "Conexões",
+          "empty": "Nenhuma conexão registrada ainda."
+        },
+        "courses": {
+          "title": "Progresso do curso",
+          "empty": "Não inscrito em nenhum curso.",
+          "activities": "{{done}}/{{total}} atividades",
+          "enrolled": "Inscrito em {{date}}"
+        },
+        "assignments": {
+          "title": "Tarefas",
+          "empty": "Nenhuma entrega de tarefa.",
+          "attempt": "tentativa {{number}}",
+          "feedback": "Feedback:"
+        },
+        "code": {
+          "title": "Exercícios de código",
+          "empty": "Nenhuma entrega de código.",
+          "activity": "Atividade",
+          "result": "Resultado",
+          "tests": "Testes",
+          "time": "Tempo",
+          "when": "Quando",
+          "passed": "Aprovado",
+          "failed": "Reprovado"
+        },
+        "community": {
+          "title": "Participação na comunidade",
+          "empty": "Nenhuma atividade na comunidade.",
+          "discussions": "Discussões",
+          "comments": "Comentários"
+        },
+        "certificates": {
+          "title": "Certificados obtidos",
+          "empty": "Nenhum certificado obtido."
+        },
+        "behavior": {
+          "title": "Análises comportamentais",
+          "time_by_course": "Tempo gasto por curso",
+          "searches": "Pesquisas"
+        },
+        "status": {
+          "completed": "concluído",
+          "in_progress": "em andamento",
+          "paused": "pausado",
+          "cancelled": "cancelado",
+          "graded": "avaliado",
+          "submitted": "enviado",
+          "pending": "pendente",
+          "late": "atrasado",
+          "not_submitted": "não enviado"
+        },
+        "comparison": {
+          "student": "Aluno",
+          "enrolled": "Inscrito",
+          "completed": "Concluído",
+          "certificates": "Certificados",
+          "last_connection": "Última conexão",
+          "view": "Ver"
+        }
       },
       "active_users": {
         "title": "Usuários ativos",
@@ -5294,7 +5375,7 @@
     }
   },
   "library": {
-    "library": "Library",
+    "library": "Biblioteca",
     "my_library": "My Library",
     "new_folder": "New Folder",
     "tabs": {
@@ -5730,5 +5811,19 @@
     "folder_count_one": "{{count}} pasta",
     "item_count": "{{count}} itens",
     "item_count_one": "{{count}} item"
+  },
+  "pwa": {
+    "offline": "Sem conexão com a internet",
+    "back_online": "Conexão restabelecida",
+    "update_available": "Nova versão disponível",
+    "update_now": "Atualizar",
+    "updating": "Atualizando…",
+    "install_title": "Instalar o aplicativo",
+    "install_body": "Acesso direto pela tela de início, em tela cheia e com abertura mais rápida.",
+    "install_ios_body": "Adicione à tela de início para abrir em tela cheia, sem a barra do navegador.",
+    "install_action": "Instalar",
+    "install_ios_step_tap": "Toque em",
+    "install_ios_step_then": "e depois",
+    "install_ios_step_add": "Adicionar à Tela de Início"
   }
 }

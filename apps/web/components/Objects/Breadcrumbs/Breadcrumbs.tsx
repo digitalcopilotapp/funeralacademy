@@ -28,9 +28,38 @@ const ChevronDivider = () => (
 )
 
 export function Breadcrumbs({ items }: BreadcrumbsProps) {
+  const scrollerRef = React.useRef<HTMLElement>(null)
+
+  // Pin the strip to its end so the current page — the last crumb — is the one
+  // on screen, rather than the org root the reader already knows they are in.
+  // A layout effect keyed on the items re-runs after the labels have actually
+  // measured; a ref callback fires while the trail is still empty and lands on
+  // the wrong offset. Suppressed when the trail fits, so there is no jump.
+  React.useLayoutEffect(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    const pin = () => {
+      if (el.scrollWidth > el.clientWidth) el.scrollLeft = el.scrollWidth
+    }
+    pin()
+    // Fonts and async labels can widen the trail after first paint.
+    const ro = new ResizeObserver(pin)
+    ro.observe(el)
+    if (el.firstElementChild) ro.observe(el.firstElementChild)
+    return () => ro.disconnect()
+  }, [items])
+
   return (
-    <nav className="flex items-center">
-      <ol className="flex items-center text-[13px] font-medium rounded-lg bg-white overflow-hidden nice-shadow">
+    // On a phone the trail is wider than the screen, and the item it cut off
+    // was the last one — the page you are actually on. The nav scrolls
+    // horizontally instead of clipping, and starts scrolled to the end so the
+    // current page is what you see first; `scrollbar-hide` keeps the desktop
+    // appearance unchanged.
+    <nav
+      ref={scrollerRef}
+      className="flex items-center max-w-full overflow-x-auto overscroll-x-contain scrollbar-hide"
+    >
+      <ol className="flex items-center text-[13px] font-medium rounded-lg bg-white overflow-hidden nice-shadow w-max shrink-0">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           const isFirst = index === 0

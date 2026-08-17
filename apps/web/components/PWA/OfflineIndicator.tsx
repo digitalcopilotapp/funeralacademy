@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CloudSlash, CheckCircle } from '@phosphor-icons/react'
 import { AnimatePresence, motion } from 'motion/react'
+import { OFFLINE_BAR_HEIGHT, setOfflineBarVisible } from './offlineBarState'
 
 /**
  * Connection state, surfaced as a slim bar under the status bar.
@@ -68,6 +69,16 @@ export default function OfflineIndicator() {
 
   const showing = offline || justReconnected
 
+  // The bar and the org header are both `position: fixed` at the top, so the
+  // bar would otherwise cover the logo, search and menu — precisely when
+  // someone is trying to work out why the app stopped responding. Broadcasting
+  // the state lets the header offset itself, the same way it already does for
+  // the join banner.
+  useEffect(() => {
+    setOfflineBarVisible(showing)
+    return () => setOfflineBarVisible(false)
+  }, [showing])
+
   return (
     <AnimatePresence>
       {showing && (
@@ -84,10 +95,14 @@ export default function OfflineIndicator() {
           style={{ paddingTop: 'env(safe-area-inset-top)' }}
         >
           <div
+            // Fixed height, matching the offset the header applies. A bar that
+            // measures differently from the space reserved for it leaves either
+            // a gap or an overlap.
+            style={{ height: OFFLINE_BAR_HEIGHT }}
             className={
               offline
-                ? 'flex items-center justify-center gap-2 bg-[#111113] py-2 text-white'
-                : 'flex items-center justify-center gap-2 bg-emerald-600 py-2 text-white'
+                ? 'flex items-center justify-center gap-2 bg-[#111113] text-white'
+                : 'flex items-center justify-center gap-2 bg-emerald-600 text-white'
             }
           >
             {offline ? (

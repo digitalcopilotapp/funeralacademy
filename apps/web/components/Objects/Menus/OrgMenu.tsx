@@ -45,6 +45,7 @@ import { isFeatureAvailable } from '@services/plans/plans'
 import { getMenuColorClasses } from '@services/utils/ts/colorUtils'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import { useJoinBannerVisible, JOIN_BANNER_HEIGHT } from '@components/Objects/Banners/OrgJoinBanner'
+import { useOfflineBarVisible, OFFLINE_BAR_HEIGHT } from '@components/PWA/offlineBarState'
 import {
   Tooltip,
   TooltipContent,
@@ -88,7 +89,12 @@ export const OrgMenu = (props: any) => {
     if (sessionUuid) setBubbleSessionToLoad(sessionUuid)
     setBubbleOpen(true)
   }
-  const topOffset = isJoinBannerVisible ? JOIN_BANNER_HEIGHT : 0
+  // Both the join banner and the offline bar are fixed strips above the header.
+  // They stack, so the header's offset is their combined height.
+  const isOfflineBarVisible = useOfflineBarVisible()
+  const topOffset =
+    (isJoinBannerVisible ? JOIN_BANNER_HEIGHT : 0) +
+    (isOfflineBarVisible ? OFFLINE_BAR_HEIGHT : 0)
 
   // Get primary color from org config (v2: customization.general.color, v1: general.color)
   const config = org?.config?.config
@@ -466,7 +472,28 @@ export const OrgMenu = (props: any) => {
           )}
 
           <div className="mt-auto border-t border-black/[0.06] px-4 py-3">
-            <HeaderProfileBox />
+            {session?.status === 'unauthenticated' ? (
+              // Full-width, touch-sized auth actions. The shared
+              // HeaderProfileBox lays these out for a dense desktop bar, where
+              // the tappable area collapses to the text itself (~15px tall) —
+              // far under the 44px floor once it is stacked in a sheet.
+              <div className="flex flex-col gap-2">
+                <Link
+                  href={getUriWithOrg(orgslug, '/signup')}
+                  className="flex min-h-12 items-center justify-center rounded-xl bg-black px-4 text-[15px] font-semibold text-white transition-transform duration-200 active:scale-[0.98]"
+                >
+                  {t('auth.sign_up')}
+                </Link>
+                <Link
+                  href={getUriWithOrg(orgslug, '/login')}
+                  className="flex min-h-12 items-center justify-center rounded-xl bg-black/[0.04] px-4 text-[15px] font-medium text-black/75 transition-colors active:bg-black/[0.08]"
+                >
+                  {t('auth.login')}
+                </Link>
+              </div>
+            ) : (
+              <HeaderProfileBox />
+            )}
           </div>
         </div>
       </OrgMobileMenuSheet>
