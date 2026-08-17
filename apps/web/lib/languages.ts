@@ -9,13 +9,13 @@ export interface Language {
 }
 
 export const AVAILABLE_LANGUAGES: Language[] = [
+  { code: 'pt', translationKey: 'common.portuguese', nativeName: 'Português (Brasil)', dir: 'ltr' },
   { code: 'en', translationKey: 'common.english', nativeName: 'English', dir: 'ltr' },
   { code: 'fr', translationKey: 'common.french', nativeName: 'Français', dir: 'ltr' },
   { code: 'de', translationKey: 'common.german', nativeName: 'Deutsch', dir: 'ltr' },
   { code: 'es', translationKey: 'common.spanish', nativeName: 'Español', dir: 'ltr' },
   { code: 'ar', translationKey: 'common.arabic', nativeName: 'العربية', dir: 'rtl' },
   { code: 'ja', translationKey: 'common.japanese', nativeName: '日本語', dir: 'ltr' },
-  { code: 'pt', translationKey: 'common.portuguese', nativeName: 'Português', dir: 'ltr' },
   { code: 'ru', translationKey: 'common.russian', nativeName: 'Русский', dir: 'ltr' },
   { code: 'zh', translationKey: 'common.chinese', nativeName: '简体中文', dir: 'ltr' },
   { code: 'hi', translationKey: 'common.hindi', nativeName: 'हिन्दी', dir: 'ltr' },
@@ -39,5 +39,5 @@ export const getLanguageByCode = (code: string): Language | undefined => {
 
 export const getCurrentLanguageNativeName = (currentLang: string): string => {
   const language = getLanguageByCode(currentLang)
-  return language?.nativeName || 'English'
+  return language?.nativeName || 'Português (Brasil)'
 }

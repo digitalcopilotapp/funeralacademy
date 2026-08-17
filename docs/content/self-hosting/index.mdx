@@ -1,24 +1,24 @@
 import { Callout } from 'nextra/components'
 
-# Self-Hosting LearnHouse
+# Self-Hosting FuneralAcademy
 
-LearnHouse can be self-hosted on your own infrastructure using the **LearnHouse CLI**. The CLI handles everything from initial setup to ongoing maintenance, including Docker Compose generation, environment file management, service orchestration, backups, and health checks.
+FuneralAcademy can be self-hosted on your own infrastructure using the **FuneralAcademy CLI**. The CLI handles everything from initial setup to ongoing maintenance, including Docker Compose generation, environment file management, service orchestration, backups, and health checks.
 
 ## Quick Start
 
 Make sure you have **Docker Engine 20.10+**, **Docker Compose 2.0+**, and **Node.js 18+** installed, then run:
 
 ```bash
-npx learnhouse@latest setup
+npx funeralacademy@latest setup
 ```
 
 The interactive setup wizard will walk you through domain configuration, database settings, admin credentials, and optional features. Once complete, start all services:
 
 ```bash
-npx learnhouse start
+npx funeralacademy start
 ```
 
-LearnHouse will be available at **http://localhost** (or your configured domain). Log in with the admin credentials you provided during setup.
+FuneralAcademy will be available at **http://localhost** (or your configured domain). Log in with the admin credentials you provided during setup.
 
 <Callout type="info">
 The CLI generates `docker-compose.yml`, `.env`, and reverse proxy configuration for you. You do not need to write or maintain these files manually.
@@ -27,18 +27,18 @@ The CLI generates `docker-compose.yml`, `.env`, and reverse proxy configuration 
 ### Verify the installation
 
 ```bash
-npx learnhouse doctor
+npx funeralacademy doctor
 ```
 
 ### Common management commands
 
 ```bash
-npx learnhouse stop       # Stop all services
-npx learnhouse start      # Start all services
-npx learnhouse logs       # Stream container logs
-npx learnhouse config     # View current configuration
-npx learnhouse backup     # Backup or restore the database
-npx learnhouse doctor     # Diagnose issues
+npx funeralacademy stop       # Stop all services
+npx funeralacademy start      # Start all services
+npx funeralacademy logs       # Stream container logs
+npx funeralacademy config     # View current configuration
+npx funeralacademy backup     # Backup or restore the database
+npx funeralacademy doctor     # Diagnose issues
 ```
 
 ## Documentation

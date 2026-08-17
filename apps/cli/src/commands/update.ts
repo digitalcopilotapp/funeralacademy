@@ -16,21 +16,21 @@ import {
 } from './update-ee.js'
 
 // Community (monolith) layout: one app container, alembic under /app/api, in-container db.
-const COMMUNITY_LAYOUT: EditionLayout = { appService: 'learnhouse-app', alembicCwd: '/app/api', dbService: 'db' }
+const COMMUNITY_LAYOUT: EditionLayout = { appService: 'funeralacademy-app', alembicCwd: '/app/api', dbService: 'db' }
 
 const GHCR_BASE = 'ghcr.io/learnhouse/app'
 
 async function resolveTag(version: string): Promise<boolean> {
   try {
     const tokenResp = await fetch(
-      'https://ghcr.io/token?scope=repository:learnhouse/app:pull',
+      'https://ghcr.io/token?scope=repository:funeralacademy/app:pull',
       { signal: AbortSignal.timeout(5000) },
     )
     if (!tokenResp.ok) return false
     const { token } = (await tokenResp.json()) as { token: string }
 
     const manifestResp = await fetch(
-      `https://ghcr.io/v2/learnhouse/app/manifests/${version}`,
+      `https://ghcr.io/v2/funeralacademy/app/manifests/${version}`,
       {
         signal: AbortSignal.timeout(5000),
         headers: {
@@ -50,7 +50,7 @@ export async function updateCommand(options: { version?: string; migrate?: boole
   const dir = findInstallDir()
   const config = readConfig(dir)
   if (!config) {
-    p.log.error('No LearnHouse installation found. Run `npx learnhouse setup` first.')
+    p.log.error('No FuneralAcademy installation found. Run `npx funeralacademy setup` first.')
     process.exit(1)
     return
   }
@@ -58,7 +58,7 @@ export async function updateCommand(options: { version?: string; migrate?: boole
   // Enterprise installs use a different upgrade path: license re-auth, EE images,
   // a pre-upgrade DB backup, and Alembic migrations against the (possibly external) DB.
   if (config.edition === 'enterprise') {
-    p.intro(pc.cyan('Upgrading LearnHouse Enterprise'))
+    p.intro(pc.cyan('Upgrading FuneralAcademy Enterprise'))
     await updateEnterprise(config, {
       version: options.version,
       migrate: options.migrate,
@@ -71,9 +71,9 @@ export async function updateCommand(options: { version?: string; migrate?: boole
   const targetVersion = options.version?.replace(/^v/, '')
 
   if (targetVersion) {
-    p.intro(pc.cyan(`Updating LearnHouse to v${targetVersion}`))
+    p.intro(pc.cyan(`Updating FuneralAcademy to v${targetVersion}`))
   } else {
-    p.intro(pc.cyan('Updating LearnHouse to latest'))
+    p.intro(pc.cyan('Updating FuneralAcademy to latest'))
   }
 
   const ui = {
@@ -170,9 +170,9 @@ export async function updateCommand(options: { version?: string; migrate?: boole
     s.stop('Services restarted')
 
     // 4) Wait for the app, then run migrations via the shared helper.
-    s.start('Waiting for LearnHouse to be ready')
+    s.start('Waiting for FuneralAcademy to be ready')
     await waitForHealth(`http://localhost:${config.httpPort}`)
-    s.stop('LearnHouse is up')
+    s.stop('FuneralAcademy is up')
 
     if (options.migrate !== false) {
       p.log.step('Running database migrations')
@@ -182,13 +182,13 @@ export async function updateCommand(options: { version?: string; migrate?: boole
       }
     } else {
       p.log.info('Skipped migrations (--no-migrate). Run later:')
-      p.log.info('  docker compose exec learnhouse-app sh -c "cd /app/api && uv run alembic upgrade head"')
+      p.log.info('  docker compose exec funeralacademy-app sh -c "cd /app/api && uv run alembic upgrade head"')
     }
 
     if (targetVersion) {
-      p.log.success(`LearnHouse has been updated to v${targetVersion}!`)
+      p.log.success(`FuneralAcademy has been updated to v${targetVersion}!`)
     } else {
-      p.log.success('LearnHouse has been updated to the latest version!')
+      p.log.success('FuneralAcademy has been updated to the latest version!')
     }
   } catch {
     s.stop('Update failed')

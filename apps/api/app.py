@@ -4,9 +4,9 @@
 #  | |__|  __/ (_| | |  | | | |  _  | (_) | |_| \__ \  __/
 #  |_____\___|\__,_|_|  |_| |_|_| |_|\___/ \__,_|___/\___|
 #
-#  LearnHouse · open-source learning platform · FastAPI entrypoint
+#  FuneralAcademy · open-source learning platform · FastAPI entrypoint
 #
-#  ↳ learnhouse.app · github.com/learnhouse/learnhouse
+#  ↳ funeralacademy.app · github.com/learnhouse/learnhouse
 #  ↳ Created and maintained by @swve © 2022–present
 
 import logging
@@ -19,7 +19,7 @@ from starlette.datastructures import Headers
 from starlette.middleware.gzip import GZipMiddleware, GZipResponder, IdentityResponder
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-from config.config import LearnHouseConfig, get_learnhouse_config
+from config.config import FuneralAcademyConfig, get_funeralacademy_config
 from src.core.ee_hooks import register_ee_middlewares
 from src.core.events.events import shutdown_app, startup_app
 from src.core.middleware.cors import configure_cors
@@ -28,7 +28,7 @@ from src.routers.content_files import router as content_files_router
 from src.routers.local_content import router as local_content_router
 
 
-learnhouse_config: LearnHouseConfig = get_learnhouse_config()
+funeralacademy_config: FuneralAcademyConfig = get_funeralacademy_config()
 
 # Health probes fail loudly on purpose — a 503 from /health is how Kubernetes
 # learns to take the pod out of rotation. It is not a second, separate incident
@@ -103,7 +103,7 @@ def _before_send(event, hint):
     return event
 
 
-if learnhouse_config.general_config.sentry_config.dsn:
+if funeralacademy_config.general_config.sentry_config.dsn:
     # OpenTelemetry logs "Failed to detach context" at ERROR when a span's
     # context token is reset from a different asyncio context than the one that
     # created it — which is exactly what streaming AI endpoints do. It is
@@ -112,12 +112,12 @@ if learnhouse_config.general_config.sentry_config.dsn:
     ignore_logger("opentelemetry.context")
 
     sentry_sdk.init(
-        dsn=learnhouse_config.general_config.sentry_config.dsn,
-        environment=learnhouse_config.general_config.env,
+        dsn=funeralacademy_config.general_config.sentry_config.dsn,
+        environment=funeralacademy_config.general_config.env,
         send_default_pii=False,
         enable_logs=True,
-        traces_sample_rate=1.0 if learnhouse_config.general_config.development_mode else 0.3,
-        profile_session_sample_rate=1.0 if learnhouse_config.general_config.development_mode else 0.1,
+        traces_sample_rate=1.0 if funeralacademy_config.general_config.development_mode else 0.3,
+        profile_session_sample_rate=1.0 if funeralacademy_config.general_config.development_mode else 0.1,
         profile_lifecycle="trace",
         before_send=_before_send,
         integrations=[
@@ -129,10 +129,10 @@ if learnhouse_config.general_config.sentry_config.dsn:
     )
 
 app = FastAPI(
-    title=learnhouse_config.site_name,
-    description=learnhouse_config.site_description,
-    docs_url="/docs" if learnhouse_config.general_config.development_mode else None,
-    redoc_url="/redoc" if learnhouse_config.general_config.development_mode else None,
+    title=funeralacademy_config.site_name,
+    description=funeralacademy_config.site_description,
+    docs_url="/docs" if funeralacademy_config.general_config.development_mode else None,
+    redoc_url="/redoc" if funeralacademy_config.general_config.development_mode else None,
     version="1.3.4",
 )
 
@@ -149,7 +149,7 @@ app.add_event_handler("shutdown", shutdown_app(app))
 
 # Content delivery — S3-aware router when S3 is enabled, local otherwise.
 # Both paths enforce access control; neither serves raw StaticFiles.
-if learnhouse_config.hosting_config.content_delivery.type == "s3api":
+if funeralacademy_config.hosting_config.content_delivery.type == "s3api":
     app.include_router(content_files_router)
 else:
     app.include_router(local_content_router)
@@ -159,13 +159,13 @@ app.include_router(v1_router)
 
 @app.get("/")
 async def root():
-    return {"Message": "Welcome to LearnHouse ✨"}
+    return {"Message": "Welcome to FuneralAcademy ✨"}
 
 
 if __name__ == "__main__":
     uvicorn.run(
         "app:app",
         host="0.0.0.0",
-        port=learnhouse_config.hosting_config.port,
-        reload=learnhouse_config.general_config.development_mode,
+        port=funeralacademy_config.hosting_config.port,
+        reload=funeralacademy_config.general_config.development_mode,
     )

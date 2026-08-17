@@ -158,7 +158,7 @@ class SecurityAdminToggle(BaseModel):
     allowed_auth_methods: list[str] = Field(
         default_factory=lambda: ["password", "magic_login", "google", "sso"]
     )
-    # Whether a session established on the central apex (learnhouse.io) or for a
+    # Whether a session established on the central apex (funeralacademy.io) or for a
     # different org may be used to access this org directly. Default True keeps
     # today's behavior (one session works everywhere the user is a member). When
     # False, a member arriving with a foreign/central session is refused and must
@@ -218,7 +218,7 @@ class GeneralCustomization(BaseModel):
     favicon_image: str = ""
     watermark: bool = True
     font: str = ""
-    default_language: str = "en"
+    default_language: str = "pt"
 
 
 class SeoOrgConfig(BaseModel):

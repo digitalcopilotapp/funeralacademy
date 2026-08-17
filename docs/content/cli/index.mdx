@@ -2,18 +2,18 @@ import { Callout } from 'nextra/components'
 
 # CLI
 
-The LearnHouse CLI is the primary tool for deploying, managing, and developing LearnHouse. It orchestrates Docker Compose services and provides an interactive setup wizard for production deployments, as well as a full local development environment.
+The FuneralAcademy CLI is the primary tool for deploying, managing, and developing FuneralAcademy. It orchestrates Docker Compose services and provides an interactive setup wizard for production deployments, as well as a full local development environment.
 
-<img src="/img/pages/cli/cli-screenshot.png" alt="LearnHouse CLI" style={{ borderRadius: '12px', marginTop: '1rem' }} />
+<img src="/img/pages/cli/cli-screenshot.png" alt="FuneralAcademy CLI" style={{ borderRadius: '12px', marginTop: '1rem' }} />
 
-**Package**: [`learnhouse`](https://www.npmjs.com/package/learnhouse) on npm
+**Package**: [`funeralacademy`](https://www.npmjs.com/package/learnhouse) on npm
 
 ## Installation
 
 ### Quick Start (recommended)
 
 ```bash
-npx learnhouse@latest setup
+npx funeralacademy@latest setup
 ```
 
 ### One-line Install (macOS / Linux)
@@ -43,7 +43,7 @@ The CLI handles two main workflows:
 
 The [setup wizard](/cli/setup-wizard) generates a complete Docker Compose deployment with:
 
-- **LearnHouse app** container (Next.js + FastAPI)
+- **FuneralAcademy app** container (Next.js + FastAPI)
 - **PostgreSQL** database (with optional pgvector for AI)
 - **Redis** cache
 - **Caddy** or **Nginx** reverse proxy (with optional auto-SSL)
@@ -58,21 +58,21 @@ The [`dev` command](/cli/dev-mode) starts infrastructure in Docker and runs the 
 
 | Command | Description |
 | --- | --- |
-| `npx learnhouse setup` | Interactive setup wizard |
-| `npx learnhouse start` | Start all services |
-| `npx learnhouse stop` | Stop all services |
-| `npx learnhouse update` | Update to latest or a specific version |
-| `npx learnhouse status` | Show service status |
-| `npx learnhouse health` | Run health checks |
-| `npx learnhouse logs` | Stream container logs |
-| `npx learnhouse config` | Show installation info |
-| `npx learnhouse env` | Edit environment variables |
-| `npx learnhouse backup` | Backup database |
-| `npx learnhouse restore <archive>` | Restore database from backup |
-| `npx learnhouse doctor` | Run diagnostics |
-| `npx learnhouse deployments` | Manage deployments & resource limits |
-| `npx learnhouse shell` | Open shell in a container |
-| `npx learnhouse dev` | Start dev environment |
+| `npx funeralacademy setup` | Interactive setup wizard |
+| `npx funeralacademy start` | Start all services |
+| `npx funeralacademy stop` | Stop all services |
+| `npx funeralacademy update` | Update to latest or a specific version |
+| `npx funeralacademy status` | Show service status |
+| `npx funeralacademy health` | Run health checks |
+| `npx funeralacademy logs` | Stream container logs |
+| `npx funeralacademy config` | Show installation info |
+| `npx funeralacademy env` | Edit environment variables |
+| `npx funeralacademy backup` | Backup database |
+| `npx funeralacademy restore <archive>` | Restore database from backup |
+| `npx funeralacademy doctor` | Run diagnostics |
+| `npx funeralacademy deployments` | Manage deployments & resource limits |
+| `npx funeralacademy shell` | Open shell in a container |
+| `npx funeralacademy dev` | Start dev environment |
 
 <Callout type="info">
 See [Commands](/cli/commands) for the full reference including all flags.

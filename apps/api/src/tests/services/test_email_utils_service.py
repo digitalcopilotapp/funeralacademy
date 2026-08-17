@@ -24,8 +24,8 @@ def _config(**overrides):
         allowed_regexp=overrides.pop("allowed_regexp", ""),
         self_hosted=overrides.pop("self_hosted", False),
         tenancy=overrides.pop("tenancy", "multi"),
-        domain=overrides.pop("domain", "learnhouse.app"),
-        frontend_domain=overrides.pop("frontend_domain", "app.learnhouse.app"),
+        domain=overrides.pop("domain", "funeralacademy.app"),
+        frontend_domain=overrides.pop("frontend_domain", "app.funeralacademy.app"),
         ssl=overrides.pop("ssl", True),
     )
     general = SimpleNamespace(
@@ -66,14 +66,14 @@ def _request(headers=None, scheme="https", server=("api.test", 443)):
 class TestEmailUtilsService:
     def test_is_allowed_base_url_matches_all_supported_sources(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 allowed_origins=["https://app.test/"],
                 allowed_regexp=r"^https://regex\.test$",
             ),
         ), patch.dict(
             "src.services.email.utils.os.environ",
-            {"LEARNHOUSE_PLATFORM_URL": "https://www.platform.test"},
+            {"FUNERALACADEMY_PLATFORM_URL": "https://www.platform.test"},
             clear=False,
         ):
             assert _is_allowed_base_url("https://app.test")
@@ -82,7 +82,7 @@ class TestEmailUtilsService:
 
     def test_is_allowed_base_url_accepts_localhost_in_development(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(development_mode=True),
         ):
             assert _is_allowed_base_url("http://localhost:3000")
@@ -90,7 +90,7 @@ class TestEmailUtilsService:
 
     def test_is_allowed_base_url_invalid_regex_and_rejects_unknown_origin(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(allowed_regexp="("),
         ), patch.dict(
             "src.services.email.utils.os.environ",
@@ -104,7 +104,7 @@ class TestEmailUtilsService:
         request = _request({"origin": "https://app.test"})
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(tenancy="single"),
         ), patch(
             "src.services.email.utils.get_base_url_from_request",
@@ -115,19 +115,19 @@ class TestEmailUtilsService:
 
     def test_is_allowed_base_url_pins_to_configured_host_in_single_tenancy(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(tenancy="single"),
         ):
-            assert _is_allowed_base_url("https://app.learnhouse.app")
-            assert _is_allowed_base_url("https://learnhouse.app")
-            assert _is_allowed_base_url("https://www.learnhouse.app")
+            assert _is_allowed_base_url("https://app.funeralacademy.app")
+            assert _is_allowed_base_url("https://funeralacademy.app")
+            assert _is_allowed_base_url("https://www.funeralacademy.app")
             assert not _is_allowed_base_url("https://learn.example.org")
             assert not _is_allowed_base_url("javascript:alert(1)")
             assert not _is_allowed_base_url("https://")
             assert not _is_allowed_base_url("http://localhost:3000")
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(tenancy="single", development_mode=True),
         ):
             assert _is_allowed_base_url("http://localhost:3000")
@@ -137,7 +137,7 @@ class TestEmailUtilsService:
         # (e.g. "localhost:3000"). The configured host must still match the
         # always-port-less request host instead of being silently rejected.
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 tenancy="single",
                 frontend_domain="localhost:3000",
@@ -153,29 +153,29 @@ class TestEmailUtilsService:
         # Line 36: a blank/whitespace configured value (here frontend_domain) is
         # skipped via `continue`; only the non-empty `domain` is honored.
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 tenancy="single",
                 frontend_domain="   ",
-                domain="learnhouse.app",
+                domain="funeralacademy.app",
             ),
         ):
-            assert _is_allowed_base_url("https://learnhouse.app")
+            assert _is_allowed_base_url("https://funeralacademy.app")
             # The blank frontend_domain contributed no allowed host.
             assert not _is_allowed_base_url("https://other.example.org")
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
         "ssl,expected",
-        [(True, "https://acme.learnhouse.app"), (False, "http://acme.learnhouse.app")],
+        [(True, "https://acme.funeralacademy.app"), (False, "http://acme.funeralacademy.app")],
     )
     async def test_get_org_signup_base_url_builds_org_subdomain(self, ssl, expected):
         request = _request({"origin": "https://app.test"})
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
-                domain="learnhouse.app",
+                domain="funeralacademy.app",
                 ssl=ssl,
             ),
         ):
@@ -188,7 +188,7 @@ class TestEmailUtilsService:
         request = _request({"origin": "https://app.test"})
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(domain="", ssl=True),
         ), patch(
             "src.services.email.utils.get_base_url_from_request",
@@ -198,7 +198,7 @@ class TestEmailUtilsService:
             mock_base_url.assert_called_once_with(request)
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(domain="localhost:3000", ssl=True),
         ), patch(
             "src.services.email.utils.get_base_url_from_request",
@@ -235,28 +235,28 @@ class TestEmailUtilsService:
 
     def test_get_base_url_from_request_uses_frontend_then_request_url(self):
         frontend_request = _request({"origin": "https://blocked.test"})
-        url_request = _request({}, scheme="http", server=("api.learnhouse.test", 8080))
+        url_request = _request({}, scheme="http", server=("api.funeralacademy.test", 8080))
 
         with patch(
             "src.services.email.utils._is_allowed_base_url",
             return_value=False,
         ), patch(
-            "src.services.email.utils.get_learnhouse_config",
-            return_value=_config(frontend_domain="frontend.learnhouse.app"),
+            "src.services.email.utils.get_funeralacademy_config",
+            return_value=_config(frontend_domain="frontend.funeralacademy.app"),
         ):
             assert (
                 get_base_url_from_request(frontend_request)
-                == "https://frontend.learnhouse.app"
+                == "https://frontend.funeralacademy.app"
             )
 
         with patch(
             "src.services.email.utils._is_allowed_base_url",
             return_value=False,
         ), patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(frontend_domain=""),
         ):
-            assert get_base_url_from_request(url_request) == "http://api.learnhouse.test:8080"
+            assert get_base_url_from_request(url_request) == "http://api.funeralacademy.test:8080"
 
     def test_get_base_url_from_request_warns_on_untrusted_referer(self):
         request = _request({"referer": "https://blocked.test/path"})
@@ -265,14 +265,14 @@ class TestEmailUtilsService:
             "src.services.email.utils._is_allowed_base_url",
             return_value=False,
         ), patch(
-            "src.services.email.utils.get_learnhouse_config",
-            return_value=_config(frontend_domain="frontend.learnhouse.app"),
+            "src.services.email.utils.get_funeralacademy_config",
+            return_value=_config(frontend_domain="frontend.funeralacademy.app"),
         ), patch(
             "src.services.email.utils.logger.warning"
         ) as mock_warning:
             assert (
                 get_base_url_from_request(request)
-                == "https://frontend.learnhouse.app"
+                == "https://frontend.funeralacademy.app"
             )
 
         mock_warning.assert_called_once_with(
@@ -282,7 +282,7 @@ class TestEmailUtilsService:
 
     def test_send_email_routes_to_resend_and_smtp(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 email_provider="resend",
                 system_email_address="system@test.com",
@@ -297,7 +297,7 @@ class TestEmailUtilsService:
         assert result == {"id": "msg-1"}
         assert send_email.__module__ == "src.services.email.utils"
         assert mock_resend_send.call_args.args[0] == {
-            "from": "LearnHouse <system@test.com>",
+            "from": "FuneralAcademy <system@test.com>",
             "to": ["to@test.com"],
             "subject": "Hello",
             "html": "<p>Body</p>",
@@ -305,11 +305,11 @@ class TestEmailUtilsService:
 
         smtp_client = Mock()
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 email_provider="smtp",
                 system_email_address="system@test.com",
-                smtp_host="smtp.learnhouse.test",
+                smtp_host="smtp.funeralacademy.test",
                 smtp_port=2525,
                 smtp_username="smtp-user",
                 smtp_password="smtp-pass",
@@ -322,7 +322,7 @@ class TestEmailUtilsService:
             result = send_email("to@test.com", "Hello", "<p>Body</p>")
 
         assert result == {"id": None, "to": "to@test.com"}
-        mock_smtp.assert_called_once_with("smtp.learnhouse.test", 2525, timeout=15)
+        mock_smtp.assert_called_once_with("smtp.funeralacademy.test", 2525, timeout=15)
         smtp_client.starttls.assert_called_once()
         smtp_client.login.assert_called_once_with("smtp-user", "smtp-pass")
         smtp_client.sendmail.assert_called_once()
@@ -331,11 +331,11 @@ class TestEmailUtilsService:
     def test_send_email_smtp_without_tls_or_login(self):
         smtp_client = Mock()
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 email_provider="smtp",
                 system_email_address="system@test.com",
-                smtp_host="smtp.learnhouse.test",
+                smtp_host="smtp.funeralacademy.test",
                 smtp_port=2525,
                 smtp_username="",
                 smtp_password="",
@@ -355,7 +355,7 @@ class TestEmailUtilsService:
 
     def test_send_email_resend_failure_raises_503(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(email_provider="resend", resend_api_key="key"),
         ), patch(
             "src.services.email.utils.resend.Emails.send",
@@ -380,7 +380,7 @@ class TestEmailUtilsService:
             code=400,
         )
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(email_provider="resend", resend_api_key="key"),
         ), patch(
             "src.services.email.utils.resend.Emails.send",
@@ -424,7 +424,7 @@ class TestEmailUtilsService:
         user, so they must stay at error level even though several carry a 4xx.
         """
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(email_provider="resend", resend_api_key="key"),
         ), patch(
             "src.services.email.utils.resend.Emails.send",
@@ -441,7 +441,7 @@ class TestEmailUtilsService:
         smtp_client.sendmail.side_effect = smtplib.SMTPException("SMTP error")
         smtp_client.quit.side_effect = Exception("quit failed")
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 email_provider="smtp",
                 smtp_use_tls=False,
@@ -458,7 +458,7 @@ class TestEmailUtilsService:
 
     def test_send_email_smtp_os_error_raises_503(self):
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(
                 email_provider="smtp",
                 smtp_use_tls=False,
@@ -489,8 +489,8 @@ class TestGetPrimaryVerifiedCustomDomain:
         mock_session = AsyncMock()
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
-            return_value=_config(tenancy="multi", ssl=True, domain="learnhouse.app"),
+            "src.services.email.utils.get_funeralacademy_config",
+            return_value=_config(tenancy="multi", ssl=True, domain="funeralacademy.app"),
         ), patch(
             "src.services.email.utils._get_primary_verified_custom_domain",
             new_callable=AsyncMock,
@@ -513,8 +513,8 @@ class TestGetPrimaryVerifiedCustomDomain:
         mock_session = AsyncMock()
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
-            return_value=_config(tenancy="multi", ssl=True, domain="learnhouse.app"),
+            "src.services.email.utils.get_funeralacademy_config",
+            return_value=_config(tenancy="multi", ssl=True, domain="funeralacademy.app"),
         ), patch(
             "src.services.email.utils._get_primary_verified_custom_domain",
             new_callable=AsyncMock,
@@ -524,7 +524,7 @@ class TestGetPrimaryVerifiedCustomDomain:
                 "myorg", request, db_session=mock_session, org_id=42
             )
 
-        assert url == "https://myorg.learnhouse.app"
+        assert url == "https://myorg.funeralacademy.app"
 
     @pytest.mark.asyncio
     async def test_get_primary_verified_custom_domain_returns_primary(self):
@@ -592,7 +592,7 @@ class TestOrgLogoUrl:
 
         with patch.dict(
             "src.services.email.utils.os.environ",
-            {"LEARNHOUSE_MEDIA_URL": "https://cdn.acme.test/"},
+            {"FUNERALACADEMY_MEDIA_URL": "https://cdn.acme.test/"},
             clear=False,
         ):
             assert get_media_base_url(_request()) == "https://cdn.acme.test"
@@ -601,18 +601,18 @@ class TestOrgLogoUrl:
         from src.services.email.utils import get_media_base_url
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
-            return_value=_config(domain="learnhouse.io", ssl=True),
+            "src.services.email.utils.get_funeralacademy_config",
+            return_value=_config(domain="funeralacademy.io", ssl=True),
         ), patch.dict(
             "src.services.email.utils.os.environ", {}, clear=True
         ):
-            assert get_media_base_url(_request()) == "https://api.learnhouse.io"
+            assert get_media_base_url(_request()) == "https://api.funeralacademy.io"
 
     def test_media_base_falls_back_to_request_host_for_localhost(self):
         from src.services.email.utils import get_media_base_url
 
         with patch(
-            "src.services.email.utils.get_learnhouse_config",
+            "src.services.email.utils.get_funeralacademy_config",
             return_value=_config(domain="localhost"),
         ), patch.dict(
             "src.services.email.utils.os.environ", {}, clear=True
@@ -626,10 +626,10 @@ class TestOrgLogoUrl:
         org = SimpleNamespace(org_uuid="org_abc", logo_image="uuid_logo.png")
         with patch(
             "src.services.email.utils.get_media_base_url",
-            return_value="https://api.learnhouse.io",
+            return_value="https://api.funeralacademy.io",
         ):
             url = get_org_logo_url(org, _request())
-        assert url == "https://api.learnhouse.io/content/orgs/org_abc/logos/uuid_logo.png"
+        assert url == "https://api.funeralacademy.io/content/orgs/org_abc/logos/uuid_logo.png"
 
     def test_org_logo_url_none_when_no_logo(self):
         from src.services.email.utils import get_org_logo_url

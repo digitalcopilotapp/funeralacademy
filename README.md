@@ -1,19 +1,19 @@
 <p align="center">
-  <a href="https://learnhouse.app">
-    <img src=".github/images/learnhouse-github.png" alt="LearnHouse" width="600" />
+  <a href="https://funeralacademy.app">
+    <img src=".github/images/funeralacademy-github.png" alt="FuneralAcademy" width="600" />
   </a>
 </p>
 
 <h3 align="center">The next-gen open-source platform for world-class educational content.</h3>
 
 <p align="center">
-  <a href="https://github.com/learnhouse/learnhouse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/learnhouse/learnhouse?style=flat&color=blue" alt="License" /></a>
-  <a href="https://github.com/learnhouse/learnhouse/stargazers"><img src="https://img.shields.io/github/stars/learnhouse/learnhouse?style=flat" alt="Stars" /></a>
-  <a href="https://www.npmjs.com/package/learnhouse"><img src="https://img.shields.io/npm/v/learnhouse?style=flat&label=cli" alt="CLI Version" /></a>
-  <a href="https://app.codecov.io/gh/learnhouse/learnhouse"><img src="https://img.shields.io/codecov/c/github/learnhouse/learnhouse?flag=api&label=api%20coverage" alt="API Coverage" /></a>
-  <a href="https://github.com/learnhouse/learnhouse/commits"><img src="https://img.shields.io/github/last-commit/learnhouse/learnhouse?style=flat&label=last%20commit" alt="Last Commit" /></a>
-  <a href="https://github.com/learnhouse/learnhouse/issues"><img src="https://img.shields.io/github/issues/learnhouse/learnhouse?style=flat" alt="Issues" /></a>
-  <a href="https://github.com/learnhouse/learnhouse/pulls"><img src="https://img.shields.io/github/issues-pr/learnhouse/learnhouse?style=flat&label=PRs" alt="Pull Requests" /></a>
+  <a href="https://github.com/learnhouse/learnhouse/blob/main/LICENSE"><img src="https://img.shields.io/github/license/funeralacademy/funeralacademy?style=flat&color=blue" alt="License" /></a>
+  <a href="https://github.com/learnhouse/learnhouse/stargazers"><img src="https://img.shields.io/github/stars/funeralacademy/funeralacademy?style=flat" alt="Stars" /></a>
+  <a href="https://www.npmjs.com/package/learnhouse"><img src="https://img.shields.io/npm/v/funeralacademy?style=flat&label=cli" alt="CLI Version" /></a>
+  <a href="https://app.codecov.io/gh/funeralacademy/funeralacademy"><img src="https://img.shields.io/codecov/c/github/funeralacademy/funeralacademy?flag=api&label=api%20coverage" alt="API Coverage" /></a>
+  <a href="https://github.com/learnhouse/learnhouse/commits"><img src="https://img.shields.io/github/last-commit/funeralacademy/funeralacademy?style=flat&label=last%20commit" alt="Last Commit" /></a>
+  <a href="https://github.com/learnhouse/learnhouse/issues"><img src="https://img.shields.io/github/issues/funeralacademy/funeralacademy?style=flat" alt="Issues" /></a>
+  <a href="https://github.com/learnhouse/learnhouse/pulls"><img src="https://img.shields.io/github/issues-pr/funeralacademy/funeralacademy?style=flat&label=PRs" alt="Pull Requests" /></a>
 </p>
 
 <p align="center">
@@ -39,31 +39,31 @@
 
 ## 🚀 Get Started
 
-LearnHouse has an official CLI that handles everything — self-hosting, updates, backups, and local development.
+FuneralAcademy has an official CLI that handles everything — self-hosting, updates, backups, and local development.
 
 ### Self-host
 
 ```bash
-npx learnhouse@latest setup
+npx funeralacademy@latest setup
 ```
 
 The setup wizard walks you through domain, database, admin account, and optional features. Once done, it generates all config files and starts your instance.
 
 ```bash
-npx learnhouse start       # Start services
-npx learnhouse stop        # Stop services
-npx learnhouse update      # Update to latest version
-npx learnhouse logs        # Stream logs
-npx learnhouse backup      # Backup database
-npx learnhouse doctor      # Diagnose issues
+npx funeralacademy start       # Start services
+npx funeralacademy stop        # Stop services
+npx funeralacademy update      # Update to latest version
+npx funeralacademy logs        # Stream logs
+npx funeralacademy backup      # Backup database
+npx funeralacademy doctor      # Diagnose issues
 ```
 
 ### Development
 
 ```bash
 git clone https://github.com/learnhouse/learnhouse.git
-cd learnhouse
-npx learnhouse dev
+cd funeralacademy
+npx funeralacademy dev
 ```
 
 This spins up PostgreSQL and Redis, installs dependencies, and starts the API, Web, and Collab servers with hot reload.
@@ -111,8 +111,8 @@ This spins up PostgreSQL and Redis, installs dependencies, and starts the API, W
 
 ```bash
 git clone https://github.com/learnhouse/learnhouse.git
-cd learnhouse
-npx learnhouse dev
+cd funeralacademy
+npx funeralacademy dev
 ```
 
 - [Contributing Guide](CONTRIBUTING.md)
@@ -121,11 +121,11 @@ npx learnhouse dev
 
 ## 🔒 Security
 
-We take the security of LearnHouse and the data entrusted to us seriously. If you discover a vulnerability, please email **security@learnhouse.app** — do not disclose it publicly until we've had a chance to investigate.
+We take the security of FuneralAcademy and the data entrusted to us seriously. If you discover a vulnerability, please email **security@funeralacademy.app** — do not disclose it publicly until we've had a chance to investigate.
 
 Please include a clear description, steps to reproduce, affected endpoints, and any relevant screenshots or proof-of-concept code. We will acknowledge your report, keep you informed, and credit you once resolved if you wish.
 
-See our full [Security Policy](https://learnhouse.app/security) for details on our practices, scope, and responsible disclosure guidelines.
+See our full [Security Policy](https://funeralacademy.app/security) for details on our practices, scope, and responsible disclosure guidelines.
 
 ## ✍️ Author & Maintainer
 
@@ -133,9 +133,9 @@ Sweave (Badr B.) — [@swve](https://github.com/swve)
 
 ## 💜 A Word
 
-LearnHouse is made with 💜, from the UI to the features it is carefully designed to make students and teachers lives easier and make education software more enjoyable.
+FuneralAcademy is made with 💜, from the UI to the features it is carefully designed to make students and teachers lives easier and make education software more enjoyable.
 
-Thank you and have fun using/developing/testing LearnHouse !
+Thank you and have fun using/developing/testing FuneralAcademy !
 
 ## 📄 License
 

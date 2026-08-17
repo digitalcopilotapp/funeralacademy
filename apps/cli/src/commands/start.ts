@@ -8,11 +8,11 @@ export async function startCommand() {
   const dir = findInstallDir()
   const config = readConfig(dir)
   if (!config) {
-    p.log.error('No LearnHouse installation found. Run `npx learnhouse setup` first.')
+    p.log.error('No FuneralAcademy installation found. Run `npx funeralacademy setup` first.')
     process.exit(1)
   }
 
-  p.intro(pc.cyan('Starting LearnHouse'))
+  p.intro(pc.cyan('Starting FuneralAcademy'))
 
   try {
     const result = migrateContentVolume(config.installDir, config.deploymentId)
@@ -28,7 +28,7 @@ export async function startCommand() {
 
   try {
     dockerComposeUp(config.installDir)
-    p.log.success('LearnHouse is running!')
+    p.log.success('FuneralAcademy is running!')
   } catch {
     p.log.error('Failed to start services. Check Docker output above.')
     process.exit(1)

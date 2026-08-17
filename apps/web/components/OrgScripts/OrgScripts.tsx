@@ -82,7 +82,7 @@ const OrgScripts: React.FC = () => {
         return
       }
 
-      const safeScriptId = `learnhouse-org-script-${scriptName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Math.random().toString(36).substr(2, 9)}`
+      const safeScriptId = `funeralacademy-org-script-${scriptName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${Math.random().toString(36).substr(2, 9)}`
 
       cleanupExistingScript(safeScriptId)
 
@@ -119,7 +119,7 @@ const OrgScripts: React.FC = () => {
         } else {
           const sanitizedContent = sanitizeScriptContent(scriptTag.textContent || '')
           scriptElement.textContent = `
-            /* LearnHouse Organization Script - ${scriptName} */
+            /* FuneralAcademy Organization Script - ${scriptName} */
             try {
               (function() {
                 'use strict';
@@ -138,7 +138,7 @@ const OrgScripts: React.FC = () => {
         scriptElement.dataset.orgId = org?.id
         scriptElement.dataset.orgSlug = org?.slug
 
-        const comment = document.createComment(` LearnHouse Organization Script - ${scriptName} (${safeScriptId}) `)
+        const comment = document.createComment(` FuneralAcademy Organization Script - ${scriptName} (${safeScriptId}) `)
         document.body.appendChild(comment)
         document.body.appendChild(scriptElement)
       } else {
@@ -147,7 +147,7 @@ const OrgScripts: React.FC = () => {
         
         const sanitizedContent = sanitizeScriptContent(scriptContent)
         scriptElement.textContent = `
-          /* LearnHouse Organization Script - ${scriptName} */
+          /* FuneralAcademy Organization Script - ${scriptName} */
           try {
             (function() {
               'use strict';
@@ -165,7 +165,7 @@ const OrgScripts: React.FC = () => {
         scriptElement.dataset.orgId = org?.id
         scriptElement.dataset.orgSlug = org?.slug
 
-        const comment = document.createComment(` LearnHouse Organization Script - ${scriptName} (${safeScriptId}) `)
+        const comment = document.createComment(` FuneralAcademy Organization Script - ${scriptName} (${safeScriptId}) `)
         document.body.appendChild(comment)
         document.body.appendChild(scriptElement)
       }
@@ -191,7 +191,7 @@ const OrgScripts: React.FC = () => {
     })
 
     return () => {
-      const scripts = document.querySelectorAll('script[id^="learnhouse-org-script-"]')
+      const scripts = document.querySelectorAll('script[id^="funeralacademy-org-script-"]')
       scripts.forEach(script => {
         cleanupExistingScript(script.id)
       })

@@ -1,13 +1,13 @@
-# Contributing to LearnHouse
+# Contributing to FuneralAcademy
 
 ## Getting Started
 
-To set up your development environment, use the LearnHouse CLI:
+To set up your development environment, use the FuneralAcademy CLI:
 
 ```bash
 git clone https://github.com/learnhouse/learnhouse.git
-cd learnhouse
-npx learnhouse dev
+cd funeralacademy
+npx funeralacademy dev
 ```
 
 This will spin up PostgreSQL and Redis containers, install dependencies, and start the API, Web, and Collab servers. See the [CLI documentation](apps/cli/README.md) for more details.

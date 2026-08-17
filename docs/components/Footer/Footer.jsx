@@ -6,7 +6,7 @@ const links = [
   { label: 'Documentation', href: '/' },
   { label: 'GitHub', href: 'https://github.com/learnhouse/learnhouse' },
   { label: 'Discord', href: 'https://discord.gg/CMyZjjYZ6x' },
-  { label: 'Twitter', href: 'https://twitter.com/learnhouseapp' },
+  { label: 'Twitter', href: 'https://twitter.com/funeralacademyapp' },
 ]
 
 export default function Footer() {
@@ -14,7 +14,7 @@ export default function Footer() {
     <footer className="lh-footer">
       <div className="lh-footer-container">
         <p className="lh-footer-copyright">
-          &copy; {new Date().getFullYear()} LearnHouse
+          &copy; {new Date().getFullYear()} FuneralAcademy
         </p>
         <nav className="lh-footer-nav">
           {links.map((link) => {

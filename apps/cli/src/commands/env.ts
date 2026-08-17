@@ -11,47 +11,47 @@ const CATEGORIES: Record<string, { label: string; keys: string[] }> = {
   domain: {
     label: 'Domain & Hosting',
     keys: [
-      'LEARNHOUSE_DOMAIN', 'HTTP_PORT', 'NEXT_PUBLIC_LEARNHOUSE_API_URL',
-      'NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL', 'NEXT_PUBLIC_LEARNHOUSE_DOMAIN',
-      'NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN', 'NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG',
-      'NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG', 'NEXT_PUBLIC_LEARNHOUSE_HTTPS',
+      'FUNERALACADEMY_DOMAIN', 'HTTP_PORT', 'NEXT_PUBLIC_FUNERALACADEMY_API_URL',
+      'NEXT_PUBLIC_FUNERALACADEMY_BACKEND_URL', 'NEXT_PUBLIC_FUNERALACADEMY_DOMAIN',
+      'NEXT_PUBLIC_FUNERALACADEMY_TOP_DOMAIN', 'NEXT_PUBLIC_FUNERALACADEMY_MULTI_ORG',
+      'NEXT_PUBLIC_FUNERALACADEMY_DEFAULT_ORG', 'NEXT_PUBLIC_FUNERALACADEMY_HTTPS',
       'NEXTAUTH_URL',
     ],
   },
   database: {
     label: 'Database & Redis',
     keys: [
-      'LEARNHOUSE_SQL_CONNECTION_STRING', 'LEARNHOUSE_REDIS_CONNECTION_STRING',
+      'FUNERALACADEMY_SQL_CONNECTION_STRING', 'FUNERALACADEMY_REDIS_CONNECTION_STRING',
       'POSTGRES_USER', 'POSTGRES_PASSWORD', 'POSTGRES_DB',
     ],
   },
   security: {
     label: 'Security',
     keys: [
-      'NEXTAUTH_SECRET', 'LEARNHOUSE_AUTH_JWT_SECRET_KEY',
-      'LEARNHOUSE_INITIAL_ADMIN_EMAIL', 'LEARNHOUSE_INITIAL_ADMIN_PASSWORD',
-      'LEARNHOUSE_COOKIE_DOMAIN',
+      'NEXTAUTH_SECRET', 'FUNERALACADEMY_AUTH_JWT_SECRET_KEY',
+      'FUNERALACADEMY_INITIAL_ADMIN_EMAIL', 'FUNERALACADEMY_INITIAL_ADMIN_PASSWORD',
+      'FUNERALACADEMY_COOKIE_DOMAIN',
     ],
   },
   ai: {
     label: 'AI',
-    keys: ['LEARNHOUSE_GEMINI_API_KEY', 'LEARNHOUSE_IS_AI_ENABLED'],
+    keys: ['FUNERALACADEMY_GEMINI_API_KEY', 'FUNERALACADEMY_IS_AI_ENABLED'],
   },
   email: {
     label: 'Email',
-    keys: ['LEARNHOUSE_RESEND_API_KEY', 'LEARNHOUSE_SYSTEM_EMAIL_ADDRESS'],
+    keys: ['FUNERALACADEMY_RESEND_API_KEY', 'FUNERALACADEMY_SYSTEM_EMAIL_ADDRESS'],
   },
   s3: {
     label: 'S3 Storage',
     keys: [
-      'LEARNHOUSE_CONTENT_DELIVERY_TYPE', 'LEARNHOUSE_S3_API_BUCKET_NAME',
-      'LEARNHOUSE_S3_API_ENDPOINT_URL',
+      'FUNERALACADEMY_CONTENT_DELIVERY_TYPE', 'FUNERALACADEMY_S3_API_BUCKET_NAME',
+      'FUNERALACADEMY_S3_API_ENDPOINT_URL',
     ],
   },
   oauth: {
     label: 'OAuth',
     keys: [
-      'LEARNHOUSE_GOOGLE_CLIENT_ID', 'LEARNHOUSE_GOOGLE_CLIENT_SECRET',
+      'FUNERALACADEMY_GOOGLE_CLIENT_ID', 'FUNERALACADEMY_GOOGLE_CLIENT_SECRET',
       'NEXT_PUBLIC_UNSPLASH_ACCESS_KEY',
     ],
   },
@@ -120,7 +120,7 @@ export async function envCommand() {
   const dir = findInstallDir()
   const config = readConfig(dir)
   if (!config) {
-    p.log.error('No LearnHouse installation found. Run setup first.')
+    p.log.error('No FuneralAcademy installation found. Run setup first.')
     process.exit(1)
   }
 
@@ -130,7 +130,7 @@ export async function envCommand() {
     process.exit(1)
   }
 
-  p.intro(pc.cyan('LearnHouse Environment Editor'))
+  p.intro(pc.cyan('FuneralAcademy Environment Editor'))
 
   const originalContent = fs.readFileSync(envPath, 'utf-8')
   const envMap = parseEnv(originalContent)

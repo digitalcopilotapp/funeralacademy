@@ -29,7 +29,7 @@ function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [mobileMenuOpen])
 
-  const logoSrc = '/img/logos/learnhouse-dark.svg'
+  const logoSrc = '/img/logos/funeralacademy-dark.svg'
 
   return (
     <>
@@ -39,7 +39,7 @@ function Navbar() {
           <div className="lh-navbar-left">
             <Link href="/" className="lh-navbar-logo">
               {mounted ? (
-                <img src={logoSrc} alt="LearnHouse" />
+                <img src={logoSrc} alt="FuneralAcademy" />
               ) : (
                 <div style={{ width: 100, height: 20 }} />
               )}
@@ -63,7 +63,7 @@ function Navbar() {
                 API Reference
               </Link>
               <a
-                href="https://university.learnhouse.io"
+                href="https://university.funeralacademy.io"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="lh-navbar-nav-item"
@@ -73,7 +73,7 @@ function Navbar() {
                 <ArrowUpRight size={11} weight="bold" />
               </a>
               <a
-                href="https://learnhouse.app/integrations"
+                href="https://funeralacademy.app/integrations"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="lh-navbar-nav-item"
@@ -83,7 +83,7 @@ function Navbar() {
                 <ArrowUpRight size={11} weight="bold" />
               </a>
               <a
-                href="https://learnhouse.app"
+                href="https://funeralacademy.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="lh-navbar-nav-item"
@@ -145,17 +145,17 @@ function Navbar() {
             <BracketsCurly size={16} weight="fill" />
             API Reference
           </Link>
-          <a href="https://university.learnhouse.io" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
+          <a href="https://university.funeralacademy.io" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
             <GraduationCap size={16} weight="fill" />
             Learn
             <ArrowUpRight size={12} weight="bold" />
           </a>
-          <a href="https://learnhouse.app/integrations" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
+          <a href="https://funeralacademy.app/integrations" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
             <Plug size={16} weight="fill" />
             Integrations
             <ArrowUpRight size={12} weight="bold" />
           </a>
-          <a href="https://learnhouse.app" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
+          <a href="https://funeralacademy.app" target="_blank" rel="noopener noreferrer" className="lh-mobile-drawer-link">
             <Globe size={16} weight="fill" />
             Website
             <ArrowUpRight size={12} weight="bold" />

@@ -3,7 +3,7 @@
   "configVersion": 0,
   "workspaces": {
     "": {
-      "name": "learnhouse",
+      "name": "funeralacademy",
       "dependencies": {
         "@codemirror/autocomplete": "^6.18.4",
         "@codemirror/lang-cpp": "^6.0.3",

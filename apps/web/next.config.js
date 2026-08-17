@@ -138,7 +138,7 @@ const nextConfig = {
   },
   // Ensure consistent build IDs across multiple pods in Kubernetes
   generateBuildId: async () => {
-    return process.env.BUILD_ID || 'learnhouse-production'
+    return process.env.BUILD_ID || 'funeralacademy-production'
   },
 }
 

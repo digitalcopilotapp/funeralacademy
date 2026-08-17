@@ -57,7 +57,7 @@ const logoAnimations: { initial: TargetAndTransition; animate: TargetAndTransiti
   },
 ]
 
-const EditorLearnHouseLogo = () => {
+const EditorFuneralAcademyLogo = () => {
   const [animation] = useState(
     () => logoAnimations[Math.floor(Math.random() * logoAnimations.length)]
   )
@@ -68,7 +68,7 @@ const EditorLearnHouseLogo = () => {
         animate={animation.animate}
         transition={animation.transition}
       >
-        <Image src="/lrn.svg" alt="LearnHouse" width={14} height={14} className="invert" />
+        <Image src="/lrn.svg" alt="FuneralAcademy" width={14} height={14} className="invert" />
       </motion.div>
     </div>
   )
@@ -285,7 +285,7 @@ export default function PlaygroundEditor({
       >
         {/* Logo */}
         <Link href="/">
-          <EditorLearnHouseLogo />
+          <EditorFuneralAcademyLogo />
         </Link>
 
         <SlashIcon style={{ color: '#d1d5db', flexShrink: 0 }} />

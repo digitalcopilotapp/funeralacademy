@@ -18,15 +18,15 @@ describe('migrateContentVolume — migrated path (container present)', () => {
 
   it('copies container content into the volume and patches the compose file', () => {
     fs.writeFileSync(path.join(dir, 'docker-compose.yml'), [
-      'name: learnhouse-dep12345',
+      'name: funeralacademy-dep12345',
       'services:',
-      '  learnhouse-app:',
+      '  funeralacademy-app:',
       '    image: ghcr.io/learnhouse/app:latest',
-      '    container_name: learnhouse-app-dep12345',
+      '    container_name: funeralacademy-app-dep12345',
       '    networks:',
-      '      - learnhouse-network-dep12345',
+      '      - funeralacademy-network-dep12345',
       'networks:',
-      '  learnhouse-network-dep12345:',
+      '  funeralacademy-network-dep12345:',
       '',
     ].join('\n'))
 
@@ -36,14 +36,14 @@ describe('migrateContentVolume — migrated path (container present)', () => {
     expect(res.copiedBytes).toBe(0) // the stubbed copy moves no bytes
 
     const patched = fs.readFileSync(path.join(dir, 'docker-compose.yml'), 'utf-8')
-    expect(patched).toContain('learnhouse_content_dep12345:/app/api/content')
+    expect(patched).toContain('funeralacademy_content_dep12345:/app/api/content')
   })
 
   it('sums nested directory content when measuring the copied bytes', () => {
     fs.writeFileSync(path.join(dir, 'docker-compose.yml'), [
-      'name: learnhouse-dep9', 'services:', '  learnhouse-app:',
-      '    container_name: learnhouse-app-dep9', '    networks:',
-      '      - learnhouse-network-dep9', 'networks:', '  learnhouse-network-dep9:', '',
+      'name: funeralacademy-dep9', 'services:', '  funeralacademy-app:',
+      '    container_name: funeralacademy-app-dep9', '    networks:',
+      '      - funeralacademy-network-dep9', 'networks:', '  funeralacademy-network-dep9:', '',
     ].join('\n'))
     // Make the mocked `docker cp <container>:path/. <tmpDir>/` actually populate
     // the temp dir with a nested subdirectory + file, so directorySize recurses.
@@ -66,8 +66,8 @@ describe('migrateContentVolume — migrated path (container present)', () => {
 })
 
 describe('patchComposeAddContentVolume — guard', () => {
-  it('throws when the compose file has no learnhouse-app service', () => {
+  it('throws when the compose file has no funeralacademy-app service', () => {
     expect(() => patchComposeAddContentVolume('services:\n  other:\n', 'dep1'))
-      .toThrow(/learnhouse-app service not found/)
+      .toThrow(/funeralacademy-app service not found/)
   })
 })

@@ -76,7 +76,7 @@ class NudgeSend(SQLModel, table=True):
         default=NudgeSendStatus.CLAIMED,
         sa_column=Column(String(16), nullable=False, default=NudgeSendStatus.CLAIMED),
     )
-    lang: str = Field(default="en", sa_column=Column(String(8), nullable=False, default="en"))
+    lang: str = Field(default="pt", sa_column=Column(String(8), nullable=False, default="pt"))
     claimed_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc),
         sa_column=Column(DateTime(timezone=True), nullable=False),

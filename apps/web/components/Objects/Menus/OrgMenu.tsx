@@ -159,12 +159,12 @@ export const OrgMenu = (props: any) => {
                   {org?.logo_image ? (
                     <img
                       src={`${getOrgLogoMediaDirectory(org.org_uuid, org?.logo_image)}`}
-                      alt="Learnhouse"
+                      alt="Funeralacademy"
                       style={{ width: 'auto', height: '100%' }}
                       className="rounded-md"
                     />
                   ) : (
-                    <LearnHouseLogo logoFilter={colors.logoFilter} />
+                    <FuneralAcademyLogo logoFilter={colors.logoFilter} />
                   )}
                 </div>
               </Link>
@@ -326,7 +326,7 @@ export const OrgMenu = (props: any) => {
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <a
-                        href="https://learnhouse.app"
+                        href="https://funeralacademy.app"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2"
@@ -557,11 +557,11 @@ const CopilotMenuButton = ({
   )
 }
 
-const LearnHouseLogo = ({ logoFilter }: { logoFilter: string }) => {
+const FuneralAcademyLogo = ({ logoFilter }: { logoFilter: string }) => {
   return (
     <Image
       src="/lrn-text.svg"
-      alt="LearnHouse logo"
+      alt="FuneralAcademy logo"
       width={133}
       height={40}
       style={{ height: 'auto', filter: logoFilter }}

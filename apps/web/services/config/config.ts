@@ -80,12 +80,12 @@ const getCookieValue = (name: string): string | null => {
 }
 
 // Dynamic config getters - these are functions to ensure runtime values are used
-const getLEARNHOUSE_HTTP_PROTOCOL = () =>
-  (getConfig('NEXT_PUBLIC_LEARNHOUSE_HTTPS') === 'true') ? 'https://' : 'http://'
-const getLEARNHOUSE_BACKEND_URL = () => getConfig('NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL', 'http://localhost/')
-const getLEARNHOUSE_DOMAIN = () => {
+const getFUNERALACADEMY_HTTP_PROTOCOL = () =>
+  (getConfig('NEXT_PUBLIC_FUNERALACADEMY_HTTPS') === 'true') ? 'https://' : 'http://'
+const getFUNERALACADEMY_BACKEND_URL = () => getConfig('NEXT_PUBLIC_FUNERALACADEMY_BACKEND_URL', 'http://localhost/')
+const getFUNERALACADEMY_DOMAIN = () => {
   // 1. Env var (backward compat for existing deploys)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const envVal = getConfig('NEXT_PUBLIC_FUNERALACADEMY_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
   const cookieVal = getCookieValue('LH_frontend_domain')
@@ -93,61 +93,61 @@ const getLEARNHOUSE_DOMAIN = () => {
   // 3. Default
   return 'localhost'
 }
-const getLEARNHOUSE_TOP_DOMAIN = () => {
+const getFUNERALACADEMY_TOP_DOMAIN = () => {
   // 1. Env var (backward compat for existing deploys)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN')
+  const envVal = getConfig('NEXT_PUBLIC_FUNERALACADEMY_TOP_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
   const cookieVal = getCookieValue('LH_top_domain')
   if (cookieVal) return cookieVal
   // 3. Derive from DOMAIN by stripping port
-  const domain = getLEARNHOUSE_DOMAIN()
+  const domain = getFUNERALACADEMY_DOMAIN()
   return domain.split(':')[0]
 }
 // PostHog product analytics — opt-in. Telemetry is OFF unless this key is set
 // in the deployment env. No separate enable flag: presence of the key IS the switch.
 const getPOSTHOG_KEY = () => getConfig('NEXT_PUBLIC_POSTHOG_KEY', '');
-const getLEARNHOUSE_PLATFORM_URL = (): string | null => {
+const getFUNERALACADEMY_PLATFORM_URL = (): string | null => {
   // NEXT_PUBLIC_ variant (available client-side via runtime config)
-  const pubVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_PLATFORM_URL')
+  const pubVal = getConfig('NEXT_PUBLIC_FUNERALACADEMY_PLATFORM_URL')
   if (pubVal) return pubVal.replace(/\/+$/, '')
   // Non-prefixed variant (server-side only, backward compat)
-  const val = getConfig('LEARNHOUSE_PLATFORM_URL')
+  const val = getConfig('FUNERALACADEMY_PLATFORM_URL')
   if (val) return val.replace(/\/+$/, '')
   return null
 }
 
 // Export getter functions for dynamic runtime configuration
-export const getLEARNHOUSE_HTTP_PROTOCOL_VAL = getLEARNHOUSE_HTTP_PROTOCOL
-export const getLEARNHOUSE_BACKEND_URL_VAL = getLEARNHOUSE_BACKEND_URL
-export const getLEARNHOUSE_DOMAIN_VAL = getLEARNHOUSE_DOMAIN
-export const getLEARNHOUSE_TOP_DOMAIN_VAL = getLEARNHOUSE_TOP_DOMAIN
+export const getFUNERALACADEMY_HTTP_PROTOCOL_VAL = getFUNERALACADEMY_HTTP_PROTOCOL
+export const getFUNERALACADEMY_BACKEND_URL_VAL = getFUNERALACADEMY_BACKEND_URL
+export const getFUNERALACADEMY_DOMAIN_VAL = getFUNERALACADEMY_DOMAIN
+export const getFUNERALACADEMY_TOP_DOMAIN_VAL = getFUNERALACADEMY_TOP_DOMAIN
 export const getPOSTHOG_KEY_VAL = getPOSTHOG_KEY
-export const getLEARNHOUSE_PLATFORM_URL_VAL = getLEARNHOUSE_PLATFORM_URL
+export const getFUNERALACADEMY_PLATFORM_URL_VAL = getFUNERALACADEMY_PLATFORM_URL
 
 // Export constants for backward compatibility
 // These are computed once at module load, but getConfig uses runtime values
 // For middleware/proxy (where runtime is critical), use the getter functions instead
-export const LEARNHOUSE_HTTP_PROTOCOL = getLEARNHOUSE_HTTP_PROTOCOL()
-export const LEARNHOUSE_BACKEND_URL = getLEARNHOUSE_BACKEND_URL()
-export const LEARNHOUSE_DOMAIN = getLEARNHOUSE_DOMAIN()
-export const LEARNHOUSE_TOP_DOMAIN = getLEARNHOUSE_TOP_DOMAIN()
+export const FUNERALACADEMY_HTTP_PROTOCOL = getFUNERALACADEMY_HTTP_PROTOCOL()
+export const FUNERALACADEMY_BACKEND_URL = getFUNERALACADEMY_BACKEND_URL()
+export const FUNERALACADEMY_DOMAIN = getFUNERALACADEMY_DOMAIN()
+export const FUNERALACADEMY_TOP_DOMAIN = getFUNERALACADEMY_TOP_DOMAIN()
 
 // Helper to check if we're on a custom domain (for API URL selection)
 export const isOnCustomDomain = (): boolean => {
   if (typeof window === 'undefined') return false
   const hostname = window.location.hostname
-  const domain = getLEARNHOUSE_DOMAIN()
+  const domain = getFUNERALACADEMY_DOMAIN()
   return !isSubdomainOf(hostname, domain) && !isSameHost(hostname, domain) && !isLocalhostCheck(hostname)
 }
 
-// Derive API URL from backend URL (with backward compat for NEXT_PUBLIC_LEARNHOUSE_API_URL)
+// Derive API URL from backend URL (with backward compat for NEXT_PUBLIC_FUNERALACADEMY_API_URL)
 const deriveAPIUrl = (): string => {
   // Backward compat: if explicit API URL is set, use it
-  const explicitApiUrl = getConfig('NEXT_PUBLIC_LEARNHOUSE_API_URL')
+  const explicitApiUrl = getConfig('NEXT_PUBLIC_FUNERALACADEMY_API_URL')
   if (explicitApiUrl) return explicitApiUrl
   // Derive from backend URL
-  const backendUrl = getLEARNHOUSE_BACKEND_URL().replace(/\/+$/, '')
+  const backendUrl = getFUNERALACADEMY_BACKEND_URL().replace(/\/+$/, '')
   return `${backendUrl}/api/v1/`
 }
 
@@ -167,14 +167,14 @@ export const getServerAPIUrl = () => {
   return deriveAPIUrl()
 }
 
-export const getBackendUrl = () => getLEARNHOUSE_BACKEND_URL()
+export const getBackendUrl = () => getFUNERALACADEMY_BACKEND_URL()
 
 /**
  * Get the upgrade/plan URL for a given org.
  *
- * In SaaS the billing/upgrade hub lives IN-APP on the apex (learnhouse.io
+ * In SaaS the billing/upgrade hub lives IN-APP on the apex (funeralacademy.io
  * /billing) — see app/(hub)/billing. We return an absolute apex URL so an
- * upgrade CTA rendered inside an org subdomain ({slug}.learnhouse.io) crosses
+ * upgrade CTA rendered inside an org subdomain ({slug}.funeralacademy.io) crosses
  * to the root hub; the `.{top_domain}`-scoped session cookie carries the login
  * across the hop. Returns null in OSS/EE, where there is no SaaS billing
  * surface — callers MUST treat null as "hide the upgrade CTA".
@@ -190,13 +190,13 @@ export const getUpgradeUrl = (orgSlug: string, plan?: string | null): string | n
 }
 
 /**
- * Build a URL on the platform domain (e.g. learnhouse.app).
+ * Build a URL on the platform domain (e.g. funeralacademy.app).
  * Use this for links that should point to the main platform site,
  * not the org subdomain (e.g. upgrade, billing, account management).
  * Returns null when platform URL is not configured.
  */
 export const getPlatformUrl = (path: string): string | null => {
-  const platformUrl = getLEARNHOUSE_PLATFORM_URL()
+  const platformUrl = getFUNERALACADEMY_PLATFORM_URL()
   if (!platformUrl) return null
   return `${platformUrl}${path}`
 }
@@ -208,7 +208,7 @@ export const getPlatformUrl = (path: string): string | null => {
 // reflects the current deployment configuration. Defaults to 'single' when
 // the cookie isn't present (e.g. very first request before middleware runs).
 //
-// We deliberately do NOT consult `NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG` here —
+// We deliberately do NOT consult `NEXT_PUBLIC_FUNERALACADEMY_MULTI_ORG` here —
 // stale env vars from older deploys used to override the runtime cookie and
 // produce broken URLs like `default.localhost:3000`. The env var still has
 // effect at backend boot time; that's the only place it should influence
@@ -232,9 +232,9 @@ export const getCustomDomainFromContext = (): string | null => {
   if (typeof window !== 'undefined') {
     const hostname = window.location.hostname
     const host = window.location.host // includes port if non-standard
-    const domain = getLEARNHOUSE_DOMAIN()
+    const domain = getFUNERALACADEMY_DOMAIN()
 
-    // Check if current hostname is a custom domain (not a subdomain of LEARNHOUSE_DOMAIN)
+    // Check if current hostname is a custom domain (not a subdomain of FUNERALACADEMY_DOMAIN)
     const isSub = isSubdomainOf(hostname, domain) || isSameHost(hostname, domain)
     const isLocal = isLocalhostCheck(hostname)
 
@@ -291,7 +291,7 @@ export const getUriWithOrg = (orgslug: string, path: string) => {
     }
 
     // Multi tenancy: relative if we're already on the correct subdomain.
-    const baseDomain = stripPort(getLEARNHOUSE_DOMAIN())
+    const baseDomain = stripPort(getFUNERALACADEMY_DOMAIN())
     const currentHostname = window.location.hostname
     const expectedHostname = `${orgslug}.${baseDomain}`
     if (currentHostname === expectedHostname) {
@@ -331,13 +331,13 @@ export const getUriWithOrg = (orgslug: string, path: string) => {
   // Multi tenancy server-side: build the subdomain URL because we can't
   // assume server components know the user's current host.
   if (orgslug) {
-    const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
-    const domain = getLEARNHOUSE_DOMAIN()
+    const protocol = getFUNERALACADEMY_HTTP_PROTOCOL()
+    const domain = getFUNERALACADEMY_DOMAIN()
     return `${protocol}${orgslug}.${domain}${path}`
   }
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('NEXT_PUBLIC_FUNERALACADEMY_DOMAIN')
   if (explicitDomain) {
-    const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
+    const protocol = getFUNERALACADEMY_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${path}`
   }
   return path
@@ -366,9 +366,9 @@ export const getAbsoluteUriWithOrg = (orgslug: string, path: string) => {
   }
 
   // Server-side fallback
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('NEXT_PUBLIC_FUNERALACADEMY_DOMAIN')
   if (explicitDomain) {
-    const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
+    const protocol = getFUNERALACADEMY_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${uri}`
   }
   return uri
@@ -381,9 +381,9 @@ export const getUriWithoutOrg = (path: string) => {
   }
 
   // Server-side fallback
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('NEXT_PUBLIC_FUNERALACADEMY_DOMAIN')
   if (explicitDomain) {
-    const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
+    const protocol = getFUNERALACADEMY_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${path}`
   }
   // No explicit domain configured: return relative path to avoid hardcoded 'localhost' URLs
@@ -396,8 +396,8 @@ export const getUriWithoutOrg = (path: string) => {
  * (e.g., Stripe Connect requires exact redirect_uri matching).
  */
 export const getMainDomainUri = (path: string) => {
-  const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
-  const domain = getLEARNHOUSE_DOMAIN()
+  const protocol = getFUNERALACADEMY_HTTP_PROTOCOL()
+  const domain = getFUNERALACADEMY_DOMAIN()
   return `${protocol}${domain}${path}`
 }
 
@@ -431,7 +431,7 @@ export const getCollabUrl = () => getConfig('NEXT_PUBLIC_COLLAB_URL', 'ws://loca
 
 export const getDefaultOrg = () => {
   // 1. Env var (backward compat)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG')
+  const envVal = getConfig('NEXT_PUBLIC_FUNERALACADEMY_DEFAULT_ORG')
   if (envVal) return envVal
   // 2. Client-side: read cookie set by middleware
   const cookieVal = getCookieValue('LH_default_org')

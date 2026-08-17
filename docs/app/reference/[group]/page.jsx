@@ -31,14 +31,14 @@ export default async function GroupPage({ params }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'APIReference',
-    name: `LearnHouse API — ${model.title}`,
+    name: `FuneralAcademy API — ${model.title}`,
     description: model.description,
     url: `https://docs.learnhouse.app/reference/${model.slug}`,
     programmingModel: 'REST',
-    targetPlatform: 'LearnHouse',
+    targetPlatform: 'FuneralAcademy',
     isPartOf: {
       '@type': 'WebSite',
-      name: 'LearnHouse Docs',
+      name: 'FuneralAcademy Docs',
       url: 'https://docs.learnhouse.app',
     },
   }

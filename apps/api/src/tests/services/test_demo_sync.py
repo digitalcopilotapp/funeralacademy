@@ -263,7 +263,7 @@ async def test_enterprise_only_features_follow_the_deployment_not_the_config(db,
 
     The demo config force-enables them, but resolve_feature refuses them
     outright in OSS mode — a platform rule the demo neither can nor should
-    defeat. The suite pins OSS (conftest sets LEARNHOUSE_DISABLE_EE), so this
+    defeat. The suite pins OSS (conftest sets FUNERALACADEMY_DISABLE_EE), so this
     documents where the ceiling actually is: on a SaaS or EE deployment the
     same config makes them available, and on a self-hosted OSS install they
     stay hidden however the demo is configured.

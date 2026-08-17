@@ -10,11 +10,11 @@ import {
 
 // Enterprise Edition deploy templates. These mirror the production-grade
 // partner templates (single / agency) that ship at
-// partners.learnhouse.app/templates, ported to the CLI so the one tool can
+// partners.funeralacademy.app/templates, ported to the CLI so the one tool can
 // deploy both Community and Enterprise editions.
 //
 // The EE stack is six services — db (pgvector), redis, caddy (auto-TLS),
-// api, web, collab — pulling enterprise images from images.learnhouse.app
+// api, web, collab — pulling enterprise images from images.funeralacademy.app
 // (authenticated with the license key). Single vs. agency (multi-tenant)
 // differ only in the domain variable + tenancy env.
 
@@ -78,8 +78,8 @@ export function generateEeDockerCompose(config: SetupConfig): string {
 
   // SQL connection string: external DB reads from .env; in-container builds from db.
   const sqlConn = external
-    ? '${LEARNHOUSE_SQL_CONNECTION_STRING:?LEARNHOUSE_SQL_CONNECTION_STRING is required}'
-    : 'postgresql://${DB_USER:-learnhouse}:${DB_PASSWORD}@db:5432/${DB_NAME:-learnhouse}'
+    ? '${FUNERALACADEMY_SQL_CONNECTION_STRING:?FUNERALACADEMY_SQL_CONNECTION_STRING is required}'
+    : 'postgresql://${DB_USER:-funeralacademy}:${DB_PASSWORD}@db:5432/${DB_NAME:-funeralacademy}'
 
   // db service (omitted when using an external database)
   const dbService = external
@@ -87,15 +87,15 @@ export function generateEeDockerCompose(config: SetupConfig): string {
     : `  db:
     image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_USER: \${DB_USER:-learnhouse}
+      POSTGRES_USER: \${DB_USER:-funeralacademy}
       POSTGRES_PASSWORD: \${DB_PASSWORD:?DB_PASSWORD is required}
-      POSTGRES_DB: \${DB_NAME:-learnhouse}
+      POSTGRES_DB: \${DB_NAME:-funeralacademy}
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./pgvector-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "\${DB_USER:-learnhouse}"]
+      test: ["CMD", "pg_isready", "-U", "\${DB_USER:-funeralacademy}"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -131,38 +131,38 @@ networks:
     enable_ipv6: true` : ''
 
   const tenancyEnv = agency
-    ? `      LEARNHOUSE_TENANCY: multi
-      LEARNHOUSE_DOMAIN: \${AGENCY_DOMAIN}
-      LEARNHOUSE_FRONTEND_DOMAIN: \${AGENCY_DOMAIN}
-      LEARNHOUSE_COOKIE_DOMAIN: .\${AGENCY_DOMAIN}
-      LEARNHOUSE_COOKIE_DOMAIN_ALLOW_BROAD: \${LEARNHOUSE_COOKIE_DOMAIN_ALLOW_BROAD:-false}`
-    : `      LEARNHOUSE_TENANCY: single
-      LEARNHOUSE_DOMAIN: \${DOMAIN}
-      LEARNHOUSE_FRONTEND_DOMAIN: \${DOMAIN}`
+    ? `      FUNERALACADEMY_TENANCY: multi
+      FUNERALACADEMY_DOMAIN: \${AGENCY_DOMAIN}
+      FUNERALACADEMY_FRONTEND_DOMAIN: \${AGENCY_DOMAIN}
+      FUNERALACADEMY_COOKIE_DOMAIN: .\${AGENCY_DOMAIN}
+      FUNERALACADEMY_COOKIE_DOMAIN_ALLOW_BROAD: \${FUNERALACADEMY_COOKIE_DOMAIN_ALLOW_BROAD:-false}`
+    : `      FUNERALACADEMY_TENANCY: single
+      FUNERALACADEMY_DOMAIN: \${DOMAIN}
+      FUNERALACADEMY_FRONTEND_DOMAIN: \${DOMAIN}`
 
   const webEnv = agency
-    ? `      NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL: https://\${AGENCY_DOMAIN}/
-      NEXT_PUBLIC_LEARNHOUSE_API_URL: https://\${AGENCY_DOMAIN}/api/v1/
-      NEXT_PUBLIC_LEARNHOUSE_HTTPS: "true"
-      NEXT_PUBLIC_LEARNHOUSE_DOMAIN: \${AGENCY_DOMAIN}
-      NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN: \${AGENCY_DOMAIN}
-      NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG: "true"`
-    : `      NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL: https://\${DOMAIN}/
-      NEXT_PUBLIC_LEARNHOUSE_API_URL: https://\${DOMAIN}/api/v1/
-      NEXT_PUBLIC_LEARNHOUSE_HTTPS: "true"
-      NEXT_PUBLIC_LEARNHOUSE_DOMAIN: \${DOMAIN}
-      NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN: \${DOMAIN}
-      NEXT_PUBLIC_LEARNHOUSE_MULTI_ORG: "false"
-      NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG: default`
+    ? `      NEXT_PUBLIC_FUNERALACADEMY_BACKEND_URL: https://\${AGENCY_DOMAIN}/
+      NEXT_PUBLIC_FUNERALACADEMY_API_URL: https://\${AGENCY_DOMAIN}/api/v1/
+      NEXT_PUBLIC_FUNERALACADEMY_HTTPS: "true"
+      NEXT_PUBLIC_FUNERALACADEMY_DOMAIN: \${AGENCY_DOMAIN}
+      NEXT_PUBLIC_FUNERALACADEMY_TOP_DOMAIN: \${AGENCY_DOMAIN}
+      NEXT_PUBLIC_FUNERALACADEMY_MULTI_ORG: "true"`
+    : `      NEXT_PUBLIC_FUNERALACADEMY_BACKEND_URL: https://\${DOMAIN}/
+      NEXT_PUBLIC_FUNERALACADEMY_API_URL: https://\${DOMAIN}/api/v1/
+      NEXT_PUBLIC_FUNERALACADEMY_HTTPS: "true"
+      NEXT_PUBLIC_FUNERALACADEMY_DOMAIN: \${DOMAIN}
+      NEXT_PUBLIC_FUNERALACADEMY_TOP_DOMAIN: \${DOMAIN}
+      NEXT_PUBLIC_FUNERALACADEMY_MULTI_ORG: "false"
+      NEXT_PUBLIC_FUNERALACADEMY_DEFAULT_ORG: default`
 
   const adminEmailEnv = agency
-    ? `      LEARNHOUSE_INITIAL_ADMIN_EMAIL: \${LEARNHOUSE_INITIAL_ADMIN_EMAIL:-admin@\${AGENCY_DOMAIN}}`
-    : `      LEARNHOUSE_INITIAL_ADMIN_EMAIL: \${LEARNHOUSE_INITIAL_ADMIN_EMAIL:?LEARNHOUSE_INITIAL_ADMIN_EMAIL is required}`
+    ? `      FUNERALACADEMY_INITIAL_ADMIN_EMAIL: \${FUNERALACADEMY_INITIAL_ADMIN_EMAIL:-admin@\${AGENCY_DOMAIN}}`
+    : `      FUNERALACADEMY_INITIAL_ADMIN_EMAIL: \${FUNERALACADEMY_INITIAL_ADMIN_EMAIL:?FUNERALACADEMY_INITIAL_ADMIN_EMAIL is required}`
 
-  return `name: learnhouse-${id}
+  return `name: funeralacademy-${id}
 
-# LearnHouse Enterprise Edition (${agency ? 'agency / multi-tenant' : 'single-tenant'}).
-# Generated by the LearnHouse CLI. Replace values in .env before booting.
+# FuneralAcademy Enterprise Edition (${agency ? 'agency / multi-tenant' : 'single-tenant'}).
+# Generated by the FuneralAcademy CLI. Replace values in .env before booting.
 # Caddy terminates TLS and routes /api/v1/* + /content/* + /collab/* to the
 # backend; everything else to the Next.js frontend.
 
@@ -206,22 +206,22 @@ ${apiDepends}
       HOSTNAME: 0.0.0.0
 
       # --- License (required for EE features) ---
-      LEARNHOUSE_LICENSE_KEY: \${LEARNHOUSE_LICENSE_KEY:?LEARNHOUSE_LICENSE_KEY is required}
-      LEARNHOUSE_LICENSE_SERVER_URL: \${LEARNHOUSE_LICENSE_SERVER_URL:-${EE_LICENSE_SERVER}}
-      LEARNHOUSE_DATA_DIR: /app/data
+      FUNERALACADEMY_LICENSE_KEY: \${FUNERALACADEMY_LICENSE_KEY:?FUNERALACADEMY_LICENSE_KEY is required}
+      FUNERALACADEMY_LICENSE_SERVER_URL: \${FUNERALACADEMY_LICENSE_SERVER_URL:-${EE_LICENSE_SERVER}}
+      FUNERALACADEMY_DATA_DIR: /app/data
 
       # --- Tenancy ---
 ${tenancyEnv}
 
       # --- Auth + secrets ---
-      LEARNHOUSE_AUTH_JWT_SECRET_KEY: \${LEARNHOUSE_AUTH_JWT_SECRET_KEY:?LEARNHOUSE_AUTH_JWT_SECRET_KEY is required (min 32 chars)}
+      FUNERALACADEMY_AUTH_JWT_SECRET_KEY: \${FUNERALACADEMY_AUTH_JWT_SECRET_KEY:?FUNERALACADEMY_AUTH_JWT_SECRET_KEY is required (min 32 chars)}
       COLLAB_INTERNAL_KEY: \${COLLAB_INTERNAL_KEY:?COLLAB_INTERNAL_KEY is required}
-      LEARNHOUSE_INITIAL_ADMIN_PASSWORD: \${LEARNHOUSE_INITIAL_ADMIN_PASSWORD:?LEARNHOUSE_INITIAL_ADMIN_PASSWORD is required}
+      FUNERALACADEMY_INITIAL_ADMIN_PASSWORD: \${FUNERALACADEMY_INITIAL_ADMIN_PASSWORD:?FUNERALACADEMY_INITIAL_ADMIN_PASSWORD is required}
 ${adminEmailEnv}
 
       # --- Storage ---
-      LEARNHOUSE_SQL_CONNECTION_STRING: ${sqlConn}
-      LEARNHOUSE_REDIS_CONNECTION_STRING: redis://redis:6379/0
+      FUNERALACADEMY_SQL_CONNECTION_STRING: ${sqlConn}
+      FUNERALACADEMY_REDIS_CONNECTION_STRING: redis://redis:6379/0
     volumes:
       - api_data:/app/data
       - api_content:/app/content
@@ -240,8 +240,8 @@ ${webEnv}
     restart: unless-stopped
 ${collabDepends}    environment:
       COLLAB_INTERNAL_KEY: \${COLLAB_INTERNAL_KEY}
-      LEARNHOUSE_AUTH_JWT_SECRET_KEY: \${LEARNHOUSE_AUTH_JWT_SECRET_KEY}
-      LEARNHOUSE_SQL_CONNECTION_STRING: ${sqlConn}
+      FUNERALACADEMY_AUTH_JWT_SECRET_KEY: \${FUNERALACADEMY_AUTH_JWT_SECRET_KEY}
+      FUNERALACADEMY_SQL_CONNECTION_STRING: ${sqlConn}
 
 volumes:
 ${dbVolume}  api_data:
@@ -255,7 +255,7 @@ ${dbVolume}  api_data:
  *  wildcard certs). Used when --dns-provider cloudflare. */
 export function generateCaddyDockerfile(): string {
   return `# Caddy with the Cloudflare DNS plugin (for DNS-01 wildcard certs).
-# Generated by the LearnHouse CLI.
+# Generated by the FuneralAcademy CLI.
 FROM caddy:2-builder AS builder
 RUN xcaddy build --with github.com/caddy-dns/cloudflare
 
@@ -318,7 +318,7 @@ export function generateEeCaddyfile(config: SetupConfig): string {
     : ''
 
   if (!agency) {
-    return `# Caddyfile — single-tenant LearnHouse EE. Generated by the LearnHouse CLI.
+    return `# Caddyfile — single-tenant FuneralAcademy EE. Generated by the FuneralAcademy CLI.
 
 {
 ${localCerts}	email {$ACME_EMAIL}
@@ -330,8 +330,8 @@ ${ROUTES_SINGLE}
 `
   }
 
-  return `# Caddyfile — agency LearnHouse EE with on-demand TLS for custom domains.
-# Generated by the LearnHouse CLI.
+  return `# Caddyfile — agency FuneralAcademy EE with on-demand TLS for custom domains.
+# Generated by the FuneralAcademy CLI.
 
 {
 ${localCerts}	email {$ACME_EMAIL}
@@ -343,13 +343,13 @@ ${localCerts}	email {$ACME_EMAIL}
 	}
 }
 
-(learnhouse_routes) {
+(funeralacademy_routes) {
 ${ROUTES_SINGLE}
 }
 
 # Agency apex + every subdomain (wildcard cert via DNS-01 when configured).
 {$AGENCY_DOMAIN}, *.{$AGENCY_DOMAIN} {${cfTls}
-	import learnhouse_routes
+	import funeralacademy_routes
 }
 
 # Customer custom domains — on-demand TLS gated by the ask endpoint above.
@@ -357,7 +357,7 @@ ${ROUTES_SINGLE}
 	tls {
 		on_demand
 	}
-	import learnhouse_routes
+	import funeralacademy_routes
 }
 `
 }
@@ -371,33 +371,33 @@ export function generateEeEnv(config: SetupConfig, secrets: EeSecrets): string {
 
   const external = isExternalDb(config)
   const lines = [
-    '# LearnHouse Enterprise Edition — generated by the LearnHouse CLI.',
+    '# FuneralAcademy Enterprise Edition — generated by the FuneralAcademy CLI.',
     '# Contains secrets — do not commit.',
     '',
-    `LEARNHOUSE_LICENSE_KEY=${quoteEnvValue(config.licenseKey || '')}`,
+    `FUNERALACADEMY_LICENSE_KEY=${quoteEnvValue(config.licenseKey || '')}`,
     `${domainVar}=${config.domain}`,
     `ACME_EMAIL=${quoteEnvValue(config.acmeEmail || config.sslEmail || '')}`,
     `EE_IMAGE_TAG=${tag}`,
   ]
   if (external) {
     lines.push('', '# External database (e.g. Supabase) — the in-container db is not used.',
-      `LEARNHOUSE_SQL_CONNECTION_STRING=${quoteEnvValue(config.externalDbUrl || '')}`)
+      `FUNERALACADEMY_SQL_CONNECTION_STRING=${quoteEnvValue(config.externalDbUrl || '')}`)
   } else {
-    lines.push('', 'DB_USER=learnhouse', `DB_PASSWORD=${secrets.dbPassword}`, 'DB_NAME=learnhouse')
+    lines.push('', 'DB_USER=funeralacademy', `DB_PASSWORD=${secrets.dbPassword}`, 'DB_NAME=funeralacademy')
   }
   lines.push(
     '',
-    `LEARNHOUSE_AUTH_JWT_SECRET_KEY=${secrets.jwtSecret}`,
+    `FUNERALACADEMY_AUTH_JWT_SECRET_KEY=${secrets.jwtSecret}`,
     `COLLAB_INTERNAL_KEY=${secrets.collabKey}`,
     '',
-    `LEARNHOUSE_INITIAL_ADMIN_EMAIL=${quoteEnvValue(config.adminEmail)}`,
-    `LEARNHOUSE_INITIAL_ADMIN_PASSWORD=${quoteEnvValue(config.adminPassword)}`,
+    `FUNERALACADEMY_INITIAL_ADMIN_EMAIL=${quoteEnvValue(config.adminEmail)}`,
+    `FUNERALACADEMY_INITIAL_ADMIN_PASSWORD=${quoteEnvValue(config.adminPassword)}`,
   )
   if (isCloudflareDns(config)) {
     lines.push('', `CLOUDFLARE_API_TOKEN=${quoteEnvValue(config.cfApiToken || '')}`)
   }
   if (agency) {
-    lines.push('', 'LEARNHOUSE_COOKIE_DOMAIN_ALLOW_BROAD=false')
+    lines.push('', 'FUNERALACADEMY_COOKIE_DOMAIN_ALLOW_BROAD=false')
   }
   return lines.join('\n') + '\n'
 }
@@ -406,7 +406,7 @@ export function generateEeEnv(config: SetupConfig, secrets: EeSecrets): string {
  *  the web/collab server-side fetches to the API (else tenancy falls back to
  *  single/default). Testing only — never production. */
 export function generateEeLocalTlsOverride(): string {
-  return `# Written by the LearnHouse CLI --local-tls.
+  return `# Written by the FuneralAcademy CLI --local-tls.
 # Trusts Caddy's internal (self-signed) CA for web/collab -> API fetches.
 # TESTING ONLY — never use in production.
 services:

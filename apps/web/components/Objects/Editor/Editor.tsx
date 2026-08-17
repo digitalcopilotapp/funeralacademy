@@ -12,7 +12,7 @@ const ToolbarButtons = dynamic(
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { DividerVerticalIcon, SlashIcon } from '@radix-ui/react-icons'
-import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
+import funeralacademyAI_icon from 'public/funeralacademy_ai_simple.png'
 import {
   AIEditorStateTypes,
   useAIEditor,
@@ -464,7 +464,7 @@ function Editor(props: EditorProps) {
             <div className="activity-editor-doc-section">
               <div className="activity-editor-info-wrapper">
                 <Link href="/">
-                  <EditorLearnHouseLogo />
+                  <EditorFuneralAcademyLogo />
                 </Link>
                 <Link target="_blank" href={`/course/${course_uuid}`}>
                   <img
@@ -512,7 +512,7 @@ function Editor(props: EditorProps) {
                         <Image
                           className=""
                           width={20}
-                          src={learnhouseAI_icon}
+                          src={funeralacademyAI_icon}
                           alt=""
                         />
                       </i>{' '}
@@ -527,7 +527,7 @@ function Editor(props: EditorProps) {
                         <Image
                           className="opacity-50 grayscale"
                           width={20}
-                          src={learnhouseAI_icon}
+                          src={funeralacademyAI_icon}
                           alt=""
                         />
                       </i>
@@ -704,7 +704,7 @@ const logoAnimations = [
   },
 ]
 
-const EditorLearnHouseLogo = () => {
+const EditorFuneralAcademyLogo = () => {
   const [animation] = React.useState(
     () => logoAnimations[Math.floor(Math.random() * logoAnimations.length)]
   )
@@ -718,7 +718,7 @@ const EditorLearnHouseLogo = () => {
       >
         <Image
           src="/lrn.svg"
-          alt="LearnHouse"
+          alt="FuneralAcademy"
           width={14}
           height={14}
           className="invert"

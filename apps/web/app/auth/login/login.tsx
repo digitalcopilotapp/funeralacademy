@@ -10,7 +10,7 @@ import { checkSSOEnabled, redirectToSSOLogin } from '@services/auth/sso'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@components/Contexts/AuthContext'
-import { getLEARNHOUSE_TOP_DOMAIN_VAL, getDeploymentMode, isOnCustomDomain } from '@services/config/config'
+import { getFUNERALACADEMY_TOP_DOMAIN_VAL, getDeploymentMode, isOnCustomDomain } from '@services/config/config'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useTranslation } from 'react-i18next'
 import { resendVerificationEmail } from '@services/auth/auth'
@@ -206,7 +206,7 @@ const LoginClient = (props: LoginClientProps) => {
     track(AnalyticsEvent.LoginGoogleClicked)
     // Store org context in cookies before OAuth redirect
     if (props.org?.slug) {
-      const topDomain = getLEARNHOUSE_TOP_DOMAIN_VAL();
+      const topDomain = getFUNERALACADEMY_TOP_DOMAIN_VAL();
       const isSecure = window.location.protocol === 'https:';
       const secureAttr = isSecure ? '; secure' : '';
       const baseAttributes = `; path=/; SameSite=Lax${secureAttr}`;
@@ -439,7 +439,7 @@ const LoginClient = (props: LoginClientProps) => {
     <AuthLayout
       org={props.org}
       welcomeText={t('auth.login_to')}
-      title={t('auth.image_title_login', { defaultValue: 'Welcome back to LearnHouse.' })}
+      title={t('auth.image_title_login', { defaultValue: 'Welcome back to FuneralAcademy.' })}
       subtitle={t('auth.image_subtitle_login', {
         defaultValue: 'Pick up where you left off — your courses, students, and tools are waiting.',
       })}

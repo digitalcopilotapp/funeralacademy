@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-# LearnHouse — Install Script (Windows PowerShell)
+# FuneralAcademy — Install Script (Windows PowerShell)
 # Installs Docker and Node.js if missing, then runs the CLI.
 #
 # Usage:
@@ -14,7 +14,7 @@ function Write-Warn($msg)  { Write-Host "! $msg" -ForegroundColor Yellow }
 function Write-Fail($msg)  { Write-Host "✗ $msg" -ForegroundColor Red; exit 1 }
 
 Write-Host ""
-Write-Host "LearnHouse Installer" -ForegroundColor White -NoNewline
+Write-Host "FuneralAcademy Installer" -ForegroundColor White -NoNewline
 Write-Host ""
 Write-Host "Platform: Windows ($env:PROCESSOR_ARCHITECTURE)" -ForegroundColor DarkGray
 Write-Host ""
@@ -116,12 +116,12 @@ if ($npxCmd) {
 Write-Host ""
 Write-Host "All dependencies installed!" -ForegroundColor Green
 Write-Host ""
-Write-Host "  Run LearnHouse with:" -ForegroundColor DarkGray
-Write-Host "  npx learnhouse@latest" -ForegroundColor Cyan
+Write-Host "  Run FuneralAcademy with:" -ForegroundColor DarkGray
+Write-Host "  npx funeralacademy@latest" -ForegroundColor Cyan
 Write-Host ""
 
 # ── Launch ───────────────────────────────────────────────────
 
-Write-Host "Launching LearnHouse..." -ForegroundColor Cyan
+Write-Host "Launching FuneralAcademy..." -ForegroundColor Cyan
 Write-Host ""
-& npx learnhouse@latest
+& npx funeralacademy@latest

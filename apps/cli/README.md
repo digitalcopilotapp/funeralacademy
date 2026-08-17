@@ -1,8 +1,8 @@
-# LearnHouse CLI
+# FuneralAcademy CLI
 
-The official [LearnHouse](https://learnhouse.app) CLI — deploy, manage, and operate your LearnHouse instance.
+The official [FuneralAcademy](https://funeralacademy.app) CLI — deploy, manage, and operate your FuneralAcademy instance.
 
-[Website](https://learnhouse.app) | [Documentation](https://docs.learnhouse.app) | [GitHub](https://github.com/learnhouse/learnhouse)
+[Website](https://funeralacademy.app) | [Documentation](https://docs.learnhouse.app) | [GitHub](https://github.com/learnhouse/learnhouse)
 
 <img width="915" height="871" alt="image" src="https://github.com/user-attachments/assets/957c6cea-3efb-4cab-a643-55df3ac4c6aa" />
 
@@ -25,13 +25,13 @@ irm https://raw.githubusercontent.com/learnhouse/learnhouse/main/apps/cli/instal
 ### Using npx
 
 ```bash
-npx learnhouse@latest setup
+npx funeralacademy@latest setup
 ```
 
 ### Install a specific version
 
 ```bash
-npx learnhouse@1.0.0 setup
+npx funeralacademy@1.0.0 setup
 ```
 
 ## Requirements
@@ -43,22 +43,22 @@ npx learnhouse@1.0.0 setup
 
 | Command | Description |
 |---------|-------------|
-| `learnhouse setup` | Interactive setup wizard |
-| `learnhouse start` | Start all services |
-| `learnhouse stop` | Stop all services |
-| `learnhouse update` | Update to the latest version |
-| `learnhouse update --version <x.y.z>` | Update to a specific version |
-| `learnhouse logs` | Stream service logs |
-| `learnhouse config` | Show current configuration |
-| `learnhouse status` | Show service status |
-| `learnhouse health` | Run health checks |
-| `learnhouse backup` | Backup database |
-| `learnhouse restore <archive>` | Restore database from a backup |
-| `learnhouse deployments` | View deployments and set resource limits |
-| `learnhouse doctor` | Diagnose common issues |
-| `learnhouse shell` | Open a shell in a running container |
-| `learnhouse env` | Edit environment variables |
-| `learnhouse dev` | Start local development environment |
+| `funeralacademy setup` | Interactive setup wizard |
+| `funeralacademy start` | Start all services |
+| `funeralacademy stop` | Stop all services |
+| `funeralacademy update` | Update to the latest version |
+| `funeralacademy update --version <x.y.z>` | Update to a specific version |
+| `funeralacademy logs` | Stream service logs |
+| `funeralacademy config` | Show current configuration |
+| `funeralacademy status` | Show service status |
+| `funeralacademy health` | Run health checks |
+| `funeralacademy backup` | Backup database |
+| `funeralacademy restore <archive>` | Restore database from a backup |
+| `funeralacademy deployments` | View deployments and set resource limits |
+| `funeralacademy doctor` | Diagnose common issues |
+| `funeralacademy shell` | Open a shell in a running container |
+| `funeralacademy env` | Edit environment variables |
+| `funeralacademy dev` | Start local development environment |
 
 ## Setup
 
@@ -77,13 +77,13 @@ You can go back to any step, and edit from the summary before confirming.
 
 ```bash
 # Back up first
-npx learnhouse backup
+npx funeralacademy backup
 
 # Update to latest
-npx learnhouse update
+npx funeralacademy update
 
 # Or a specific version
-npx learnhouse update --version 1.2.0
+npx funeralacademy update --version 1.2.0
 ```
 
 The update command pulls the new image, restarts services, and asks if you want to run database migrations. Check [docs.learnhouse.app](https://docs.learnhouse.app) for migration guides before proceeding.
@@ -91,10 +91,10 @@ The update command pulls the new image, restarts services, and asks if you want 
 ## Generated Files
 
 ```
-learnhouse/
+funeralacademy/
   docker-compose.yml       # Service definitions
   .env                     # Configuration
-  learnhouse.config.json   # CLI metadata
+  funeralacademy.config.json   # CLI metadata
   extra/
     nginx.prod.conf        # Reverse proxy (or Caddyfile for auto-SSL)
 ```
@@ -105,7 +105,7 @@ All commands support non-interactive usage for CI pipelines:
 
 ```bash
 # Setup without prompts
-npx learnhouse setup --ci \
+npx funeralacademy setup --ci \
   --name production \
   --domain example.com \
   --port 80 \
@@ -113,13 +113,13 @@ npx learnhouse setup --ci \
   --admin-password secretpass123
 
 # Update with auto-migration
-npx learnhouse update --version 1.2.0 --migrate
+npx funeralacademy update --version 1.2.0 --migrate
 
 # Update without migrations
-npx learnhouse update --no-migrate
+npx funeralacademy update --no-migrate
 
 # Setup without starting services
-npx learnhouse setup --ci --admin-password pass123 --no-start
+npx funeralacademy setup --ci --admin-password pass123 --no-start
 ```
 
 ## Testing
@@ -145,7 +145,7 @@ bun run test:all
 - `update --migrate` with pending Alembic migrations
 - `logs` (streams indefinitely)
 - `dev` mode (requires full monorepo source)
-- Multi-installation discovery (`findInstallDir` with multiple `~/.learnhouse/*` entries)
+- Multi-installation discovery (`findInstallDir` with multiple `~/.funeralacademy/*` entries)
 - Error recovery (Docker daemon down, port conflicts, corrupted config)
 
 ## License

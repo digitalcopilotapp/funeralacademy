@@ -24,8 +24,8 @@ RUN uv sync --frozen --no-install-project
 ADD . /app
 
 # Remove Enterprise Edition folder for public builds
-ARG LEARNHOUSE_PUBLIC=false
-RUN if [ "$LEARNHOUSE_PUBLIC" = "true" ]; then rm -rf /app/ee; fi
+ARG FUNERALACADEMY_PUBLIC=false
+RUN if [ "$FUNERALACADEMY_PUBLIC" = "true" ]; then rm -rf /app/ee; fi
 
 # Sync again so the lockfile is verified against the copied project
 RUN uv sync --frozen

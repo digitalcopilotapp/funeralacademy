@@ -45,7 +45,7 @@ class CoursePlanningSessionData(BaseModel):
     """Session data stored in Redis"""
     session_uuid: str
     org_id: int
-    language: str = "en"  # Language code for content generation
+    language: str = "pt"  # Language code for content generation
     planning_iteration_count: int = 0
     max_planning_iterations: int = 10
     activity_iteration_counts: Dict[str, int] = {}  # activity_uuid -> iteration count
@@ -59,7 +59,7 @@ class StartCoursePlanningSession(BaseModel):
     """Request to start a new course planning session"""
     org_id: int
     prompt: str  # Initial course description from user
-    language: str = "en"  # Language code for content generation (e.g., "en", "fr", "de")
+    language: str = "pt"  # Language code for content generation (e.g., "en", "fr", "de")
     attachments: Optional[List[AttachmentData]] = None  # Context files/links
 
 

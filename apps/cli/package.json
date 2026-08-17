@@ -1,10 +1,10 @@
 {
-  "name": "learnhouse",
+  "name": "funeralacademy",
   "version": "1.5.1",
-  "description": "The official LearnHouse CLI — deploy, manage, and operate your LearnHouse instance",
+  "description": "The official FuneralAcademy CLI — deploy, manage, and operate your FuneralAcademy instance",
   "type": "module",
   "bin": {
-    "learnhouse": "./dist/bin/learnhouse.js"
+    "funeralacademy": "./dist/bin/funeralacademy.js"
   },
   "files": [
     "dist"
@@ -26,12 +26,12 @@
     "url": "https://github.com/learnhouse/learnhouse.git",
     "directory": "apps/cli"
   },
-  "homepage": "https://learnhouse.app",
+  "homepage": "https://funeralacademy.app",
   "bugs": {
     "url": "https://github.com/learnhouse/learnhouse/issues"
   },
   "keywords": [
-    "learnhouse",
+    "funeralacademy",
     "lms",
     "self-hosted",
     "cli",
@@ -39,7 +39,7 @@
     "education",
     "learning-management-system"
   ],
-  "author": "LearnHouse",
+  "author": "FuneralAcademy",
   "devDependencies": {
     "@types/node": "^26.0.0",
     "@vitest/coverage-v8": "^4",

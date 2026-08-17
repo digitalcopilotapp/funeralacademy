@@ -2,7 +2,7 @@ import { execSync, spawnSync } from 'node:child_process'
 import os from 'node:os'
 import path from 'node:path'
 
-const CLI_PATH = path.resolve(__dirname, '..', 'dist', 'bin', 'learnhouse.js')
+const CLI_PATH = path.resolve(__dirname, '..', 'dist', 'bin', 'funeralacademy.js')
 
 export interface CliResult {
   stdout: string

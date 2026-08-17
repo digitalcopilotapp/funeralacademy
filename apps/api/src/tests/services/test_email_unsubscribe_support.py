@@ -91,7 +91,7 @@ class TestSendEmailHeaders:
 
         monkeypatch.setattr(email_utils.resend.Emails, "send", staticmethod(fake_send))
         email_utils._send_email_resend(
-            "LearnHouse <no-reply@test>",
+            "FuneralAcademy <no-reply@test>",
             "user@test.com",
             "hi",
             "<p>hi</p>",
@@ -111,7 +111,7 @@ class TestSendEmailHeaders:
 
         monkeypatch.setattr(email_utils.resend.Emails, "send", staticmethod(fake_send))
         email_utils._send_email_resend(
-            "LearnHouse <no-reply@test>", "user@test.com", "hi", "<p>hi</p>", _mailing()
+            "FuneralAcademy <no-reply@test>", "user@test.com", "hi", "<p>hi</p>", _mailing()
         )
         assert "headers" not in captured
 
@@ -138,7 +138,7 @@ class TestSendEmailHeaders:
 
         monkeypatch.setattr(email_utils.smtplib, "SMTP", FakeSMTP)
         email_utils._send_email_smtp(
-            "LearnHouse <no-reply@test>",
+            "FuneralAcademy <no-reply@test>",
             "user@test.com",
             "hi",
             "<p>hi</p>",

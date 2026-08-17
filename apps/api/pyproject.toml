@@ -1,6 +1,6 @@
 [project]
-description = "Learnhouse Backend"
-name = "learnhouse-api"
+description = "Funeralacademy Backend"
+name = "funeralacademy-api"
 version = "1.3.4"
 requires-python = ">=3.14.6,<3.14.7"
 authors = [

@@ -2,14 +2,14 @@ import { Callout } from 'nextra/components'
 
 # Commands
 
-Full reference for all LearnHouse CLI commands.
+Full reference for all FuneralAcademy CLI commands.
 
 ## `setup`
 
 Interactive wizard that generates a complete Docker Compose deployment. See [Setup Wizard](/cli/setup-wizard) for details.
 
 ```bash
-npx learnhouse@latest setup
+npx funeralacademy@latest setup
 ```
 
 | Flag | Description |
@@ -37,7 +37,7 @@ Use `--org-slug` to set a custom URL prefix (e.g. `--org-slug acme` → users br
 Start all Docker containers for your deployment.
 
 ```bash
-npx learnhouse start
+npx funeralacademy start
 ```
 
 ## `stop`
@@ -45,15 +45,15 @@ npx learnhouse start
 Stop all running containers without removing data volumes.
 
 ```bash
-npx learnhouse stop
+npx funeralacademy stop
 ```
 
 ## `status`
 
-Show the live status of each LearnHouse container.
+Show the live status of each FuneralAcademy container.
 
 ```bash
-npx learnhouse status
+npx funeralacademy status
 ```
 
 Displays each service name, container state, health check result, and restart count.
@@ -63,7 +63,7 @@ Displays each service name, container state, health check result, and restart co
 Run health checks against the running deployment and report the results.
 
 ```bash
-npx learnhouse health
+npx funeralacademy health
 ```
 
 Checks:
@@ -79,7 +79,7 @@ Checks:
 Stream logs from all containers in real-time.
 
 ```bash
-npx learnhouse logs
+npx funeralacademy logs
 ```
 
 ## `config`
@@ -87,21 +87,21 @@ npx learnhouse logs
 Display current installation metadata — version, directory, URL, organization slug, and file locations.
 
 ```bash
-npx learnhouse config
+npx funeralacademy config
 ```
 
 ## `update`
 
-Update LearnHouse to the latest release or a specific version. See [Updates](/self-hosting/maintenance/updates) for details.
+Update FuneralAcademy to the latest release or a specific version. See [Updates](/self-hosting/maintenance/updates) for details.
 
 ```bash
 # Update to latest
-npx learnhouse update
+npx funeralacademy update
 
 # Update to a specific version
-npx learnhouse update --to 1.4.2
+npx funeralacademy update --to 1.4.2
 # or using the short form:
-npx learnhouse update -v 1.4.2
+npx funeralacademy update -v 1.4.2
 ```
 
 | Flag | Description |
@@ -123,7 +123,7 @@ npx learnhouse update -v 1.4.2
 8. Runs `alembic upgrade head` (unless `--no-migrate`)
 
 <Callout type="warning">
-If the migration step fails, the CLI prints the rollback command and exits with a non-zero code. Your pre-upgrade backup is in `{installDir}/backups/`. To roll back: restore the backup, revert the image tag in `docker-compose.yml`, and run `npx learnhouse start`.
+If the migration step fails, the CLI prints the rollback command and exits with a non-zero code. Your pre-upgrade backup is in `{installDir}/backups/`. To roll back: restore the backup, revert the image tag in `docker-compose.yml`, and run `npx funeralacademy start`.
 </Callout>
 
 ## `backup`
@@ -131,10 +131,10 @@ If the migration step fails, the CLI prints the rollback command and exits with 
 Create a database backup as a `.tar.gz` archive containing a `pg_dump` and optionally your `.env` file.
 
 ```bash
-npx learnhouse backup
+npx funeralacademy backup
 ```
 
-Backups are saved to `{installDir}/backups/learnhouse-backup-{timestamp}.tar.gz`.
+Backups are saved to `{installDir}/backups/funeralacademy-backup-{timestamp}.tar.gz`.
 
 The backup prompt lets you choose between creating a new backup or restoring from an existing one. Pass `--restore` to skip the prompt.
 
@@ -143,17 +143,17 @@ The backup prompt lets you choose between creating a new backup or restoring fro
 Restore a database from a backup archive. This overwrites the current database.
 
 ```bash
-npx learnhouse restore <archive.tar.gz>
+npx funeralacademy restore <archive.tar.gz>
 ```
 
 Alternatively:
 
 ```bash
-npx learnhouse backup --restore <archive.tar.gz>
+npx funeralacademy backup --restore <archive.tar.gz>
 ```
 
 <Callout type="warning">
-Restore only works with local (Docker) databases, not external Postgres connections. Restart services after restoring: `npx learnhouse stop && npx learnhouse start`.
+Restore only works with local (Docker) databases, not external Postgres connections. Restart services after restoring: `npx funeralacademy stop && npx funeralacademy start`.
 </Callout>
 
 The dump uses `--clean --if-exists` so it can be replayed into an existing database without errors (tables are dropped and recreated). If the `.env` file was included in the backup, you will be prompted whether to restore it.
@@ -163,7 +163,7 @@ The dump uses `--clean --if-exists` so it can be replayed into an existing datab
 Run comprehensive diagnostics to identify issues.
 
 ```bash
-npx learnhouse doctor
+npx funeralacademy doctor
 ```
 
 Checks:
@@ -183,12 +183,12 @@ Checks:
 View and manage deployments on the current machine.
 
 ```bash
-npx learnhouse deployments
+npx funeralacademy deployments
 ```
 
 Features:
-- List all LearnHouse deployments with container status
-- Scale memory limits for `learnhouse-app`, `db`, and `redis`
+- List all FuneralAcademy deployments with container status
+- Scale memory limits for `funeralacademy-app`, `db`, and `redis`
 - View current resource usage via `docker stats`
 
 ## `env`
@@ -204,7 +204,7 @@ Interactive environment variable editor. Edit variables by category:
 - OAuth
 
 ```bash
-npx learnhouse env
+npx funeralacademy env
 ```
 
 Secret values are masked in the display. Optionally restart services after changes.
@@ -214,7 +214,7 @@ Secret values are masked in the display. Optionally restart services after chang
 Open an interactive shell (`/bin/sh`) inside a running container.
 
 ```bash
-npx learnhouse shell
+npx funeralacademy shell
 ```
 
 Displays a list of running containers to choose from.
@@ -224,7 +224,7 @@ Displays a list of running containers to choose from.
 Start a local development environment. See [Dev Mode](/cli/dev-mode) for details.
 
 ```bash
-npx learnhouse dev
+npx funeralacademy dev
 ```
 
 | Flag | Description |
@@ -237,31 +237,31 @@ npx learnhouse dev
 
 ### Containers restart in a loop
 
-Run `npx learnhouse doctor` — it scans logs and surfaces the root cause. Common causes:
+Run `npx funeralacademy doctor` — it scans logs and surfaces the root cause. Common causes:
 - Missing required env var in `.env`
 - Port conflict (another process is using port 80 or 5432)
 - Postgres volume corruption (restore from backup)
 
 ### `update` migration fails
 
-If `npx learnhouse update` reports a migration failure:
+If `npx funeralacademy update` reports a migration failure:
 
 ```bash
 # 1. Restore your pre-upgrade backup
-npx learnhouse restore backups/db-pre-upgrade-*.sql.gz
+npx funeralacademy restore backups/db-pre-upgrade-*.sql.gz
 
 # 2. Revert the image tag in docker-compose.yml to the previous version
 # (open the file and change image: ghcr.io/learnhouse/app:<new> back to <old>)
 
 # 3. Restart on the old image
-npx learnhouse start
+npx funeralacademy start
 ```
 
-Then check the [LearnHouse releases page](https://github.com/learnhouse/learnhouse/releases) and the [GitHub issues](https://github.com/learnhouse/learnhouse/issues) for your version before retrying.
+Then check the [FuneralAcademy releases page](https://github.com/learnhouse/learnhouse/releases) and the [GitHub issues](https://github.com/learnhouse/learnhouse/issues) for your version before retrying.
 
 ### Database unreachable after update
 
-The `learnhouse-db` container may need a moment after startup. Wait 20-30 seconds and run `npx learnhouse health`. If health checks keep failing, run `npx learnhouse logs` to see the Postgres logs.
+The `funeralacademy-db` container may need a moment after startup. Wait 20-30 seconds and run `npx funeralacademy health`. If health checks keep failing, run `npx funeralacademy logs` to see the Postgres logs.
 
 ### `restore` errors: "relation already exists"
 
@@ -269,6 +269,6 @@ The restore command uses `pg_dump --clean --if-exists`, which drops existing tab
 
 ```bash
 # Drop and recreate the database, then restore
-docker compose exec db psql -U learnhouse -c "DROP DATABASE learnhouse; CREATE DATABASE learnhouse;"
-npx learnhouse restore <backup.tar.gz>
+docker compose exec db psql -U funeralacademy -c "DROP DATABASE funeralacademy; CREATE DATABASE funeralacademy;"
+npx funeralacademy restore <backup.tar.gz>
 ```

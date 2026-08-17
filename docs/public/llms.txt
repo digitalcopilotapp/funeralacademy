@@ -1,8 +1,8 @@
-# LearnHouse Documentation
+# FuneralAcademy Documentation
 
-> Official documentation for LearnHouse, the open-source learning management system (LMS).
+> Official documentation for FuneralAcademy, the open-source learning management system (LMS).
 
-LearnHouse is an open-source platform for creating and delivering modern educational content. It features a Notion-like WYSIWYG editor, built-in AI assistants, multi-organizational support, real-time collaboration, progress tracking, and can be self-hosted or used via LearnHouse Cloud.
+FuneralAcademy is an open-source platform for creating and delivering modern educational content. It features a Notion-like WYSIWYG editor, built-in AI assistants, multi-organizational support, real-time collaboration, progress tracking, and can be self-hosted or used via FuneralAcademy Cloud.
 
 ## Docs
 
@@ -11,7 +11,7 @@ LearnHouse is an open-source platform for creating and delivering modern educati
   - [Key Concepts](https://docs.learnhouse.app/getting-started/key-concepts): Organizations, courses, chapters, activities, and trails
   - [Cloud vs Self Hosting](https://docs.learnhouse.app/getting-started/cloud-vs-self-hosting): Choose the right deployment model
 
-- [Platform](https://docs.learnhouse.app/platform): Complete guide to LearnHouse features
+- [Platform](https://docs.learnhouse.app/platform): Complete guide to FuneralAcademy features
   - [Courses](https://docs.learnhouse.app/platform/courses): Creating and managing courses
     - [Chapters & Activities](https://docs.learnhouse.app/platform/courses/chapters-and-activities): Structuring course content
     - [Collections](https://docs.learnhouse.app/platform/courses/collections): Grouping courses together
@@ -40,7 +40,7 @@ LearnHouse is an open-source platform for creating and delivering modern educati
   - [Code Execution](https://docs.learnhouse.app/platform/code-execution): Sandboxed code execution
 
 - [Self Hosting](https://docs.learnhouse.app/self-hosting): Deploy on your own infrastructure
-  - [Installation](https://docs.learnhouse.app/self-hosting/installation): Install via the LearnHouse CLI
+  - [Installation](https://docs.learnhouse.app/self-hosting/installation): Install via the FuneralAcademy CLI
     - [Requirements](https://docs.learnhouse.app/self-hosting/installation/requirements): System requirements
     - [Quick Install](https://docs.learnhouse.app/self-hosting/installation/quick-install): Step-by-step install guide
     - [CLI Reference](https://docs.learnhouse.app/self-hosting/installation/cli-reference): All CLI commands
@@ -52,7 +52,7 @@ LearnHouse is an open-source platform for creating and delivering modern educati
     - [Storage](https://docs.learnhouse.app/self-hosting/configuration/storage): S3 and filesystem storage
   - [Maintenance](https://docs.learnhouse.app/self-hosting/maintenance): Keep your instance healthy
     - [Backups](https://docs.learnhouse.app/self-hosting/maintenance/backups): Database backups
-    - [Updates](https://docs.learnhouse.app/self-hosting/maintenance/updates): Updating LearnHouse
+    - [Updates](https://docs.learnhouse.app/self-hosting/maintenance/updates): Updating FuneralAcademy
     - [Monitoring](https://docs.learnhouse.app/self-hosting/maintenance/monitoring): Health checks and monitoring
     - [Troubleshooting](https://docs.learnhouse.app/self-hosting/maintenance/troubleshooting): Common issues
 

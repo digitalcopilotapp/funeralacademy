@@ -45,12 +45,12 @@ function buildInfoBox(): string[] {
 
   return [
     top,
-    boxLine(pc.bold(pc.white('LearnHouse')) + pc.dim(` // v${VERSION}`)),
+    boxLine(pc.bold(pc.white('FuneralAcademy')) + pc.dim(` // v${VERSION}`)),
     boxLine(sep),
-    boxLine(pc.white('Deploy LearnHouse with a single command.')),
+    boxLine(pc.white('Deploy FuneralAcademy with a single command.')),
     boxLine(pc.white('Handles configuration, Docker, SSL, DB.')),
     empty,
-    boxLine(pc.white('> ') + pc.dim('npx learnhouse@latest')),
+    boxLine(pc.white('> ') + pc.dim('npx funeralacademy@latest')),
     bot,
   ]
 }

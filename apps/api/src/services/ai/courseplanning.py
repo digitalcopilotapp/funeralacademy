@@ -5,7 +5,7 @@ import redis
 import json
 import base64
 
-from config.config import get_learnhouse_config
+from config.config import get_funeralacademy_config
 from src.services.ai.llm import generate_stream, attachments_to_parts, model_for_tier
 from src.services.ai.schemas.courseplanning import (
     CoursePlan,
@@ -16,7 +16,7 @@ from src.services.ai.schemas.courseplanning import (
 
 logger = logging.getLogger(__name__)
 
-LH_CONFIG = get_learnhouse_config()
+LH_CONFIG = get_funeralacademy_config()
 
 # Redis key pattern for course planning sessions
 COURSE_PLANNING_SESSION_KEY = "course_planning_session:{session_uuid}"
@@ -62,7 +62,7 @@ def get_course_planning_session(session_uuid: str) -> Optional[CoursePlanningSes
     return None
 
 
-def create_course_planning_session(org_id: int, language: str = "en") -> CoursePlanningSessionData:
+def create_course_planning_session(org_id: int, language: str = "pt") -> CoursePlanningSessionData:
     """Create a new course planning session"""
     session_uuid = f"cp_{uuid4()}"
 
@@ -189,7 +189,7 @@ def get_language_name(language_code: str) -> str:
     return language_names.get(language_code, "English")
 
 
-def build_course_planning_system_prompt(language: str = "en") -> str:
+def build_course_planning_system_prompt(language: str = "pt") -> str:
     """Build the system prompt for course plan generation"""
     language_name = get_language_name(language)
     return f"""You are an expert instructional designer and course creator. Your task is to help users create comprehensive, well-structured course plans.
@@ -214,7 +214,7 @@ IMPORTANT GUIDELINES:
 - Activity names should be descriptive (e.g., "Introduction to Variables", "Quiz: Testing Your Knowledge")
 
 ACTIVITY TYPES AND SUGGESTED BLOCKS:
-Activities in LearnHouse use a rich content editor with various block types. For each activity, suggest appropriate blocks:
+Activities in FuneralAcademy use a rich content editor with various block types. For each activity, suggest appropriate blocks:
 - paragraph: Regular text content
 - heading: Section headers (levels 1-3)
 - bulletList: Unordered lists
@@ -266,7 +266,7 @@ def build_activity_content_system_prompt(
     chapter_name: str,
     activity_name: str,
     activity_description: str,
-    language: str = "en"
+    language: str = "pt"
 ) -> str:
     """Build the system prompt for activity content generation"""
     language_name = get_language_name(language)

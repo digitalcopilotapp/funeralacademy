@@ -7,7 +7,7 @@ VERSION="${1:-}"
 
 if [ -z "$VERSION" ]; then
   echo ""
-  echo "  📦 LearnHouse Release Script"
+  echo "  📦 FuneralAcademy Release Script"
   echo ""
   echo "  Usage: .github/utils/release.sh <version>"
   echo "  Example: .github/utils/release.sh 1.0.0"
@@ -33,7 +33,7 @@ VERSION_FILES=(
 )
 
 echo ""
-echo "  🚀 LearnHouse Release — ${TAG}"
+echo "  🚀 FuneralAcademy Release — ${TAG}"
 echo "  ─────────────────────────────"
 echo ""
 
@@ -287,17 +287,17 @@ CHANGELOG_FILE=$(mktemp)
   echo "**New installation:**"
   echo ""
   echo "\`\`\`bash"
-  echo "npx learnhouse setup"
+  echo "npx funeralacademy setup"
   echo "\`\`\`"
   echo ""
   echo "**Upgrade to this version:**"
   echo ""
   echo "\`\`\`bash"
   echo "# Back up your database first"
-  echo "npx learnhouse backup"
+  echo "npx funeralacademy backup"
   echo ""
   echo "# Update to this specific version"
-  echo "npx learnhouse update --version ${VERSION}"
+  echo "npx funeralacademy update --version ${VERSION}"
   echo "\`\`\`"
   echo ""
   echo "**Docker image:**"

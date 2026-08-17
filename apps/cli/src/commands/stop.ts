@@ -7,14 +7,14 @@ export async function stopCommand() {
   const dir = findInstallDir()
   const config = readConfig(dir)
   if (!config) {
-    p.log.error('No LearnHouse installation found. Run `npx learnhouse setup` first.')
+    p.log.error('No FuneralAcademy installation found. Run `npx funeralacademy setup` first.')
     process.exit(1)
   }
 
-  p.intro(pc.cyan('Stopping LearnHouse'))
+  p.intro(pc.cyan('Stopping FuneralAcademy'))
   try {
     dockerComposeDown(config.installDir)
-    p.log.success('LearnHouse stopped.')
+    p.log.success('FuneralAcademy stopped.')
   } catch {
     p.log.error('Failed to stop services. Check Docker output above.')
     process.exit(1)

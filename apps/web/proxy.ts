@@ -9,7 +9,7 @@ import { isLocalhost as isLocalhostCheck } from './services/utils/ts/hostUtils'
 //
 // Three runtime behaviors selected by `instance.tenancy`:
 //
-//   1. multi (EE-only):   slug.{LEARNHOUSE_DOMAIN} subdomain detection +
+//   1. multi (EE-only):   slug.{FUNERALACADEMY_DOMAIN} subdomain detection +
 //                         per-org custom domains. The detection logic lives in
 //                         `./ee/services/tenancy/...` and is dynamic-imported
 //                         here — OSS proxy.ts never references subdomain or
@@ -272,7 +272,7 @@ export default async function proxy(req: NextRequest) {
   // -------------------------------------------------------------------------
   // 1b. Legacy /dashboard/* → hub redirects
   //
-  //    The old platform (learnhouse.app) used /dashboard/{slug}/plan, /dashboard/
+  //    The old platform (funeralacademy.app) used /dashboard/{slug}/plan, /dashboard/
   //    new, /dashboard/account, etc. Those paths do NOT exist on .io and would
   //    404. Old bookmarks, emails, and — critically — URLs Stripe has already
   //    stored on live checkout sessions can still point here, so permanently map
@@ -515,10 +515,10 @@ export default async function proxy(req: NextRequest) {
   // -------------------------------------------------------------------------
   // 10. Apex root (multi tenancy only) — login-first, then org picker.
   //
-  //     The bare apex (learnhouse.io) is NOT org-scoped. An unauthenticated
+  //     The bare apex (funeralacademy.io) is NOT org-scoped. An unauthenticated
   //     visitor lands on the login page; once signed in they get the /home org
   //     picker and choose an org — which lives on its own subdomain
-  //     ({slug}.learnhouse.io) or custom domain. Org content is ONLY served on
+  //     ({slug}.funeralacademy.io) or custom domain. Org content is ONLY served on
   //     a subdomain/custom domain, never at the apex. Mirrors the platform's
   //     "log in, then choose an org" flow. We branch on the non-httpOnly
   //     LH_session marker cookie (best-effort; the page itself re-verifies).

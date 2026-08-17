@@ -1,15 +1,15 @@
 <p align="center">
   <a href="https://docs.learnhouse.app">
-    <img alt="LearnHouse" src=".github/images/learnhouse-github.png" width="600" />
+    <img alt="FuneralAcademy" src=".github/images/funeralacademy-github.png" width="600" />
   </a>
 </p>
 
 <p align="center">
-  <strong>LearnHouse Documentation</strong>
+  <strong>FuneralAcademy Documentation</strong>
 </p>
 
 <p align="center">
-  Official documentation for <a href="https://learnhouse.app">LearnHouse</a>, the open-source learning management system.
+  Official documentation for <a href="https://funeralacademy.app">FuneralAcademy</a>, the open-source learning management system.
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@
 
 ## Local Development
 
-This site lives in the [`learnhouse/learnhouse`](https://github.com/learnhouse/learnhouse)
+This site lives in the [`funeralacademy/funeralacademy`](https://github.com/learnhouse/learnhouse)
 monorepo under `docs/`. Run all commands from that directory.
 
 **Prerequisites:** [Bun](https://bun.sh) installed.
@@ -28,7 +28,7 @@ monorepo under `docs/`. Run all commands from that directory.
 ```bash
 # Clone the monorepo and move into the docs app
 git clone https://github.com/learnhouse/learnhouse.git
-cd learnhouse/docs
+cd funeralacademy/docs
 
 # Install dependencies
 bun install

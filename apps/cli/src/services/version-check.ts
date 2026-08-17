@@ -1,7 +1,7 @@
 import pc from 'picocolors'
 import { VERSION, DEV_IMAGE } from '../constants.js'
 
-const NPM_REGISTRY_URL = 'https://registry.npmjs.org/learnhouse'
+const NPM_REGISTRY_URL = 'https://registry.npmjs.org/funeralacademy'
 const GHCR_BASE = 'ghcr.io/learnhouse/app'
 
 function compareVersions(a: string, b: string): number {
@@ -32,7 +32,7 @@ export async function checkForUpdates(): Promise<void> {
     if (compareVersions(latest, VERSION) > 0) {
       console.log()
       console.log(pc.yellow(`  Update available: ${VERSION} → ${pc.bold(latest)}`))
-      console.log(pc.dim(`  Run: npx learnhouse@latest`))
+      console.log(pc.dim(`  Run: npx funeralacademy@latest`))
       console.log()
     }
   } catch {
@@ -41,7 +41,7 @@ export async function checkForUpdates(): Promise<void> {
 }
 
 /**
- * Resolve the Docker image tag for the LearnHouse app.
+ * Resolve the Docker image tag for the FuneralAcademy app.
  *
  * - channel 'dev'    → always returns ghcr.io/learnhouse/app:dev
  * - channel 'stable' → fetches the latest app release tag from GitHub, falls back to :latest
@@ -56,7 +56,7 @@ export async function resolveAppImage(
   try {
     // Get the latest app release tag from GitHub (excludes cli-* tags)
     const releasesResp = await fetch(
-      'https://api.github.com/repos/learnhouse/learnhouse/releases',
+      'https://api.github.com/repos/funeralacademy/funeralacademy/releases',
       {
         signal: AbortSignal.timeout(5000),
         headers: { Accept: 'application/vnd.github+json' },
@@ -74,14 +74,14 @@ export async function resolveAppImage(
 
     // Verify the Docker image exists for this version
     const tokenResp = await fetch(
-      'https://ghcr.io/token?scope=repository:learnhouse/app:pull',
+      'https://ghcr.io/token?scope=repository:funeralacademy/app:pull',
       { signal: AbortSignal.timeout(5000) },
     )
     if (!tokenResp.ok) throw new Error('GHCR token failed')
     const { token } = await tokenResp.json() as { token: string }
 
     const manifestResp = await fetch(
-      `https://ghcr.io/v2/learnhouse/app/manifests/${appVersion}`,
+      `https://ghcr.io/v2/funeralacademy/app/manifests/${appVersion}`,
       {
         signal: AbortSignal.timeout(5000),
         headers: {

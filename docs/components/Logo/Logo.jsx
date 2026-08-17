@@ -1,8 +1,8 @@
 function Logo() {
   return (
     <img
-      src="/img/logos/learnhouse-dark.svg"
-      alt="LearnHouse"
+      src="/img/logos/funeralacademy-dark.svg"
+      alt="FuneralAcademy"
       style={{ height: 20, width: 'auto' }}
     />
   )

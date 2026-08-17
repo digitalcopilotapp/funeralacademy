@@ -21,35 +21,35 @@ SECRETS_FILE="../../.demo-secrets"
 if [ ! -f "$SECRETS_FILE" ]; then
   echo "Generating local demo secrets in $(cd .. && pwd)/../.demo-secrets"
   {
-    echo "LEARNHOUSE_AUTH_JWT_SECRET_KEY=$(python3 -c 'import secrets;print(secrets.token_urlsafe(32))')"
+    echo "FUNERALACADEMY_AUTH_JWT_SECRET_KEY=$(python3 -c 'import secrets;print(secrets.token_urlsafe(32))')"
     echo "COLLAB_INTERNAL_KEY=$(python3 -c 'import secrets;print(secrets.token_urlsafe(32))')"
-    echo "LEARNHOUSE_INITIAL_ADMIN_PASSWORD=$(python3 -c 'import secrets;print(secrets.token_urlsafe(12))')"
+    echo "FUNERALACADEMY_INITIAL_ADMIN_PASSWORD=$(python3 -c 'import secrets;print(secrets.token_urlsafe(12))')"
   } > "$SECRETS_FILE"
   chmod 600 "$SECRETS_FILE"
-  echo "Admin password: $(grep LEARNHOUSE_INITIAL_ADMIN_PASSWORD "$SECRETS_FILE" | cut -d= -f2)"
+  echo "Admin password: $(grep FUNERALACADEMY_INITIAL_ADMIN_PASSWORD "$SECRETS_FILE" | cut -d= -f2)"
 fi
 set -a
 # shellcheck disable=SC1090
 . "$SECRETS_FILE"
 set +a
 
-export LEARNHOUSE_SQL_CONNECTION_STRING="postgresql+asyncpg://learnhouse:learnhouse@localhost:5432/learnhouse"
-export LEARNHOUSE_REDIS_CONNECTION_STRING="redis://localhost:6379/0"
-export LEARNHOUSE_DEVELOPMENT_MODE=true
+export FUNERALACADEMY_SQL_CONNECTION_STRING="postgresql+asyncpg://funeralacademy:funeralacademy@localhost:5432/funeralacademy"
+export FUNERALACADEMY_REDIS_CONNECTION_STRING="redis://localhost:6379/0"
+export FUNERALACADEMY_DEVELOPMENT_MODE=true
 
-export LEARNHOUSE_TENANCY=multi
-export LEARNHOUSE_DOMAIN="lvh.me:3010"
-export LEARNHOUSE_FRONTEND_DOMAIN="lvh.me:3010"
-export LEARNHOUSE_COOKIE_DOMAIN=".lvh.me"
+export FUNERALACADEMY_TENANCY=multi
+export FUNERALACADEMY_DOMAIN="lvh.me:3010"
+export FUNERALACADEMY_FRONTEND_DOMAIN="lvh.me:3010"
+export FUNERALACADEMY_COOKIE_DOMAIN=".lvh.me"
 # Multi tenancy is gated on "Enterprise Edition available OR SaaS mode", and
 # the demo needs nothing from the Enterprise Edition, so SaaS is the simpler
 # switch to flip for a local run.
-export LEARNHOUSE_SAAS=true
+export FUNERALACADEMY_SAAS=true
 
-export LEARNHOUSE_DEMO_ENABLED=1
-export LEARNHOUSE_DEMO_SLUG=demo
-export LEARNHOUSE_DEMO_REFRESH_MINUTES=10
+export FUNERALACADEMY_DEMO_ENABLED=1
+export FUNERALACADEMY_DEMO_SLUG=demo
+export FUNERALACADEMY_DEMO_REFRESH_MINUTES=10
 
-export LEARNHOUSE_INITIAL_ADMIN_EMAIL=admin@school.dev
+export FUNERALACADEMY_INITIAL_ADMIN_EMAIL=admin@school.dev
 
 exec uv run uvicorn app:app --host 0.0.0.0 --port 1348 --log-level info

@@ -24,7 +24,7 @@ import { replaceComposeImageTag } from '../src/services/compose-utils.js'
 import type { SetupConfig } from '../src/types.js'
 import type { EditionLayout } from '../src/commands/update-ee.js'
 
-const COMMUNITY_LAYOUT: EditionLayout = { appService: 'learnhouse-app', alembicCwd: '/app/api', dbService: 'db' }
+const COMMUNITY_LAYOUT: EditionLayout = { appService: 'funeralacademy-app', alembicCwd: '/app/api', dbService: 'db' }
 
 const baseConfig: SetupConfig = {
   deploymentId: 'test1234',
@@ -54,27 +54,27 @@ describe('generateDockerCompose', () => {
   it('generates valid YAML with correct image', () => {
     const yml = generateDockerCompose(baseConfig, 'ghcr.io/learnhouse/app:1.0.0')
     expect(yml).toContain('image: ghcr.io/learnhouse/app:1.0.0')
-    expect(yml).toContain('container_name: learnhouse-app-test1234')
-    expect(yml).toContain('learnhouse-network-test1234')
+    expect(yml).toContain('container_name: funeralacademy-app-test1234')
+    expect(yml).toContain('funeralacademy-network-test1234')
   })
 
   it('includes local db and redis by default', () => {
     const yml = generateDockerCompose(baseConfig)
-    expect(yml).toContain('learnhouse-db-test1234')
-    expect(yml).toContain('learnhouse-redis-test1234')
+    expect(yml).toContain('funeralacademy-db-test1234')
+    expect(yml).toContain('funeralacademy-redis-test1234')
     expect(yml).toContain('pgvector')
   })
 
   it('excludes db when useExternalDb is true', () => {
     const yml = generateDockerCompose({ ...baseConfig, useExternalDb: true })
-    expect(yml).not.toContain('learnhouse-db-test1234')
-    expect(yml).toContain('learnhouse-redis-test1234')
+    expect(yml).not.toContain('funeralacademy-db-test1234')
+    expect(yml).toContain('funeralacademy-redis-test1234')
   })
 
   it('excludes redis when useExternalRedis is true', () => {
     const yml = generateDockerCompose({ ...baseConfig, useExternalRedis: true })
-    expect(yml).toContain('learnhouse-db-test1234')
-    expect(yml).not.toContain('learnhouse-redis-test1234')
+    expect(yml).toContain('funeralacademy-db-test1234')
+    expect(yml).not.toContain('funeralacademy-redis-test1234')
   })
 
   it('enables IPv6 on the network when dockerIpv6 is set (e.g. IPv6-only external DB)', () => {
@@ -89,8 +89,8 @@ describe('generateDockerCompose', () => {
 
   it('uses caddy instead of nginx when autoSsl is true', () => {
     const yml = generateDockerCompose({ ...baseConfig, autoSsl: true })
-    expect(yml).toContain('learnhouse-caddy-test1234')
-    expect(yml).not.toContain('learnhouse-nginx')
+    expect(yml).toContain('funeralacademy-caddy-test1234')
+    expect(yml).not.toContain('funeralacademy-nginx')
   })
 
   it('uses nginx when autoSsl is false', () => {
@@ -106,26 +106,26 @@ describe('generateDockerCompose', () => {
 
   it('mounts a content volume on filesystem delivery', () => {
     const yml = generateDockerCompose(baseConfig)
-    expect(yml).toContain('learnhouse_content_test1234:/app/api/content')
-    expect(yml).toContain('  learnhouse_content_test1234:')
+    expect(yml).toContain('funeralacademy_content_test1234:/app/api/content')
+    expect(yml).toContain('  funeralacademy_content_test1234:')
   })
 
   it('skips the content volume when s3 is enabled', () => {
     const yml = generateDockerCompose({ ...baseConfig, s3Enabled: true })
     expect(yml).not.toContain('/app/api/content')
-    expect(yml).not.toContain('learnhouse_content_test1234')
+    expect(yml).not.toContain('funeralacademy_content_test1234')
   })
 })
 
 // ─── Content volume migration — compose patcher ──────────────
 
 describe('patchComposeAddContentVolume', () => {
-  const legacyCompose = `name: learnhouse-abc123
+  const legacyCompose = `name: funeralacademy-abc123
 
 services:
-  learnhouse-app:
+  funeralacademy-app:
     image: ghcr.io/learnhouse/app:1.2.1
-    container_name: learnhouse-app-abc123
+    container_name: funeralacademy-app-abc123
     restart: unless-stopped
     env_file:
       - .env
@@ -135,53 +135,53 @@ services:
       db:
         condition: service_healthy
     networks:
-      - learnhouse-network-abc123
+      - funeralacademy-network-abc123
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/api/v1/health"]
 
   db:
     image: pgvector/pgvector:pg16
-    container_name: learnhouse-db-abc123
+    container_name: funeralacademy-db-abc123
     volumes:
-      - learnhouse_db_data_abc123:/var/lib/postgresql/data
+      - funeralacademy_db_data_abc123:/var/lib/postgresql/data
     networks:
-      - learnhouse-network-abc123
+      - funeralacademy-network-abc123
 
 volumes:
-  learnhouse_db_data_abc123:
+  funeralacademy_db_data_abc123:
 `
 
-  it('injects mount on learnhouse-app and appends named volume', () => {
+  it('injects mount on funeralacademy-app and appends named volume', () => {
     const out = patchComposeAddContentVolume(legacyCompose, 'abc123')
-    expect(out).toContain('- learnhouse_content_abc123:/app/api/content')
-    expect(out).toContain('  learnhouse_content_abc123:')
+    expect(out).toContain('- funeralacademy_content_abc123:/app/api/content')
+    expect(out).toContain('  funeralacademy_content_abc123:')
 
-    const appBlock = out.slice(out.indexOf('learnhouse-app:'), out.indexOf('\n  db:'))
+    const appBlock = out.slice(out.indexOf('funeralacademy-app:'), out.indexOf('\n  db:'))
     expect(appBlock).toContain('/app/api/content')
 
     const volumesSection = out.slice(out.lastIndexOf('volumes:'))
-    expect(volumesSection).toContain('learnhouse_db_data_abc123:')
-    expect(volumesSection).toContain('learnhouse_content_abc123:')
+    expect(volumesSection).toContain('funeralacademy_db_data_abc123:')
+    expect(volumesSection).toContain('funeralacademy_content_abc123:')
   })
 
   it('is idempotent', () => {
     const once = patchComposeAddContentVolume(legacyCompose, 'abc123')
     const twice = patchComposeAddContentVolume(once, 'abc123')
-    const mountCount = (twice.match(/learnhouse_content_abc123:\/app\/api\/content/g) ?? []).length
-    const declCount = (twice.match(/^  learnhouse_content_abc123:$/gm) ?? []).length
+    const mountCount = (twice.match(/funeralacademy_content_abc123:\/app\/api\/content/g) ?? []).length
+    const declCount = (twice.match(/^  funeralacademy_content_abc123:$/gm) ?? []).length
     expect(mountCount).toBe(1)
     expect(declCount).toBe(1)
   })
 
-  it('merges into an existing learnhouse-app volumes block', () => {
+  it('merges into an existing funeralacademy-app volumes block', () => {
     const composeWithExistingVolumes = legacyCompose.replace(
       '    environment:\n      - HOSTNAME=0.0.0.0',
       '    environment:\n      - HOSTNAME=0.0.0.0\n    volumes:\n      - ./extra:/extra:ro',
     )
     const out = patchComposeAddContentVolume(composeWithExistingVolumes, 'abc123')
-    const appBlock = out.slice(out.indexOf('learnhouse-app:'), out.indexOf('\n  db:'))
+    const appBlock = out.slice(out.indexOf('funeralacademy-app:'), out.indexOf('\n  db:'))
     expect(appBlock).toContain('./extra:/extra:ro')
-    expect(appBlock).toContain('learnhouse_content_abc123:/app/api/content')
+    expect(appBlock).toContain('funeralacademy_content_abc123:/app/api/content')
   })
 })
 
@@ -190,13 +190,13 @@ volumes:
 describe('generateEnvFile', () => {
   it('includes required env vars', () => {
     const env = generateEnvFile(baseConfig)
-    expect(env).toContain('LEARNHOUSE_DOMAIN=localhost')
-    expect(env).toContain('LEARNHOUSE_SQL_CONNECTION_STRING=')
-    expect(env).toContain('LEARNHOUSE_REDIS_CONNECTION_STRING=')
+    expect(env).toContain('FUNERALACADEMY_DOMAIN=localhost')
+    expect(env).toContain('FUNERALACADEMY_SQL_CONNECTION_STRING=')
+    expect(env).toContain('FUNERALACADEMY_REDIS_CONNECTION_STRING=')
     expect(env).toContain('NEXTAUTH_SECRET=')
-    expect(env).toContain('LEARNHOUSE_AUTH_JWT_SECRET_KEY=')
-    expect(env).toContain('LEARNHOUSE_INITIAL_ADMIN_EMAIL=admin@test.dev')
-    expect(env).toContain('LEARNHOUSE_INITIAL_ADMIN_PASSWORD=password123')
+    expect(env).toContain('FUNERALACADEMY_AUTH_JWT_SECRET_KEY=')
+    expect(env).toContain('FUNERALACADEMY_INITIAL_ADMIN_EMAIL=admin@test.dev')
+    expect(env).toContain('FUNERALACADEMY_INITIAL_ADMIN_PASSWORD=password123')
   })
 
   it('includes port', () => {
@@ -266,7 +266,7 @@ describe('generateCaddyfile', () => {
 
 describe('config-store', () => {
   const testBase = path.join(os.tmpdir(), 'lh-config-test-' + Date.now())
-  const testDir = path.join(testBase, '.learnhouse', 'unit-test')
+  const testDir = path.join(testBase, '.funeralacademy', 'unit-test')
 
   beforeEach(() => {
     fs.mkdirSync(testDir, { recursive: true })
@@ -279,7 +279,7 @@ describe('config-store', () => {
   it('writeConfig creates config file', () => {
     const config = { ...baseConfig, installDir: testDir }
     writeConfig(config)
-    const configPath = path.join(testDir, 'learnhouse.config.json')
+    const configPath = path.join(testDir, 'funeralacademy.config.json')
     expect(fs.existsSync(configPath)).toBe(true)
     const data = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
     expect(data.deploymentId).toBe('test1234')
@@ -299,9 +299,9 @@ describe('config-store', () => {
     expect(result).toBeNull()
   })
 
-  it('listInstallations returns empty when ~/.learnhouse does not exist', () => {
+  it('listInstallations returns empty when ~/.funeralacademy does not exist', () => {
     // This test assumes no real installations interfere —
-    // if ~/.learnhouse exists on the host, this will still pass
+    // if ~/.funeralacademy exists on the host, this will still pass
     // since it lists only complete installs
     const list = listInstallations()
     expect(Array.isArray(list)).toBe(true)
@@ -321,7 +321,7 @@ describe('config-store', () => {
 describe('generateEnvFile — dbPassword handling', () => {
   it('writes dbPassword into both connection string and POSTGRES_PASSWORD', () => {
     const env = generateEnvFile({ ...baseConfig, dbPassword: 'Sup3rS3cret-Abc_123' })
-    expect(env).toContain('postgresql://learnhouse:Sup3rS3cret-Abc_123@db:5432/learnhouse')
+    expect(env).toContain('postgresql://funeralacademy:Sup3rS3cret-Abc_123@db:5432/funeralacademy')
     expect(env).toContain('POSTGRES_PASSWORD=Sup3rS3cret-Abc_123')
   })
 
@@ -345,7 +345,7 @@ describe('generateEnvFile — dbPassword handling', () => {
 // The published app image's Next.js SSR fetches the public URL (e.g.
 // http://localhost:8088/...) to render. That host:port isn't bound inside
 // the container, so SSR always fails on non-80 deployments. The CLI adds
-// an alpine/socat sidecar in `network_mode: service:learnhouse-app` that
+// an alpine/socat sidecar in `network_mode: service:funeralacademy-app` that
 // listens on the public port inside the app container's net namespace and
 // forwards to localhost:80 (internal nginx). The sidecar is skipped when
 // it would conflict with the internal nginx (port 80) or when TLS is in
@@ -354,9 +354,9 @@ describe('generateEnvFile — dbPassword handling', () => {
 describe('generateDockerCompose — ssr-fwd sidecar', () => {
   it('adds the socat sidecar when httpPort is not 80', () => {
     const yml = generateDockerCompose({ ...baseConfig, httpPort: 8088 })
-    expect(yml).toContain('learnhouse-ssr-fwd-test1234')
+    expect(yml).toContain('funeralacademy-ssr-fwd-test1234')
     expect(yml).toContain('alpine/socat')
-    expect(yml).toContain('network_mode: "service:learnhouse-app"')
+    expect(yml).toContain('network_mode: "service:funeralacademy-app"')
     expect(yml).toContain('TCP-LISTEN:8088,fork,reuseaddr TCP:localhost:80')
   })
 
@@ -433,29 +433,29 @@ describe('generateDockerCompose — IPv6-safe healthchecks', () => {
 // The CLI used to collect `orgName` from the user but never sent it
 // downstream — the API's auto-install hard-coded "Default Organization"
 // / slug "default". The user's wizard input was discarded silently.
-// The fix threads LEARNHOUSE_INITIAL_ORG_NAME / _ORG_SLUG into .env,
+// The fix threads FUNERALACADEMY_INITIAL_ORG_NAME / _ORG_SLUG into .env,
 // where the API's `install(short=True)` reads them.
 
 describe('generateEnvFile — org propagation', () => {
   it('writes the user-chosen org name and slug', () => {
     const env = generateEnvFile({ ...baseConfig, orgName: 'Acme Academy', orgSlug: 'acme' })
-    expect(env).toContain('LEARNHOUSE_INITIAL_ORG_NAME=')
+    expect(env).toContain('FUNERALACADEMY_INITIAL_ORG_NAME=')
     expect(env).toContain('Acme Academy')
-    expect(env).toContain('LEARNHOUSE_INITIAL_ORG_SLUG=acme')
-    expect(env).toContain('NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG=acme')
+    expect(env).toContain('FUNERALACADEMY_INITIAL_ORG_SLUG=acme')
+    expect(env).toContain('NEXT_PUBLIC_FUNERALACADEMY_DEFAULT_ORG=acme')
   })
 
   it('falls back to default when no slug was set', () => {
     const env = generateEnvFile({ ...baseConfig, orgSlug: '' as unknown as string })
-    expect(env).toContain('NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG=default')
-    expect(env).toContain('LEARNHOUSE_INITIAL_ORG_SLUG=default')
+    expect(env).toContain('NEXT_PUBLIC_FUNERALACADEMY_DEFAULT_ORG=default')
+    expect(env).toContain('FUNERALACADEMY_INITIAL_ORG_SLUG=default')
   })
 })
 
 // ─── Regression: findInstallDir prefers running install ─────
 //
-// When multiple installs exist (e.g. stale `~/.learnhouse/default` from
-// an old setup plus a fresh `~/.learnhouse/qa`), every command used to
+// When multiple installs exist (e.g. stale `~/.funeralacademy/default` from
+// an old setup plus a fresh `~/.funeralacademy/qa`), every command used to
 // silently target `default` because of a hard-coded preference. That
 // broke stop/status/health/etc. The fix: prefer whichever install has
 // an actually-running app container, falling back to most recent.
@@ -488,14 +488,14 @@ vi.mock('node:child_process', async () => {
 
 describe('findInstallDir — picks the running install over a stale one', () => {
   const fakeHome = path.join(os.tmpdir(), 'lh-findinstall-' + Date.now())
-  const lhBase = path.join(fakeHome, '.learnhouse')
+  const lhBase = path.join(fakeHome, '.funeralacademy')
   let origHome: string | undefined
 
   function writeInstall(name: string, deploymentId: string, createdAt: string) {
     const dir = path.join(lhBase, name)
     fs.mkdirSync(dir, { recursive: true })
     fs.writeFileSync(
-      path.join(dir, 'learnhouse.config.json'),
+      path.join(dir, 'funeralacademy.config.json'),
       JSON.stringify({
         version: '0.0.0-test',
         deploymentId,
@@ -532,7 +532,7 @@ describe('findInstallDir — picks the running install over a stale one', () => 
 
     const { isContainerRunning } = await import('../src/services/docker.js')
     ;(isContainerRunning as ReturnType<typeof vi.fn>).mockImplementation((name: string) =>
-      name === 'learnhouse-app-bbbb2222',
+      name === 'funeralacademy-app-bbbb2222',
     )
 
     expect(findInstallDir()).toBe(live)
@@ -586,7 +586,7 @@ describe('validateEmail — reserved TLDs', () => {
   })
 
   it('rejects .test TLD (RFC 6761)', () => {
-    expect(validateEmail('admin@learnhouse.test')).toMatch(/RFC 6761|reserved/i)
+    expect(validateEmail('admin@funeralacademy.test')).toMatch(/RFC 6761|reserved/i)
   })
 
   it('rejects .invalid TLD (RFC 6761)', () => {
@@ -598,7 +598,7 @@ describe('validateEmail — reserved TLDs', () => {
   })
 
   it('rejects .example TLD (RFC 2606 documentation)', () => {
-    expect(validateEmail('admin@learnhouse.example')).toMatch(/RFC 6761|reserved/i)
+    expect(validateEmail('admin@funeralacademy.example')).toMatch(/RFC 6761|reserved/i)
   })
 
   it('is case-insensitive on the TLD', () => {
@@ -611,7 +611,7 @@ describe('validateEmail — reserved TLDs', () => {
 // Prior to this fix, `dockerComposeUp` was called without `pull=true`,
 // so `docker compose up -d` reused the locally-cached image instead of
 // pulling the new tag. Users on `latest` saw no change after running
-// `npx learnhouse update` because the compose file tag didn't change and
+// `npx funeralacademy update` because the compose file tag didn't change and
 // Docker never re-fetched. The fix: (1) explicit `docker compose pull`
 // before restarting, (2) `--pull always` on `docker compose up` as safety net.
 //
@@ -623,7 +623,7 @@ describe('validateEmail — reserved TLDs', () => {
 // Prior to this fix, `dockerComposeUp` was called without `pull=true`,
 // so `docker compose up -d` reused the locally-cached image instead of
 // pulling the new tag. Users on `latest` saw no change after running
-// `npx learnhouse update` because the compose file tag didn't change and
+// `npx funeralacademy update` because the compose file tag didn't change and
 // Docker never re-fetched. The fix: (1) explicit `docker compose pull`
 // before restarting, (2) `--pull always` on `docker compose up` as safety net.
 //
@@ -641,7 +641,7 @@ describe('update — image tag replacement in docker-compose.yml', () => {
   it('updates the tag within a realistic compose file block', () => {
     const compose = [
       'services:',
-      '  learnhouse-app:',
+      '  funeralacademy-app:',
       '    image: ghcr.io/learnhouse/app:1.2.2',
       '    restart: unless-stopped',
     ].join('\n')
@@ -675,7 +675,7 @@ describe('update — image tag replacement in docker-compose.yml', () => {
 
   it('does not modify other images in the compose file', () => {
     const compose = [
-      '  learnhouse-app:',
+      '  funeralacademy-app:',
       '    image: ghcr.io/learnhouse/app:1.2.2',
       '  db:',
       '    image: pgvector/pgvector:pg16',
@@ -694,7 +694,7 @@ describe('update — image tag replacement in docker-compose.yml', () => {
 // The update command rewrote docker-compose.yml with the new tag but
 // skipped the pull, so `docker compose up` reused the cached layer and
 // the container restarted on the OLD image (reported on Discord: app.py
-// still read the previous version after `learnhouse update`). The fix
+// still read the previous version after `funeralacademy update`). The fix
 // calls dockerComposePull() explicitly and brings services up with
 // `--pull always`. These tests pin the exact commands so the pull can't
 // silently regress out again.
@@ -1059,10 +1059,10 @@ describe('isExternalDbInstall', () => {
     fs.rmSync(tmpDir, { recursive: true, force: true })
   })
 
-  it('returns true when LEARNHOUSE_SQL_CONNECTION_STRING is set', () => {
+  it('returns true when FUNERALACADEMY_SQL_CONNECTION_STRING is set', () => {
     fs.writeFileSync(
       path.join(tmpDir, '.env'),
-      'LEARNHOUSE_SQL_CONNECTION_STRING=postgresql://user:pw@rds.example.com:5432/lh\n',
+      'FUNERALACADEMY_SQL_CONNECTION_STRING=postgresql://user:pw@rds.example.com:5432/lh\n',
     )
     expect(isExternalDbInstall(tmpDir)).toBe(true)
   })
@@ -1130,7 +1130,7 @@ describe('ensureAlembicBaseline', () => {
   it('warns and does not throw when alembic current fails', async () => {
     const { dockerComposeExec } = await import('../src/services/docker.js')
     vi.mocked(dockerComposeExec).mockImplementation(() => {
-      throw new Error('container learnhouse-app not found')
+      throw new Error('container funeralacademy-app not found')
     })
 
     const warns: string[] = []
@@ -1273,7 +1273,7 @@ describe('runAlembicUpgrade', () => {
 // input. No Docker daemon is needed — they cover the "what does the user
 // see when they type X" layer that module-level unit tests cannot reach.
 
-const CLI_BIN = path.resolve(__dirname, '..', 'dist', 'bin', 'learnhouse.js')
+const CLI_BIN = path.resolve(__dirname, '..', 'dist', 'bin', 'funeralacademy.js')
 
 function runCli(args: string, timeoutMs = 10_000): { stdout: string; stderr: string; exitCode: number } {
   const argArray = args ? args.trim().split(/\s+/) : []
@@ -1315,7 +1315,7 @@ describe('CLI — version and help', () => {
   it('no-argument invocation shows the welcome screen, not an error', () => {
     const r = runCli('')
     expect(r.exitCode).toBe(0)
-    expect(r.stdout).toContain('LearnHouse')
+    expect(r.stdout).toContain('FuneralAcademy')
   })
 })
 
@@ -1365,7 +1365,7 @@ describe('CLI — backup / restore --help', () => {
 //
 // A single sweep confirms all 16 commands are wired up. This test
 // exists because scale was fully implemented in scale.ts but forgotten
-// in bin/learnhouse.ts — `npx learnhouse scale` silently showed the
+// in bin/funeralacademy.ts — `npx funeralacademy scale` silently showed the
 // main help instead of the scale UI. Never again.
 
 describe('CLI — all 16 commands registered', () => {
@@ -1423,7 +1423,7 @@ describe('CLI — all 16 commands registered', () => {
 // ─── CLI — setup --ci --no-start: real install, no Docker ────
 //
 // setup --ci --no-start writes the full file set (docker-compose.yml,
-// .env, nginx.conf, learnhouse.config.json) without starting containers.
+// .env, nginx.conf, funeralacademy.config.json) without starting containers.
 // Running the REAL binary against a temp HOME lets us verify that:
 //
 //   1. Specific values we passed end up in the right files with the right keys
@@ -1470,7 +1470,7 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
       '--no-start',
     ])
     if (r.status !== 0) throw new Error(`setup failed:\n${r.stdout}\n${r.stderr}`)
-    installDir = path.join(tempHome, '.learnhouse', INSTALL_NAME)
+    installDir = path.join(tempHome, '.funeralacademy', INSTALL_NAME)
   })
 
   afterAll(() => {
@@ -1478,18 +1478,18 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
   })
 
   // ── File existence ──────────────────────────────────────────
-  it('creates docker-compose.yml, .env, and learnhouse.config.json', () => {
+  it('creates docker-compose.yml, .env, and funeralacademy.config.json', () => {
     expect(fs.existsSync(path.join(installDir, 'docker-compose.yml'))).toBe(true)
     expect(fs.existsSync(path.join(installDir, '.env'))).toBe(true)
-    expect(fs.existsSync(path.join(installDir, 'learnhouse.config.json'))).toBe(true)
+    expect(fs.existsSync(path.join(installDir, 'funeralacademy.config.json'))).toBe(true)
   })
 
   // ── docker-compose.yml ──────────────────────────────────────
   it('docker-compose.yml has all four services (app, db, redis, nginx)', () => {
     const yml = fs.readFileSync(path.join(installDir, 'docker-compose.yml'), 'utf-8')
-    expect(yml).toContain('learnhouse-app-')
-    expect(yml).toContain('learnhouse-db-')
-    expect(yml).toContain('learnhouse-redis-')
+    expect(yml).toContain('funeralacademy-app-')
+    expect(yml).toContain('funeralacademy-db-')
+    expect(yml).toContain('funeralacademy-redis-')
     expect(yml).toContain('nginx')
   })
 
@@ -1509,19 +1509,19 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
   })
 
   // ── .env values ─────────────────────────────────────────────
-  it('.env LEARNHOUSE_DOMAIN contains the domain we passed', () => {
+  it('.env FUNERALACADEMY_DOMAIN contains the domain we passed', () => {
     const env = fs.readFileSync(path.join(installDir, '.env'), 'utf-8')
-    expect(env).toContain(`LEARNHOUSE_DOMAIN=${DOMAIN}`)
+    expect(env).toContain(`FUNERALACADEMY_DOMAIN=${DOMAIN}`)
   })
 
-  it('.env LEARNHOUSE_INITIAL_ADMIN_EMAIL is exactly the email we passed', () => {
+  it('.env FUNERALACADEMY_INITIAL_ADMIN_EMAIL is exactly the email we passed', () => {
     const env = fs.readFileSync(path.join(installDir, '.env'), 'utf-8')
-    expect(env).toContain(`LEARNHOUSE_INITIAL_ADMIN_EMAIL=${EMAIL}`)
+    expect(env).toContain(`FUNERALACADEMY_INITIAL_ADMIN_EMAIL=${EMAIL}`)
   })
 
-  it('.env LEARNHOUSE_INITIAL_ORG_SLUG is exactly the slug we passed', () => {
+  it('.env FUNERALACADEMY_INITIAL_ORG_SLUG is exactly the slug we passed', () => {
     const env = fs.readFileSync(path.join(installDir, '.env'), 'utf-8')
-    expect(env).toContain(`LEARNHOUSE_INITIAL_ORG_SLUG=${ORG_SLUG}`)
+    expect(env).toContain(`FUNERALACADEMY_INITIAL_ORG_SLUG=${ORG_SLUG}`)
   })
 
   it('.env has no =undefined lines (any undefined value causes a broken container at runtime)', () => {
@@ -1543,19 +1543,19 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
         .map(l => [l.split('=')[0], l.slice(l.indexOf('=') + 1)]),
     )
     expect(kv['NEXTAUTH_SECRET']?.trim().length).toBeGreaterThanOrEqual(40)
-    expect(kv['LEARNHOUSE_AUTH_JWT_SECRET_KEY']?.trim().length).toBeGreaterThanOrEqual(40)
+    expect(kv['FUNERALACADEMY_AUTH_JWT_SECRET_KEY']?.trim().length).toBeGreaterThanOrEqual(40)
   })
 
-  // ── learnhouse.config.json ──────────────────────────────────
-  it('learnhouse.config.json stores exactly the domain, port, and slug we passed', () => {
-    const cfg = JSON.parse(fs.readFileSync(path.join(installDir, 'learnhouse.config.json'), 'utf-8'))
+  // ── funeralacademy.config.json ──────────────────────────────────
+  it('funeralacademy.config.json stores exactly the domain, port, and slug we passed', () => {
+    const cfg = JSON.parse(fs.readFileSync(path.join(installDir, 'funeralacademy.config.json'), 'utf-8'))
     expect(cfg.domain).toBe(DOMAIN)
     expect(cfg.httpPort).toBe(PORT)
     expect(cfg.orgSlug).toBe(ORG_SLUG)
   })
 
-  it('learnhouse.config.json deploymentId is a non-empty alphanumeric id', () => {
-    const cfg = JSON.parse(fs.readFileSync(path.join(installDir, 'learnhouse.config.json'), 'utf-8'))
+  it('funeralacademy.config.json deploymentId is a non-empty alphanumeric id', () => {
+    const cfg = JSON.parse(fs.readFileSync(path.join(installDir, 'funeralacademy.config.json'), 'utf-8'))
     expect(cfg.deploymentId).toMatch(/^[a-z0-9]{8,}$/)
   })
 
@@ -1584,7 +1584,7 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
   // ── status — prints URL from config before touching Docker ────
   it('"status" shows our install URL (read from config.json before any Docker call)', () => {
     // status always prints the URL first — this is guaranteed regardless of whether
-    // containers are running, because it reads learnhouse.config.json before docker compose ps
+    // containers are running, because it reads funeralacademy.config.json before docker compose ps
     const r = cliHome(['status'])
     expect(r.stdout + r.stderr).toContain(DOMAIN)
   })
@@ -1631,7 +1631,7 @@ describe('CLI — setup --ci --no-start: real installation, real file assertions
 //
 // Bad input must: (1) exit 1, (2) print a clear message, (3) leave no
 // files behind. Each test uses an isolated temp HOME so a validation
-// failure can never pollute ~/.learnhouse on the developer's machine.
+// failure can never pollute ~/.funeralacademy on the developer's machine.
 // Testing at the binary level catches regressions that module-level tests
 // miss — e.g. a Commander flag definition that silently swallows the value
 // before validation runs.
@@ -1651,7 +1651,7 @@ describe('CLI — setup --ci input validation', () => {
   }
 
   function installDir(name: string) {
-    return path.join(validationHome, '.learnhouse', name)
+    return path.join(validationHome, '.funeralacademy', name)
   }
 
   it('exits 1 with "--admin-password" in the error when password is missing', () => {
@@ -1722,16 +1722,16 @@ describe('generateDockerCompose — service completeness', () => {
     const yml = generateDockerCompose(baseConfig)
     // Each service has a container_name with the deployment id — this
     // confirms both the service declaration AND the naming convention.
-    expect(yml).toContain(`learnhouse-app-${baseConfig.deploymentId}`)
-    expect(yml).toContain(`learnhouse-db-${baseConfig.deploymentId}`)
-    expect(yml).toContain(`learnhouse-redis-${baseConfig.deploymentId}`)
+    expect(yml).toContain(`funeralacademy-app-${baseConfig.deploymentId}`)
+    expect(yml).toContain(`funeralacademy-db-${baseConfig.deploymentId}`)
+    expect(yml).toContain(`funeralacademy-redis-${baseConfig.deploymentId}`)
     // nginx (reverse proxy)
     expect(yml).toContain('nginx')
   })
 
   it('restart policy is unless-stopped on the app service', () => {
     // "unless-stopped" survives host reboots while still being manually
-    // stoppable. "always" would restart even after `npx learnhouse stop`.
+    // stoppable. "always" would restart even after `npx funeralacademy stop`.
     const yml = generateDockerCompose(baseConfig)
     expect(yml).toContain('restart: unless-stopped')
   })
@@ -1779,7 +1779,7 @@ describe('generateEnvFile — no empty or undefined values', () => {
         .map((l) => [l.split('=')[0], l.slice(l.indexOf('=') + 1)]),
     )
     expect(lines['NEXTAUTH_SECRET']?.trim().length).toBeGreaterThan(8)
-    expect(lines['LEARNHOUSE_AUTH_JWT_SECRET_KEY']?.trim().length).toBeGreaterThan(8)
+    expect(lines['FUNERALACADEMY_AUTH_JWT_SECRET_KEY']?.trim().length).toBeGreaterThan(8)
   })
 })
 
@@ -1905,16 +1905,16 @@ describe('docker output parsers', () => {
   })
 
   describe('autoDetectDeploymentId', () => {
-    it('pulls the hex id from the first learnhouse-app container', () => {
-      execSync.mockReturnValue(Buffer.from('learnhouse-app-ab12cd34\n'))
+    it('pulls the hex id from the first funeralacademy-app container', () => {
+      execSync.mockReturnValue(Buffer.from('funeralacademy-app-ab12cd34\n'))
       expect(autoDetectDeploymentId()).toBe('ab12cd34')
-      // The detection MUST filter on the learnhouse-app- name prefix, otherwise it
+      // The detection MUST filter on the funeralacademy-app- name prefix, otherwise it
       // would latch onto db/redis/unrelated containers. Pin the actual filter string.
-      expect(execSync.mock.calls.at(-1)?.[0]).toContain('name=learnhouse-app-')
+      expect(execSync.mock.calls.at(-1)?.[0]).toContain('name=funeralacademy-app-')
     })
 
     it('uses the first line when several containers exist', () => {
-      execSync.mockReturnValue(Buffer.from('learnhouse-app-aaaa1111\nlearnhouse-app-bbbb2222\n'))
+      execSync.mockReturnValue(Buffer.from('funeralacademy-app-aaaa1111\nfuneralacademy-app-bbbb2222\n'))
       expect(autoDetectDeploymentId()).toBe('aaaa1111')
     })
 
@@ -1934,13 +1934,13 @@ describe('docker output parsers', () => {
   describe('listDeploymentContainers', () => {
     it('parses tab-separated name/status/image rows for the deployment', () => {
       execSync.mockReturnValue(Buffer.from(
-        'learnhouse-app-dep1\tUp 2 hours\tghcr.io/learnhouse/app:1.4.2\n' +
-        'learnhouse-db-dep1\tUp 2 hours (healthy)\tpgvector/pgvector:pg16\n' +
+        'funeralacademy-app-dep1\tUp 2 hours\tghcr.io/learnhouse/app:1.4.2\n' +
+        'funeralacademy-db-dep1\tUp 2 hours (healthy)\tpgvector/pgvector:pg16\n' +
         'unrelated-dep2\tUp\tnginx:alpine\n',
       ))
       const rows = listDeploymentContainers('dep1')
       expect(rows).toHaveLength(2)
-      expect(rows[0]).toEqual({ name: 'learnhouse-app-dep1', status: 'Up 2 hours', image: 'ghcr.io/learnhouse/app:1.4.2' })
+      expect(rows[0]).toEqual({ name: 'funeralacademy-app-dep1', status: 'Up 2 hours', image: 'ghcr.io/learnhouse/app:1.4.2' })
       expect(rows.every((r) => r.name.includes('dep1'))).toBe(true)
     })
 
@@ -1958,7 +1958,7 @@ describe('docker output parsers', () => {
   describe('getContainerRestartCount', () => {
     it('parses the restart count', () => {
       execSync.mockReturnValue(Buffer.from('7\n'))
-      expect(getContainerRestartCount('learnhouse-app-x')).toBe(7)
+      expect(getContainerRestartCount('funeralacademy-app-x')).toBe(7)
     })
 
     it('returns 0 on non-numeric output or a docker error', () => {
@@ -1974,13 +1974,13 @@ describe('docker output parsers', () => {
 
 describe('listInstallations — completeness filter and ordering', () => {
   const fakeHome = path.join(os.tmpdir(), 'lh-listinstall-' + process.pid)
-  const lhBase = path.join(fakeHome, '.learnhouse')
+  const lhBase = path.join(fakeHome, '.funeralacademy')
   let origHome: string | undefined
 
   function writeInstall(name: string, opts: { deploymentId?: string; createdAt?: string; env?: boolean } = {}) {
     const dir = path.join(lhBase, name)
     fs.mkdirSync(dir, { recursive: true })
-    fs.writeFileSync(path.join(dir, 'learnhouse.config.json'), JSON.stringify({
+    fs.writeFileSync(path.join(dir, 'funeralacademy.config.json'), JSON.stringify({
       version: '0.0.0-test',
       deploymentId: opts.deploymentId ?? 'aaaa1111',
       createdAt: opts.createdAt ?? '2026-01-01T00:00:00Z',
@@ -2014,7 +2014,7 @@ describe('listInstallations — completeness filter and ordering', () => {
     expect(listInstallations().map((i) => i.name)).toEqual(['complete'])
   })
 
-  it('returns [] when ~/.learnhouse has no installs', () => {
+  it('returns [] when ~/.funeralacademy has no installs', () => {
     expect(listInstallations()).toEqual([])
   })
 })
@@ -2033,9 +2033,9 @@ describe('dockerComposeExec builds a non-interactive command', () => {
     execSync.mockReturnValue(Buffer.from('revision-abc (head)'))
     const real = await vi.importActual<typeof import('../src/services/docker.js')>('../src/services/docker.js')
 
-    const out = real.dockerComposeExec('/srv/lh', 'learnhouse-app', 'sh -c "uv run alembic current"')
+    const out = real.dockerComposeExec('/srv/lh', 'funeralacademy-app', 'sh -c "uv run alembic current"')
     expect(execSync.mock.calls.at(-1)?.[0]).toBe(
-      'docker compose exec -T learnhouse-app sh -c "uv run alembic current"',
+      'docker compose exec -T funeralacademy-app sh -c "uv run alembic current"',
     )
     expect((execSync.mock.calls.at(-1)?.[1] as { cwd?: string }).cwd).toBe('/srv/lh')
     expect(out).toBe('revision-abc (head)')
@@ -2059,27 +2059,27 @@ describe('migrateContentVolume', () => {
 
   it('returns already_mounted when the content path is already in the compose file', () => {
     fs.writeFileSync(path.join(dir, 'docker-compose.yml'),
-      'services:\n  learnhouse-app:\n    volumes:\n      - x:/app/api/content\n')
+      'services:\n  funeralacademy-app:\n    volumes:\n      - x:/app/api/content\n')
     expect(migrateContentVolume(dir, 'dep12345')).toEqual({ status: 'already_mounted' })
   })
 
   it('returns skipped_s3 when content delivery is s3api', () => {
-    fs.writeFileSync(path.join(dir, 'docker-compose.yml'), 'services:\n  learnhouse-app:\n')
-    fs.writeFileSync(path.join(dir, '.env'), 'LEARNHOUSE_CONTENT_DELIVERY_TYPE=s3api\n')
+    fs.writeFileSync(path.join(dir, 'docker-compose.yml'), 'services:\n  funeralacademy-app:\n')
+    fs.writeFileSync(path.join(dir, '.env'), 'FUNERALACADEMY_CONTENT_DELIVERY_TYPE=s3api\n')
     expect(migrateContentVolume(dir, 'dep12345')).toEqual({ status: 'skipped_s3' })
   })
 
   it('patches the compose file and reports patched_no_data when no container exists', () => {
     const compose = [
-      'name: learnhouse-dep12345',
+      'name: funeralacademy-dep12345',
       'services:',
-      '  learnhouse-app:',
+      '  funeralacademy-app:',
       '    image: ghcr.io/learnhouse/app:latest',
-      '    container_name: learnhouse-app-dep12345',
+      '    container_name: funeralacademy-app-dep12345',
       '    networks:',
-      '      - learnhouse-network-dep12345',
+      '      - funeralacademy-network-dep12345',
       'networks:',
-      '  learnhouse-network-dep12345:',
+      '  funeralacademy-network-dep12345:',
       '',
     ].join('\n')
     fs.writeFileSync(path.join(dir, 'docker-compose.yml'), compose)
@@ -2088,7 +2088,7 @@ describe('migrateContentVolume', () => {
     expect(res).toEqual({ status: 'patched_no_data' })
 
     const patched = fs.readFileSync(path.join(dir, 'docker-compose.yml'), 'utf-8')
-    expect(patched).toContain('learnhouse_content_dep12345:/app/api/content')
+    expect(patched).toContain('funeralacademy_content_dep12345:/app/api/content')
     expect(patched).toMatch(/^volumes:/m)
   })
 })
@@ -2397,19 +2397,19 @@ describe('docker.ts command builders', () => {
   })
 
   it('dockerExec / getContainerLogs / getDockerDiskUsage build their commands', () => {
-    dockerExec('learnhouse-app-x', 'env')
-    expect(cmd()).toBe('docker exec learnhouse-app-x env')
-    getContainerLogs('learnhouse-app-x', 25)
-    expect(cmd()).toBe('docker logs --tail 25 learnhouse-app-x')
+    dockerExec('funeralacademy-app-x', 'env')
+    expect(cmd()).toBe('docker exec funeralacademy-app-x env')
+    getContainerLogs('funeralacademy-app-x', 25)
+    expect(cmd()).toBe('docker logs --tail 25 funeralacademy-app-x')
     getDockerDiskUsage()
     expect(cmd()).toBe('docker system df')
   })
 
   it('dockerExecToFile / dockerExecFromFile redirect through a shell', () => {
-    dockerExecToFile('db-x', 'pg_dump learnhouse', '/tmp/out.sql')
-    expect(cmd()).toBe('docker exec db-x pg_dump learnhouse > "/tmp/out.sql"')
-    dockerExecFromFile('db-x', 'psql learnhouse', '/tmp/in.sql')
-    expect(cmd()).toBe('docker exec -i db-x psql learnhouse < "/tmp/in.sql"')
+    dockerExecToFile('db-x', 'pg_dump funeralacademy', '/tmp/out.sql')
+    expect(cmd()).toBe('docker exec db-x pg_dump funeralacademy > "/tmp/out.sql"')
+    dockerExecFromFile('db-x', 'psql funeralacademy', '/tmp/in.sql')
+    expect(cmd()).toBe('docker exec -i db-x psql funeralacademy < "/tmp/in.sql"')
   })
 
   it('dockerStats / dockerStatsForContainers build the table format', () => {
@@ -2436,8 +2436,8 @@ describe('docker.ts isContainerRunning (real impl)', () => {
     execSync.mockReset()
     const real = await vi.importActual<typeof import('../src/services/docker.js')>('../src/services/docker.js')
     execSync.mockReturnValue(Buffer.from('true\n'))
-    expect(real.isContainerRunning('learnhouse-app-x')).toBe(true)
-    expect(execSync.mock.calls.at(-1)?.[0]).toBe("docker inspect -f '{{.State.Running}}' learnhouse-app-x")
+    expect(real.isContainerRunning('funeralacademy-app-x')).toBe(true)
+    expect(execSync.mock.calls.at(-1)?.[0]).toBe("docker inspect -f '{{.State.Running}}' funeralacademy-app-x")
     execSync.mockReturnValue(Buffer.from('false\n'))
     expect(real.isContainerRunning('x')).toBe(false)
     execSync.mockImplementation(() => { throw new Error('no container') })
@@ -2512,20 +2512,20 @@ describe('generateEnvFile — feature flags', () => {
       googleOAuthEnabled: true, googleClientId: 'gid', googleClientSecret: 'gsec',
       unsplashEnabled: true, unsplashAccessKey: 'ukey',
     })
-    expect(env).toContain('LEARNHOUSE_GEMINI_API_KEY=AIzaKEY')
-    expect(env).toContain('LEARNHOUSE_IS_AI_ENABLED=True')
-    expect(env).toContain('LEARNHOUSE_SMTP_HOST=smtp.test')
-    expect(env).toContain('LEARNHOUSE_SMTP_PORT=2525')
-    expect(env).toContain('LEARNHOUSE_SMTP_USE_TLS=False')
-    expect(env).toContain('LEARNHOUSE_S3_API_BUCKET_NAME=bkt')
-    expect(env).toContain('LEARNHOUSE_S3_API_ENDPOINT_URL=https://s3.example.com')
-    expect(env).toContain('LEARNHOUSE_GOOGLE_CLIENT_ID=gid')
+    expect(env).toContain('FUNERALACADEMY_GEMINI_API_KEY=AIzaKEY')
+    expect(env).toContain('FUNERALACADEMY_IS_AI_ENABLED=True')
+    expect(env).toContain('FUNERALACADEMY_SMTP_HOST=smtp.test')
+    expect(env).toContain('FUNERALACADEMY_SMTP_PORT=2525')
+    expect(env).toContain('FUNERALACADEMY_SMTP_USE_TLS=False')
+    expect(env).toContain('FUNERALACADEMY_S3_API_BUCKET_NAME=bkt')
+    expect(env).toContain('FUNERALACADEMY_S3_API_ENDPOINT_URL=https://s3.example.com')
+    expect(env).toContain('FUNERALACADEMY_GOOGLE_CLIENT_ID=gid')
     expect(env).toContain('NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=ukey')
   })
 
   it('uses the Resend key for the resend email provider', () => {
     const env = generateEnvFile({ ...baseConfig, emailEnabled: true, emailProvider: 'resend', resendApiKey: 're_key' })
-    expect(env).toContain('LEARNHOUSE_RESEND_API_KEY=re_key')
+    expect(env).toContain('FUNERALACADEMY_RESEND_API_KEY=re_key')
   })
 
   it('points the connection strings at external DB/Redis when configured', () => {
@@ -2534,12 +2534,12 @@ describe('generateEnvFile — feature flags', () => {
       useExternalDb: true, externalDbConnectionString: 'postgresql://u:p@db.ext:5432/lh',
       useExternalRedis: true, externalRedisConnectionString: 'redis://cache.ext:6379',
     })
-    expect(env).toContain('LEARNHOUSE_SQL_CONNECTION_STRING=postgresql://u:p@db.ext:5432/lh')
+    expect(env).toContain('FUNERALACADEMY_SQL_CONNECTION_STRING=postgresql://u:p@db.ext:5432/lh')
     expect(env).toContain('redis://cache.ext:6379')
   })
 
   it('marks AI disabled when the feature is off', () => {
-    expect(generateEnvFile({ ...baseConfig, aiEnabled: false })).toContain('LEARNHOUSE_IS_AI_ENABLED=False')
+    expect(generateEnvFile({ ...baseConfig, aiEnabled: false })).toContain('FUNERALACADEMY_IS_AI_ENABLED=False')
   })
 })
 
@@ -2559,17 +2559,17 @@ describe('formatBytes', () => {
 describe('config-store edge cases', () => {
   it('readConfig returns null on malformed JSON', () => {
     const d = fs.mkdtempSync(path.join(os.tmpdir(), 'lh-badcfg-'))
-    fs.writeFileSync(path.join(d, 'learnhouse.config.json'), '{ this is not valid json')
+    fs.writeFileSync(path.join(d, 'funeralacademy.config.json'), '{ this is not valid json')
     expect(readConfig(d)).toBeNull()
     fs.rmSync(d, { recursive: true, force: true })
   })
 
   it('listInstallations skips a directory whose config is malformed JSON', () => {
     const fakeHome = path.join(os.tmpdir(), 'lh-badlist-' + process.pid)
-    const base = path.join(fakeHome, '.learnhouse')
+    const base = path.join(fakeHome, '.funeralacademy')
     const bad = path.join(base, 'broken')
     fs.mkdirSync(bad, { recursive: true })
-    fs.writeFileSync(path.join(bad, 'learnhouse.config.json'), '{bad')
+    fs.writeFileSync(path.join(bad, 'funeralacademy.config.json'), '{bad')
     fs.writeFileSync(path.join(bad, '.env'), '# x')
     const origHome = process.env.HOME
     process.env.HOME = fakeHome
