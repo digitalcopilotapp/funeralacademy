@@ -44,11 +44,11 @@
     "help": "Trợ giúp",
     "help_menu": {
       "documentation": "Tài liệu",
-      "website": "Trang web FuneralAcademy",
+      "website": "Trang web Funeral Academy",
       "discord": "Discord",
       "report_feedback": "Báo cáo vấn đề hoặc phản hồi",
       "feedback_title": "Gửi Phản hồi",
-      "feedback_description": "Giúp chúng tôi cải thiện FuneralAcademy bằng cách chia sẻ suy nghĩ, báo cáo lỗi hoặc đề xuất tính năng mới.",
+      "feedback_description": "Giúp chúng tôi cải thiện Funeral Academy bằng cách chia sẻ suy nghĩ, báo cáo lỗi hoặc đề xuất tính năng mới.",
       "feedback_placeholder": "Cho chúng tôi biết bạn đang nghĩ gì...",
       "feedback_success": "Cảm ơn phản hồi của bạn!",
       "send_feedback": "Gửi Phản hồi",
@@ -215,7 +215,7 @@
     "organizations": "Tổ chức",
     "billing": "Thanh toán",
     "create_organization": "Tạo tổ chức",
-    "copyright": "© {{year}} FuneralAcademy, Inc.",
+    "copyright": "© {{year}} Funeral Academy, Inc.",
     "delete_organization_error": "Không thể xóa tổ chức này. Vui lòng thử lại.",
     "org_actions": "Thao tác tổ chức",
     "manage_upgrade": "Quản lý / Nâng cấp",
@@ -371,11 +371,11 @@
     "privacy_policy": "Chính sách Bảo mật",
     "image_title_forgot": "Đặt lại mật khẩu của bạn.",
     "image_subtitle_forgot": "Chúng tôi sẽ giúp bạn nhanh chóng truy cập lại tài khoản.",
-    "image_title_login": "Chào mừng trở lại với FuneralAcademy.",
+    "image_title_login": "Chào mừng trở lại với Funeral Academy.",
     "image_subtitle_login": "Tiếp tục từ nơi bạn dừng lại — các khóa học, học viên và công cụ của bạn đang chờ.",
     "image_title_reset": "Sắp xong rồi.",
     "image_subtitle_reset": "Tạo một mật khẩu mạnh để giữ tài khoản của bạn an toàn.",
-    "image_title_signup": "Bắt đầu giảng dạy cùng FuneralAcademy.",
+    "image_title_signup": "Bắt đầu giảng dạy cùng Funeral Academy.",
     "image_subtitle_signup": "Tạo tài khoản và ra mắt khóa học đầu tiên của bạn chỉ trong vài phút.",
     "image_title_verify": "Xác minh email của bạn.",
     "image_subtitle_verify": "Một bước nhanh gọn để bảo mật tài khoản và bắt đầu.",
@@ -576,14 +576,14 @@
     "import": {
       "scorm_package": "Gói SCORM",
       "scorm_description": "Nhập các gói SCORM 1.2 hoặc SCORM 2004",
-      "funeralacademy_courses": "Khóa học FuneralAcademy",
-      "funeralacademy_description": "Nhập các khóa học đã xuất từ FuneralAcademy",
+      "funeralacademy_courses": "Khóa học Funeral Academy",
+      "funeralacademy_description": "Nhập các khóa học đã xuất từ Funeral Academy",
       "upload_package": "Tải lên Gói",
       "configure": "Cấu hình",
       "complete": "Hoàn thành",
       "click_to_upload": "Nhấp để tải lên hoặc kéo và thả",
-      "funeralacademy_format": "Xuất khóa học FuneralAcademy (.zip)",
-      "funeralacademy_info": "Tải lên gói xuất khóa học FuneralAcademy (.zip). Bạn có thể chọn khóa học nào cần nhập và cấu hình các tùy chọn nhập.",
+      "funeralacademy_format": "Xuất khóa học Funeral Academy (.zip)",
+      "funeralacademy_info": "Tải lên gói xuất khóa học Funeral Academy (.zip). Bạn có thể chọn khóa học nào cần nhập và cấu hình các tùy chọn nhập.",
       "analyze_package": "Phân tích Gói",
       "ready_to_analyze": "Sẵn sàng phân tích",
       "invalid_file_format": "Vui lòng tải lên tệp .zip",
@@ -1456,7 +1456,7 @@
           "description": "Cấu hình cài đặt cá nhân, mật khẩu, email"
         }
       },
-      "funeralacademy_university": "Đại học FuneralAcademy",
+      "funeralacademy_university": "Đại học Funeral Academy",
       "welcome_back": "Chào mừng trở lại",
       "plan": "gói",
       "create_course": "Tạo khóa học",
@@ -1513,8 +1513,8 @@
       "import_course": "Nhập khóa học",
       "import_scorm": "Nhập Gói SCORM",
       "import_scorm_description": "Nhập gói SCORM để tạo khóa học mới",
-      "import_funeralacademy": "Nhập Khóa học FuneralAcademy",
-      "import_funeralacademy_description": "Nhập khóa học từ gói xuất FuneralAcademy",
+      "import_funeralacademy": "Nhập Khóa học Funeral Academy",
+      "import_funeralacademy_description": "Nhập khóa học từ gói xuất Funeral Academy",
       "import_select_type": "Chọn loại gói bạn muốn nhập",
       "no_courses": "Chưa có khóa học nào",
       "create_course_placeholder": "Tạo khóa học để thêm nội dung",
@@ -2353,8 +2353,8 @@
         "label_placeholder": "Chọn một nhãn tổ chức",
         "about": "Giới thiệu tổ chức",
         "about_placeholder": "Mô tả chi tiết về tổ chức của bạn",
-        "showcase_explore": "Hiển thị trong FuneralAcademy Explore",
-        "showcase_description": "Chia sẻ các khóa học và nội dung của tổ chức bạn với cộng đồng FuneralAcademy. Bật tính năng này để giúp người học khám phá các tài nguyên giáo dục giá trị.",
+        "showcase_explore": "Hiển thị trong Funeral Academy Explore",
+        "showcase_description": "Chia sẻ các khóa học và nội dung của tổ chức bạn với cộng đồng Funeral Academy. Bật tính năng này để giúp người học khám phá các tài nguyên giáo dục giá trị.",
         "save_changes": "Lưu thay đổi",
         "saving": "Đang lưu...",
         "update_success": "Thông tin tổ chức đã được cập nhật",
@@ -2365,9 +2365,9 @@
         "footer_text_desc": "Văn bản tùy chỉnh hiển thị ở cuối các trang của tổ chức",
         "default_language": "Ngôn ngữ mặc định",
         "default_language_desc": "Ngôn ngữ mà khách truy cập mới sẽ thấy theo mặc định và được dùng cho các email gửi thay mặt tổ chức này. Thành viên vẫn có thể thay đổi ngôn ngữ giao diện của mình.",
-        "watermark_desc": "Hiển thị watermark thương hiệu FuneralAcademy trên các trang tổ chức của bạn",
+        "watermark_desc": "Hiển thị watermark thương hiệu Funeral Academy trên các trang tổ chức của bạn",
         "watermark_free_plan": "Watermark luôn được hiển thị trên gói miễn phí",
-        "watermark_label": "Watermark \"Made with FuneralAcademy\"",
+        "watermark_label": "Watermark \"Made with Funeral Academy\"",
         "watermark_ee": "Bị ẩn bởi giấy phép Enterprise Edition của bạn"
       },
       "images": {
@@ -4824,10 +4824,10 @@
       },
       "teach_the_world": {
         "title": "Học hỏi & phát triển",
-        "description": "Tài nguyên giúp bạn tận dụng tối đa FuneralAcademy.",
+        "description": "Tài nguyên giúp bạn tận dụng tối đa Funeral Academy.",
         "classroom": "Lớp học",
         "classroom_desc": "Tìm hiểu cách phát triển và quản lý khóa học",
-        "university": "Đại học FuneralAcademy",
+        "university": "Đại học Funeral Academy",
         "university_desc": "Hướng dẫn, mẹo và thực hành tốt nhất"
       },
       "add_content": {
@@ -4857,7 +4857,7 @@
       }
     },
     "welcome": {
-      "title": "Chào mừng đến với FuneralAcademy",
+      "title": "Chào mừng đến với Funeral Academy",
       "subtitle": "Tạo khóa học, mời học viên và chia sẻ kiến thức với thế giới.",
       "get_started": "Bắt đầu",
       "features_title": "Mọi thứ bạn cần",
@@ -5157,7 +5157,7 @@
   "embed": {
     "not_supported_description": "Loại hoạt động này yêu cầu xác thực và không thể được nhúng.",
     "not_supported_title": "Hoạt động này không được hỗ trợ",
-    "powered_by": "Cung cấp bởi FuneralAcademy",
+    "powered_by": "Cung cấp bởi Funeral Academy",
     "visit_activity": "Truy cập trang hoạt động"
   },
   "migration": {
@@ -5662,7 +5662,7 @@
         "title": "Muốn dùng thử?",
         "body": "Hãy đến",
         "link": "trang Nhà phát triển",
-        "suffix": "để trải nghiệm FuneralAcademy."
+        "suffix": "để trải nghiệm Funeral Academy."
       },
       "validation": {
         "required": "Bắt buộc",

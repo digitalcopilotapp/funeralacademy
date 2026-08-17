@@ -6,9 +6,9 @@ import { send } from './resend'
 
 export async function sendWelcomeAccountMail(args: { email: string; username?: string }): Promise<void> {
   const { email, username } = args
-  await send(email, 'Welcome to FuneralAcademy 👋', {
+  await send(email, 'Welcome to Funeral Academy 👋', {
     accentColor: '#171717',
-    heading: 'Welcome to FuneralAcademy!',
+    heading: 'Welcome to Funeral Academy!',
     subtitle: username
       ? `Hey ${username}, we're thrilled to have you on board.`
       : "We're thrilled to have you on board.",

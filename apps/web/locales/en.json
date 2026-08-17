@@ -48,11 +48,11 @@
     "help": "Help",
     "help_menu": {
       "documentation": "Documentation",
-      "website": "FuneralAcademy Website",
+      "website": "Funeral Academy Website",
       "discord": "Discord",
       "report_feedback": "Report Issue or Feedback",
       "feedback_title": "Send Feedback",
-      "feedback_description": "Help us improve FuneralAcademy by sharing your thoughts, reporting bugs, or suggesting new features.",
+      "feedback_description": "Help us improve Funeral Academy by sharing your thoughts, reporting bugs, or suggesting new features.",
       "feedback_placeholder": "Tell us what's on your mind...",
       "feedback_success": "Thank you for your feedback!",
       "send_feedback": "Send Feedback",
@@ -215,7 +215,7 @@
     "organizations": "Organizations",
     "billing": "Billing",
     "create_organization": "Create organization",
-    "copyright": "© {{year}} FuneralAcademy, Inc.",
+    "copyright": "© {{year}} Funeral Academy, Inc.",
     "delete_organization_error": "Could not delete this organization. Please try again.",
     "org_actions": "Organization actions",
     "manage_upgrade": "Manage / Upgrade",
@@ -361,17 +361,17 @@
     "invite_required_desc": "An invite code is required to join {{org}}",
     "invite_code": "Invite Code",
     "validate_invite": "Validate Invite",
-    "terms_text": "By continuing, you agree to FuneralAcademy's",
+    "terms_text": "By continuing, you agree to Funeral Academy's",
     "terms_of_service": "Terms of Service",
     "and": "and",
     "privacy_policy": "Privacy Policy",
     "image_title_forgot": "Reset your password.",
     "image_subtitle_forgot": "We'll help you get back into your account in no time.",
-    "image_title_login": "Welcome back to FuneralAcademy.",
+    "image_title_login": "Welcome back to Funeral Academy.",
     "image_subtitle_login": "Pick up where you left off — your courses, students, and tools are waiting.",
     "image_title_reset": "Almost there.",
     "image_subtitle_reset": "Create a strong password to keep your account secure.",
-    "image_title_signup": "Start teaching with FuneralAcademy.",
+    "image_title_signup": "Start teaching with Funeral Academy.",
     "image_subtitle_signup": "Create your account and launch your first course in minutes.",
     "image_title_verify": "Verify your email.",
     "image_subtitle_verify": "One quick step to secure your account and get started.",
@@ -579,14 +579,14 @@
     "import": {
       "scorm_package": "SCORM Package",
       "scorm_description": "Import SCORM 1.2 or SCORM 2004 packages",
-      "funeralacademy_courses": "FuneralAcademy Courses",
-      "funeralacademy_description": "Import courses exported from FuneralAcademy",
+      "funeralacademy_courses": "Funeral Academy Courses",
+      "funeralacademy_description": "Import courses exported from Funeral Academy",
       "upload_package": "Upload Package",
       "configure": "Configure",
       "complete": "Complete",
       "click_to_upload": "Click to upload or drag and drop",
-      "funeralacademy_format": "FuneralAcademy course export (.zip)",
-      "funeralacademy_info": "Upload a FuneralAcademy course export package (.zip). You'll be able to select which courses to import and configure import options.",
+      "funeralacademy_format": "Funeral Academy course export (.zip)",
+      "funeralacademy_info": "Upload a Funeral Academy course export package (.zip). You'll be able to select which courses to import and configure import options.",
       "analyze_package": "Analyze Package",
       "ready_to_analyze": "Ready to analyze",
       "invalid_file_format": "Please upload a .zip file",
@@ -1470,7 +1470,7 @@
     "not_supported_title": "This activity is not supported",
     "not_supported_description": "This type of activity requires authentication and cannot be embedded.",
     "visit_activity": "Visit Activity Page",
-    "powered_by": "Powered by FuneralAcademy"
+    "powered_by": "Powered by Funeral Academy"
   },
   "assignments": {
     "submit_assignment": "Submit Assignment",
@@ -1872,7 +1872,7 @@
           "rate_limited": "Too many attempts. Please wait a moment and try again.",
           "status_error": "Could not load your two-factor settings.",
           "copy_failed": "Could not copy. Please select the text and copy it manually.",
-          "codes_file_header": "FuneralAcademy two-factor backup codes. Each code can be used once.",
+          "codes_file_header": "Funeral Academy two-factor backup codes. Each code can be used once.",
           "already_enabled": "Two-factor authentication is already enabled on this account.",
           "setup_failed": "Could not start two-factor setup. Please try again.",
           "enabled_toast": "Two-factor authentication is now enabled.",
@@ -1991,7 +1991,7 @@
           "description": "Configure your personal settings, passwords, email"
         }
       },
-      "funeralacademy_university": "FuneralAcademy University",
+      "funeralacademy_university": "Funeral Academy University",
       "welcome_back": "Welcome back",
       "plan": "plan",
       "create_course": "Create Course",
@@ -2048,8 +2048,8 @@
       "import_course": "Import Course",
       "import_scorm": "Import SCORM",
       "import_scorm_description": "Import a SCORM package to create a new course",
-      "import_funeralacademy": "Import FuneralAcademy Course",
-      "import_funeralacademy_description": "Import a course exported from FuneralAcademy",
+      "import_funeralacademy": "Import Funeral Academy Course",
+      "import_funeralacademy_description": "Import a course exported from Funeral Academy",
       "import_select_type": "Select the type of course to import",
       "no_courses": "No courses yet",
       "create_course_placeholder": "Create a course to add content",
@@ -2906,8 +2906,8 @@
         "footer_text_desc": "Custom text displayed at the bottom of your organization pages",
         "default_language": "Default Language",
         "default_language_desc": "The language new visitors see by default and the language used for emails sent on behalf of this organization. Members can still switch their own UI language.",
-        "watermark_label": "\"Made with FuneralAcademy\" watermark",
-        "watermark_desc": "Show the FuneralAcademy branding watermark on your organization pages",
+        "watermark_label": "\"Made with Funeral Academy\" watermark",
+        "watermark_desc": "Show the Funeral Academy branding watermark on your organization pages",
         "watermark_free_plan": "Watermark is always shown on the free plan",
         "watermark_ee": "Hidden by your Enterprise Edition license"
       },
@@ -5668,10 +5668,10 @@
       },
       "teach_the_world": {
         "title": "Learn & grow",
-        "description": "Resources to help you get the most out of FuneralAcademy.",
+        "description": "Resources to help you get the most out of Funeral Academy.",
         "classroom": "The Classroom",
         "classroom_desc": "Learn how to grow and manage your courses",
-        "university": "FuneralAcademy University",
+        "university": "Funeral Academy University",
         "university_desc": "Guides, tips and best practices"
       },
       "add_content": {
@@ -5701,7 +5701,7 @@
       }
     },
     "welcome": {
-      "title": "Welcome to FuneralAcademy",
+      "title": "Welcome to Funeral Academy",
       "subtitle": "Create courses, invite learners and share knowledge with the world.",
       "get_started": "Get Started",
       "features_title": "Everything you need",
@@ -6070,7 +6070,7 @@
         "title": "Looking to test?",
         "body": "Head to the",
         "link": "Developers page",
-        "suffix": "to try FuneralAcademy instead."
+        "suffix": "to try Funeral Academy instead."
       },
       "validation": {
         "required": "Required",

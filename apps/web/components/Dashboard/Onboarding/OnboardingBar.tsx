@@ -662,7 +662,7 @@ export default function OnboardingBar() {
                                       </div>
                                     )}
 
-                                  {/* Teach the world — FuneralAcademy University link */}
+                                  {/* Teach the world — Funeral Academy University link */}
                                   {step.id === 'teach_the_world' &&
                                     !step.completed && (
                                       <div className="relative px-3 pb-3 space-y-2">
@@ -674,7 +674,7 @@ export default function OnboardingBar() {
                                         >
                                           <img
                                             src="/UNI_LOGO.png"
-                                            alt="FuneralAcademy University"
+                                            alt="Funeral Academy University"
                                             className="h-9 w-auto shrink-0 rounded"
                                           />
                                           <div className="min-w-0">

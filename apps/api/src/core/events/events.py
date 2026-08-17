@@ -39,7 +39,7 @@ async def _reconcile_packs():
 
 def startup_app(app: FastAPI) -> Callable:
     async def start_app() -> None:
-        # Get FuneralAcademy Config
+        # Get Funeral Academy Config
         funeralacademy_config: FuneralAcademyConfig = get_funeralacademy_config()
         app.funeralacademy_config = funeralacademy_config  # type: ignore
 

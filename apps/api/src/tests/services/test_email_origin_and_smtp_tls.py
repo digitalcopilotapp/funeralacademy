@@ -6,7 +6,7 @@ Two hardening fixes in ``src/services/email/utils.py``:
   a magic-login / email-verification link. The shipped ``allowed_regexp``
   default used to be a catch-all that ``re.fullmatch`` accepted for any
   ``https://host``, so ``Origin: https://evil.com`` produced a genuine
-  FuneralAcademy email containing an attacker-hosted login link.
+  Funeral Academy email containing an attacker-hosted login link.
 * ``starttls()`` with no ``context`` builds an *unverified* TLS session, so an
   on-path relay impersonator captures the SMTP credentials and every emailed
   token.

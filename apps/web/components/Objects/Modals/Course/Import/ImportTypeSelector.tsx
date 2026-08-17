@@ -48,7 +48,7 @@ function ImportTypeSelector({ onSelectType, currentPlan }: ImportTypeSelectorPro
           </p>
         </button>
 
-        {/* FuneralAcademy Import Option */}
+        {/* Funeral Academy Import Option */}
         <button
           onClick={() => onSelectType('funeralacademy')}
           className="group flex flex-col items-center p-6 rounded-xl border-2 border-gray-200 bg-white hover:border-black hover:shadow-lg transition-all duration-200"

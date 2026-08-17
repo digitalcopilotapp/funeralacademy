@@ -28,7 +28,7 @@ export function isEmailEnabled(): boolean {
 }
 
 const DEFAULT_FROM =
-  process.env.RESEND_FROM_EMAIL || 'FuneralAcademy <hello@emails.funeralacademy.app>'
+  process.env.RESEND_FROM_EMAIL || 'Funeral Academy <hello@emails.funeralacademy.app>'
 
 export interface SendResult {
   ok: boolean

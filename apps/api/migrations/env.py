@@ -9,7 +9,7 @@ from alembic import context
 
 from config.config import get_funeralacademy_config
 
-# FuneralAcademy config
+# Funeral Academy config
 
 lh_config = get_funeralacademy_config()
 

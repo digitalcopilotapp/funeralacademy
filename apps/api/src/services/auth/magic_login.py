@@ -3,7 +3,7 @@
 Distinct from the admin/integration magic link (``purpose: "magic_link"`` in
 :mod:`src.services.admin.admin`), which an API-token integration mints for a
 specific user and is delivered out-of-band. This one is requested by the end user
-from the login page ("email me a login link"), is emailed by FuneralAcademy, and
+from the login page ("email me a login link"), is emailed by Funeral Academy, and
 carries ``purpose: "magic_login"``.
 
 Security posture mirrors the admin link:
@@ -111,7 +111,7 @@ def send_magic_login_email(
     safe_name = html.escape(user.username or user.email)
 
     body_content = f"""
-        <h1 style="{STYLES['h1']}">Sign in to FuneralAcademy</h1>
+        <h1 style="{STYLES['h1']}">Sign in to Funeral Academy</h1>
         <p style="{STYLES['p']}">
             Hi {safe_name}, click the button below to sign in. This link works
             once and expires in 15 minutes. If you didn't request it, you can
@@ -124,11 +124,11 @@ def send_magic_login_email(
     """
     return send_email(
         to=email,
-        subject="Your FuneralAcademy login link",
+        subject="Your Funeral Academy login link",
         body=_email_layout(
-            title="Sign in to FuneralAcademy",
+            title="Sign in to Funeral Academy",
             body_content=body_content,
-            footer_note="This link signs you in to your FuneralAcademy account.",
+            footer_note="This link signs you in to your Funeral Academy account.",
         ),
     )
 

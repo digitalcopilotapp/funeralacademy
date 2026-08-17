@@ -242,7 +242,7 @@ export function downloadBlob(blob: Blob, filename: string) {
 }
 
 /**
- * Analyze a FuneralAcademy course export package for import
+ * Analyze a Funeral Academy course export package for import
  */
 export async function analyzeImportPackage(
   file: File,

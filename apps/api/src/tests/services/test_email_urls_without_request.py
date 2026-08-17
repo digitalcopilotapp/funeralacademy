@@ -189,7 +189,7 @@ class TestOrgLogoUrlWithoutRequest:
         self, monkeypatch, clean_env
     ):
         """A relative src renders broken in every mail client, so returning
-        None (and letting the caller use the FuneralAcademy wordmark) is the only
+        None (and letting the caller use the Funeral Academy wordmark) is the only
         acceptable outcome."""
         monkeypatch.setattr(
             email_utils, "get_funeralacademy_config", lambda: _config(domain="localhost")

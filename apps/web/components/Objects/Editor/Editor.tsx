@@ -718,7 +718,7 @@ const EditorFuneralAcademyLogo = () => {
       >
         <Image
           src="/lrn.svg"
-          alt="FuneralAcademy"
+          alt="Funeral Academy"
           width={14}
           height={14}
           className="invert"

@@ -421,7 +421,7 @@ async def connect_to_db(app: FastAPI):
             await asyncio.sleep(delay)
 
     app.db_engine = engine  # type: ignore
-    logging.info("FuneralAcademy database has been started.")
+    logging.info("Funeral Academy database has been started.")
 
 
 async def get_db_session() -> AsyncSession:  # type: ignore[override]
@@ -433,5 +433,5 @@ async def close_database(app: FastAPI):
     db_engine = getattr(app, "db_engine", None)
     if db_engine is not None and hasattr(db_engine, "dispose"):
         await db_engine.dispose()
-    logging.info("FuneralAcademy has been shut down.")
+    logging.info("Funeral Academy has been shut down.")
     return app

@@ -232,6 +232,22 @@ export default async function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl
   const fullhost = req.headers.get('host')
 
+  // Idempotent, for the same reason the /admin branch below is: routing
+  // re-evaluates this proxy against the path a rewrite produced, and those
+  // internal paths match the matcher. Without this guard the tenant catch-all
+  // at the bottom prefixes its own output on every pass — `/login` becomes
+  // `/orgs/{slug}/auth/login`, then `/orgs/{slug}/orgs/{slug}/auth/login`, and
+  // the request finally dies with 431 once the rewrite header outgrows the
+  // header limit.
+  //
+  // `request.headers` is re-asserted rather than dropped: the tenant headers
+  // were injected on the first pass, and a bare NextResponse.next() clears the
+  // override list, so the page would render without knowing its org.
+  const INTERNAL_PREFIXES = ['/orgs', '/auth', '/editor']
+  if (INTERNAL_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return NextResponse.next({ request: { headers: req.headers } })
+  }
+
   // SEO: canonicalize mixed-case top-level route names (/Login → /login). Scoped
   // to KNOWN static routes only so it never lowercases data-bearing segments
   // (org slugs, course/activity UUIDs, media paths).

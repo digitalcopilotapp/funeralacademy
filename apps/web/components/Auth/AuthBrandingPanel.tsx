@@ -28,10 +28,10 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
     unsplash_photographer_url = '',
     unsplash_photo_url = '',
   } = authBranding
-  const UNSPLASH_UTM = '?utm_source=FuneralAcademy&utm_medium=referral'
+  const UNSPLASH_UTM = '?utm_source=Funeral Academy&utm_medium=referral'
   const withUtm = (url: string) => (url ? `${url}${UNSPLASH_UTM}` : '')
 
-  // Check if org has enterprise plan - hide FuneralAcademy branding for enterprise users
+  // Check if org has enterprise plan - hide Funeral Academy branding for enterprise users
   // In OSS mode, always show branding regardless of plan
   const plan = usePlan()
   const isEnterprise = plan === 'enterprise'
@@ -75,7 +75,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
 
   const displayMessage = welcome_message || welcomeText || ''
   // No-org platform copy (defaults mirror the platform login illustration).
-  const noOrgTitle = title || 'Welcome back to FuneralAcademy.'
+  const noOrgTitle = title || 'Welcome back to Funeral Academy.'
   const noOrgSubtitle =
     subtitle || 'Pick up where you left off — your courses, students, and tools are waiting.'
   // Treat the no-org illustration like a photo background: dark scrim, no
@@ -141,14 +141,14 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
 
         {/* Content */}
         <div className="relative z-10 flex flex-col h-full p-10">
-          {/* Top bar with FuneralAcademy lrn.svg logo - hidden for enterprise users
+          {/* Top bar with Funeral Academy lrn.svg logo - hidden for enterprise users
               and for the no-org apex panel (platform shows no logo on the image). */}
           {!isEnterprise && !noOrg && (
             <div className="login-topbar">
               <Link prefetch href="https://funeralacademy.app" target="_blank">
                 <img
                   src="/lrn.svg"
-                  alt="FuneralAcademy"
+                  alt="Funeral Academy"
                   width={30}
                   height={30}
                   className={cn(
@@ -194,7 +194,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
                           width={96}
                           height={96}
                           src={funeralacademyIcon}
-                          alt="FuneralAcademy"
+                          alt="Funeral Academy"
                           className="object-contain"
                         />
                       )}
@@ -203,7 +203,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
 
                   {/* Text content */}
                   <div className="space-y-1">
-                    <h1 className="font-black text-3xl tracking-tight">{org?.name || 'FuneralAcademy'}</h1>
+                    <h1 className="font-black text-3xl tracking-tight">{org?.name || 'Funeral Academy'}</h1>
                     {displayMessage && (
                       <p className={cn(
                         "text-lg max-w-sm leading-relaxed",

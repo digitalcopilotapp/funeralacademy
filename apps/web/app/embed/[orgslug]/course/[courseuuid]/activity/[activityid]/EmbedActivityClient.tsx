@@ -169,7 +169,7 @@ function EmbedActivityClient({ activityId, courseuuid, orgslug, bgcolor }: Embed
           <div className="mb-6">
             <Image
               src="/funeralacademy_bigicon.png"
-              alt="FuneralAcademy"
+              alt="Funeral Academy"
               width={64}
               height={64}
               className="mx-auto"
@@ -278,7 +278,7 @@ function PoweredByBadge({ activityUrl }: { activityUrl: string }) {
       >
         <Image
           src="/lrn.svg"
-          alt="FuneralAcademy"
+          alt="Funeral Academy"
           width={20}
           height={20}
         />

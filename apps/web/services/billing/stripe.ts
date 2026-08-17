@@ -86,7 +86,7 @@ function getPeriodStart(subscription: any): number | undefined {
 
 // ── Customer resolution ──────────────────────────────────────────────────────
 // A single email can map to MULTIPLE Stripe customers. Duplicates arise because
-// other FuneralAcademy products share this Stripe account and create their own
+// other Funeral Academy products share this Stripe account and create their own
 // customer per email. `customers.list({ email, limit: 1 })` returns an arbitrary
 // (most-recently created) customer, which may not be the one holding this org's
 // subscription — that made getActiveSubscription return null and wrongly route
@@ -556,7 +556,7 @@ export async function getUpcomingInvoice(
  *
  * Invoices carry no org metadata, so they are matched by the subscriptions they
  * belong to — the org's plan subscription plus its packs. Invoices belonging to
- * another org (or another FuneralAcademy product) on the same shared customer are
+ * another org (or another Funeral Academy product) on the same shared customer are
  * therefore excluded.
  */
 export async function listInvoices(

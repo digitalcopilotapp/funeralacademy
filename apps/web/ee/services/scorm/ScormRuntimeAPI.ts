@@ -1,7 +1,7 @@
 /**
  * SCORM Runtime API Bridge
  * Implements JavaScript API for SCORM 1.2 and SCORM 2004
- * Handles communication between SCORM content and the FuneralAcademy backend
+ * Handles communication between SCORM content and the Funeral Academy backend
  */
 
 // SCORM 1.2 Error Codes

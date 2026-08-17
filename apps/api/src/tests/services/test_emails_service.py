@@ -82,9 +82,9 @@ class TestEmailsService:
             )
         call = send_email.call_args.kwargs
         assert "https://platform.test/organizations" in call["body"]
-        # Org-less keeps the FuneralAcademy-branded subject + Academy footer, no org logo.
-        assert "Welcome to FuneralAcademy" in call["subject"]
-        assert "FuneralAcademy Academy" in call["body"]
+        # Org-less keeps the Funeral Academy-branded subject + Academy footer, no org logo.
+        assert "Welcome to Funeral Academy" in call["subject"]
+        assert "Funeral Academy Academy" in call["body"]
         assert "<img" not in call["body"]
 
     def test_welcome_is_whitelabeled_when_org_supplied(self):
@@ -97,14 +97,14 @@ class TestEmailsService:
                 logo_url="https://api.test/content/orgs/org_uuid/logos/logo.png",
             )
         call = send_email.call_args.kwargs
-        # Subject/body name the org (html-escaped), not FuneralAcademy.
+        # Subject/body name the org (html-escaped), not Funeral Academy.
         assert "Acme &amp; Co" in call["subject"]
-        assert "Welcome to FuneralAcademy" not in call["subject"]
+        assert "Welcome to Funeral Academy" not in call["subject"]
         assert "Acme &amp; Co" in call["body"]
         # Org logo replaces the mark; Academy link is gone; powered-by remains.
         assert '<img src="https://api.test/content/orgs/org_uuid/logos/logo.png"' in call["body"]
-        assert "FuneralAcademy Academy" not in call["body"]
-        assert "Powered by FuneralAcademy" in call["body"]
+        assert "Funeral Academy Academy" not in call["body"]
+        assert "Powered by Funeral Academy" in call["body"]
         assert "https://acme.test/home" in call["body"]
 
     def test_whitelabel_without_logo_falls_back_to_funeralacademy_mark(self):
@@ -113,11 +113,11 @@ class TestEmailsService:
                 _user(), "user@test.com", org_name="Acme", logo_url=None
             )
         call = send_email.call_args.kwargs
-        # No org logo → FuneralAcademy wordmark (SVG), but text still white-labeled.
+        # No org logo → Funeral Academy wordmark (SVG), but text still white-labeled.
         assert "<img" not in call["body"]
         assert "<svg" in call["body"]
         assert "Acme" in call["subject"]
-        assert "Powered by FuneralAcademy" in call["body"]
+        assert "Powered by Funeral Academy" in call["body"]
 
     def test_role_changed_email_links_back_to_the_org(self):
         """Telling someone their permissions changed is useless without a way
@@ -154,7 +154,7 @@ class TestEmailsService:
                 logo_url="https://api.test/content/orgs/org_uuid/logos/logo.png",
             ) is True
         call = send_email.call_args.kwargs
-        # Named after the org, with the org's own logo, not the FuneralAcademy mark.
+        # Named after the org, with the org's own logo, not the Funeral Academy mark.
         assert "Acme &amp; Co" in call["subject"]
         assert '<img src="https://api.test/content/orgs/org_uuid/logos/logo.png"' in call["body"]
         # The whole point of the email: a working way back into the org.
@@ -349,7 +349,7 @@ class TestResendTransientRetry:
         monkeypatch.setattr(email_utils.resend.Emails, "send", staticmethod(flaky))
 
         result = email_utils._send_email_resend(
-            "FuneralAcademy <no-reply@test>", "user@test.com", "hi", "<p>hi</p>",
+            "Funeral Academy <no-reply@test>", "user@test.com", "hi", "<p>hi</p>",
             SimpleNamespace(resend_api_key="key"),
         )
 
@@ -372,7 +372,7 @@ class TestResendTransientRetry:
 
         with pytest.raises(HTTPException) as exc_info:
             email_utils._send_email_resend(
-                "FuneralAcademy <no-reply@test>", "user@test.com", "hi", "<p>hi</p>",
+                "Funeral Academy <no-reply@test>", "user@test.com", "hi", "<p>hi</p>",
                 SimpleNamespace(resend_api_key="key"),
             )
 

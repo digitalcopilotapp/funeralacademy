@@ -183,7 +183,7 @@ async def api_export_courses_batch(
     response_model=ImportAnalysisResponse,
     summary="Analyze a course import package",
     description=(
-        "Upload and analyze a FuneralAcademy course export ZIP. Validates the package, "
+        "Upload and analyze a Funeral Academy course export ZIP. Validates the package, "
         "extracts its contents, and returns a list of courses available for import "
         "along with a temp_id to use with the subsequent import endpoint."
     ),
@@ -202,7 +202,7 @@ async def api_analyze_import_package(
     current_user: PublicUser = Depends(get_current_user),
 ) -> ImportAnalysisResponse:
     """
-    Analyze a FuneralAcademy course export package for import.
+    Analyze a Funeral Academy course export package for import.
 
     Upload a ZIP file containing exported courses. The endpoint will:
     1. Validate the package format
@@ -660,7 +660,7 @@ async def api_clone_course(
     summary="Export course as ZIP",
     description=(
         "Export a single course and all its content (chapters, activities, blocks, "
-        "and files) as a ZIP archive following the FuneralAcademy export format."
+        "and files) as a ZIP archive following the Funeral Academy export format."
     ),
     responses={
         200: {"description": "ZIP archive containing the exported course", "content": {"application/zip": {}}},
@@ -685,8 +685,8 @@ async def api_export_course(
     - Activities with their files (videos, documents, PDFs)
     - Dynamic activity blocks with their files (images, videos, PDFs)
 
-    The ZIP file follows the FuneralAcademy export format and can be imported
-    into any FuneralAcademy instance.
+    The ZIP file follows the Funeral Academy export format and can be imported
+    into any Funeral Academy instance.
 
     **Required Permissions:**
     - Read access to the course

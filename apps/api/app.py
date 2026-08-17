@@ -4,7 +4,7 @@
 #  | |__|  __/ (_| | |  | | | |  _  | (_) | |_| \__ \  __/
 #  |_____\___|\__,_|_|  |_| |_|_| |_|\___/ \__,_|___/\___|
 #
-#  FuneralAcademy · open-source learning platform · FastAPI entrypoint
+#  Funeral Academy · open-source learning platform · FastAPI entrypoint
 #
 #  ↳ funeralacademy.app · github.com/learnhouse/learnhouse
 #  ↳ Created and maintained by @swve © 2022–present
@@ -159,7 +159,7 @@ app.include_router(v1_router)
 
 @app.get("/")
 async def root():
-    return {"Message": "Welcome to FuneralAcademy ✨"}
+    return {"Message": "Welcome to Funeral Academy ✨"}
 
 
 if __name__ == "__main__":

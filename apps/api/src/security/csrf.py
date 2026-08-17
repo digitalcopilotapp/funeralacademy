@@ -35,7 +35,7 @@ class CSRFProtectionMiddleware(BaseHTTPMiddleware):
     Middleware that validates Origin header on state-changing requests.
 
     This protects against CSRF attacks by ensuring that requests come from
-    allowed origins. The allowed origins are configured in the FuneralAcademy config.
+    allowed origins. The allowed origins are configured in the Funeral Academy config.
     """
 
     def __init__(self, app):

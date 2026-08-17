@@ -561,7 +561,7 @@ const FuneralAcademyLogo = ({ logoFilter }: { logoFilter: string }) => {
   return (
     <Image
       src="/lrn-text.svg"
-      alt="FuneralAcademy logo"
+      alt="Funeral Academy logo"
       width={133}
       height={40}
       style={{ height: 'auto', filter: logoFilter }}

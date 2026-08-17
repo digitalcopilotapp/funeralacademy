@@ -19,7 +19,7 @@ export async function generateMetadata(props: MetadataProps): Promise<Metadata> 
   }, access_token)
   return {
     title: 'Copilot — ' + org.name,
-    description: 'Chat with AI about your courses using FuneralAcademy Copilot.',
+    description: 'Chat with AI about your courses using Funeral Academy Copilot.',
   }
 }
 

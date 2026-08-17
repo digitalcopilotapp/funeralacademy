@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unified migration script for FuneralAcademy database updates.
+Unified migration script for Funeral Academy database updates.
 
 This script handles all migrations:
 1. Communities and discussions permissions for roles
@@ -848,7 +848,7 @@ def run_playgrounds_migration():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='FuneralAcademy Database Migration Script',
+        description='Funeral Academy Database Migration Script',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -871,7 +871,7 @@ Examples:
     args = parser.parse_args()
 
     print("=" * 60)
-    print("FuneralAcademy Database Migration Script")
+    print("Funeral Academy Database Migration Script")
     print("=" * 60)
 
     if args.show:

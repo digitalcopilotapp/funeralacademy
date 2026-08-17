@@ -60,7 +60,7 @@ i18n
       escapeValue: false, // react already safes from xss
     },
     detection: {
-      // `navigator` is deliberately absent: FuneralAcademy is a pt-BR product, so
+      // `navigator` is deliberately absent: Funeral Academy is a pt-BR product, so
       // a visitor with an en-US browser still lands on Portuguese. Only an
       // explicit choice (stored) or an explicit ?lng= switches the language.
       order: ['localStorage', 'cookie', 'querystring'],

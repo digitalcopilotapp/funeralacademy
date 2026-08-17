@@ -203,7 +203,7 @@ async def analyze_import_package(
     db_session: AsyncSession,
 ) -> ImportAnalysisResponse:
     """
-    Analyze a FuneralAcademy course export package.
+    Analyze a Funeral Academy course export package.
     Returns list of courses and stores package temporarily.
     """
     # Verify organization exists
@@ -347,7 +347,7 @@ async def analyze_import_package(
         if manifest.get("format") != "funeralacademy-course-export":
             raise HTTPException(
                 status_code=400,
-                detail="Invalid package: Not a FuneralAcademy course export"
+                detail="Invalid package: Not a Funeral Academy course export"
             )
 
         version = manifest.get("version", "1.0.0")

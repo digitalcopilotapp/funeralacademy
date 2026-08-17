@@ -16,7 +16,7 @@ export default function EERequiredScreen() {
           Enterprise Edition license required
         </h1>
         <p className="text-white/50 text-sm leading-relaxed">
-          The superadmin dashboard is part of FuneralAcademy Enterprise Edition and
+          The superadmin dashboard is part of Funeral Academy Enterprise Edition and
           is not available on this deployment.
         </p>
       </div>

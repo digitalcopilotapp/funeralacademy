@@ -42,7 +42,7 @@ function OrgFooter() {
           <Link href="https://funeralacademy.app" target="_blank" rel="noopener noreferrer">
             <Image
               src="/lrn.svg"
-              alt="FuneralAcademy"
+              alt="Funeral Academy"
               width={24}
               height={24}
               style={{ height: 'auto' }}

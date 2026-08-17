@@ -1,5 +1,5 @@
 """
-Admin API Router — Headless access to FuneralAcademy via API tokens.
+Admin API Router — Headless access to Funeral Academy via API tokens.
 
 All endpoints are scoped by org_slug and require API token authentication
 (Bearer lh_...). The token's organization must match the org_slug in the URL.
@@ -956,7 +956,7 @@ def _render_magic_link_error(title: str, message: str) -> HTMLResponse:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign-in link — FuneralAcademy</title>
+<title>Sign-in link — Funeral Academy</title>
 <style>
   body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
          background: #f6f7f9; color: #111827; margin: 0;

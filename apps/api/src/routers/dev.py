@@ -23,8 +23,8 @@ def _require_superadmin(current_user: PublicUser):
 
 @router.get(
     "/config",
-    summary="Get FuneralAcademy runtime config",
-    description="Returns the current FuneralAcademy configuration with sensitive values redacted. Restricted to superadmin users.",
+    summary="Get Funeral Academy runtime config",
+    description="Returns the current Funeral Academy configuration with sensitive values redacted. Restricted to superadmin users.",
     responses={
         200: {"description": "Configuration dictionary with secrets redacted"},
         401: {"description": "Authentication required"},

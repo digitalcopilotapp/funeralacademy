@@ -35,7 +35,7 @@ def _send_notification_email(**kwargs):
 ACADEMY_URL = "https://university.funeralacademy.io"
 
 
-# Inline SVG logo (FuneralAcademy icon mark + wordmark, scaled down)
+# Inline SVG logo (Funeral Academy icon mark + wordmark, scaled down)
 LOGO_SVG = """<svg width="140" height="20" viewBox="0 0 1488 218" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M152 37C152 56.96 148.07 76.73 140.43 95.17C132.79 113.61 121.6 130.37 107.48 144.48C93.37 158.6 76.61 169.79 58.17 177.43C39.73 185.07 19.96 189 0 189V115.94C10.37 115.94 20.63 113.9 30.21 109.93C39.79 105.96 48.49 100.15 55.82 92.82C63.15 85.49 68.97 76.79 72.93 67.21C76.9 57.63 78.94 47.37 78.94 37H152Z" fill="black"/>
 <path d="M304 189C284.04 189 264.27 185.07 245.83 177.43C227.39 169.79 210.63 158.6 196.52 144.48C182.4 130.37 171.21 113.61 163.57 95.17C155.93 76.73 152 56.96 152 37H225.06C225.06 47.37 227.1 57.63 231.07 67.21C235.03 76.79 240.85 85.49 248.18 92.82C255.51 100.15 264.21 105.96 273.79 109.93C283.37 113.9 293.63 115.94 304 115.94V189Z" fill="black"/>
@@ -63,10 +63,10 @@ STYLES = {
 def _org_logo_img(logo_url: str, alt: str) -> str:
     """<img> for a white-labeled org logo.
 
-    Bounded to the same footprint as the FuneralAcademy wordmark. Raster logos
+    Bounded to the same footprint as the Funeral Academy wordmark. Raster logos
     (PNG/JPG) render in every mail client; an SVG logo may be stripped by some
     (e.g. Gmail), in which case the ``alt`` (the org name) shows instead — still
-    org-branded, never a broken FuneralAcademy mark.
+    org-branded, never a broken Funeral Academy mark.
     """
     return (
         f'<img src="{html.escape(logo_url)}" alt="{html.escape(alt)}" '
@@ -171,7 +171,7 @@ def _email_layout(
 ) -> str:
     """Wrap content in the standard email layout.
 
-    ``logo_html`` defaults to the FuneralAcademy mark; white-labeled emails pass the
+    ``logo_html`` defaults to the Funeral Academy mark; white-labeled emails pass the
     org's logo <img> instead.
 
     ``unsubscribe_url`` is set only by bulk lifecycle mail. Transactional email
@@ -241,9 +241,9 @@ def send_account_creation_email(
     signups. Falls back to the public academy when no URL is supplied.
 
     When ``org_name`` is set the email is WHITE-LABELED to that organization:
-    the subject and body name the org (not FuneralAcademy), the org's ``logo_url``
-    replaces the FuneralAcademy mark when present, and the footer is reduced to a
-    subtle "Powered by FuneralAcademy". Org-less signups keep the FuneralAcademy-branded
+    the subject and body name the org (not Funeral Academy), the org's ``logo_url``
+    replaces the Funeral Academy mark when present, and the footer is reduced to a
+    subtle "Powered by Funeral Academy". Org-less signups keep the Funeral Academy-branded
     variant with the Academy footer link.
     """
     safe_username = html.escape(user.username)
@@ -521,7 +521,7 @@ def send_org_join_email(
     mail at all and had to find their way to the org on their own.
 
     Always white-labeled to the org — the user is being welcomed into that
-    academy, not onto FuneralAcademy — with the org's logo when it has one.
+    academy, not onto Funeral Academy — with the org's logo when it has one.
     """
     safe_username = html.escape(username)
     safe_org_name = html.escape(org_name)
