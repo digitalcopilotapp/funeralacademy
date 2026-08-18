@@ -21,10 +21,10 @@ import { getOrgLogoMediaDirectory } from '@services/media/media'
 
 export const revalidate = 3600
 
-// The installed-app chrome. Sampled from the dashboard shell (DashMobileMenu's
-// floating pill) so the OS window frame matches the product's own chrome
-// instead of flashing white around it.
-const BRAND_BG = '#111113'
+// Moldura do app instalado: o azul-marinho do SINDEF-BA, extraído do logotipo
+// oficial. É a mesma cor da barra superior do portal, então a janela do sistema
+// continua a interface em vez de emoldurá-la com um cinza genérico.
+const BRAND_BG = '#0B2C62'
 
 type ManifestIcon = {
   src: string
@@ -51,10 +51,16 @@ export async function GET(request: NextRequest) {
     'Formação e certificação para as empresas funerárias da Bahia. Uma iniciativa do SINDEF-BA.'
 
   if (orgslug) {
-    // An installed app that opens on the wrong tenant is worse than no install
-    // at all, so the start_url is scoped to the org even when the lookup below
-    // fails and we fall back to the platform name.
-    startUrl = `/orgs/${orgslug}/courses`
+    // `/orgs/{slug}/…` é caminho INTERNO: o proxy reescreve `/courses` para ele,
+    // e uma requisição que já chega nessa forma sai pelo guard de idempotência
+    // sem o contexto de organização — renderizando a página de 404. Como
+    // start_url, isso reprova a validação de instalação do navegador e o
+    // "adicionar à tela de início" simplesmente não aparece.
+    //
+    // Em tenancy single há uma organização só, então a rota pública já resolve
+    // para ela. Em multi, o host é que carrega o tenant — o caminho continua
+    // sendo o público.
+    startUrl = '/courses'
 
     try {
       const org = await getOrganizationContextInfo(orgslug, {
@@ -114,13 +120,13 @@ export async function GET(request: NextRequest) {
           {
             name: 'Meus cursos',
             short_name: 'Cursos',
-            url: `/orgs/${orgslug}/courses`,
+            url: '/courses',
             icons: [{ src: '/icons/icon-192.png', sizes: '192x192' }],
           },
           {
             name: 'Minha trilha',
             short_name: 'Trilha',
-            url: `/orgs/${orgslug}/trail`,
+            url: '/trail',
             icons: [{ src: '/icons/icon-192.png', sizes: '192x192' }],
           },
         ]
