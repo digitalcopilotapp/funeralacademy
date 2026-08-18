@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
@@ -131,6 +131,13 @@ const MultipleAuthors = ({ authors }: { authors: Author[] }) => {
 
 const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseActionsMobileProps) => {
   const router = useRouter()
+  // Where to send someone who is not signed in. It is the LOGIN screen, not
+  // signup: most people reaching a course already have an account, and the
+  // login page links to signup for those who do not. `next` brings them back to
+  // the exact course they were trying to open. usePathname (not window) so the
+  // value is identical on the server and the client render.
+  const pathname = usePathname() || ''
+  const loginHref = getUriWithOrg(orgslug, `/login?next=${encodeURIComponent(pathname)}`)
   const session = useLHSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
   const org = useOrg() as any
@@ -164,13 +171,13 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
         reason: 'unauthenticated',
         intended_action: isStarted ? 'leave_course' : 'start_course',
       })
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      router.push(loginHref)
       return
     }
 
     // Check if user is part of the organization
     if (!isUserPartOfTheOrg) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      router.push(loginHref)
       return
     }
 
@@ -234,7 +241,7 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
             </p>
           </div>
           <a
-            href={getUriWithOrg(orgslug, '/signup')}
+            href={loginHref}
             className="w-full py-2 px-4 rounded-lg bg-neutral-900 text-white font-semibold text-sm hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
           >
             <UserPlus className="w-4 h-4" />

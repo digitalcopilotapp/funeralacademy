@@ -4,6 +4,7 @@ import LanguageSwitcher from '@components/Utils/LanguageSwitcher'
 import AuthBrandingPanel from '@components/Auth/AuthBrandingPanel'
 import AuthMobileHeader from '@components/Auth/AuthMobileHeader'
 import { AuthFooter } from '@components/Footers/LegalFooters'
+import OrgBrandColor from '@components/Contexts/OrgBrandColor'
 
 interface AuthLayoutProps {
   org: any
@@ -17,15 +18,25 @@ interface AuthLayoutProps {
 export default function AuthLayout({ org, welcomeText, title, subtitle, children }: AuthLayoutProps) {
   return (
     <div className="min-h-screen lg:h-screen bg-white flex flex-col lg:flex-row relative overflow-hidden">
-      {/* Page-level blueprint grid, bottom-anchored */}
+      {/* Publishes the org colour to --brand for the panels and buttons below. */}
+      <OrgBrandColor
+        color={
+          org?.config?.config?.customization?.general?.color ||
+          org?.config?.config?.general?.color
+        }
+      />
+
+      {/* Page-level grid, bottom-anchored. Tinted from the brand hue rather
+          than neutral black so the ground belongs to the same palette as the
+          panel it sits beside. */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.035) 1px, transparent 1px),
-            linear-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.018) 1px, transparent 1px)`,
+            linear-gradient(color-mix(in srgb, var(--brand) 12%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--brand) 12%, transparent) 1px, transparent 1px),
+            linear-gradient(color-mix(in srgb, var(--brand) 6%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--brand) 6%, transparent) 1px, transparent 1px)`,
           backgroundSize: '80px 80px, 80px 80px, 16px 16px, 16px 16px',
           maskImage: 'linear-gradient(to top, black 0%, transparent 60%)',
           WebkitMaskImage: 'linear-gradient(to top, black 0%, transparent 60%)',

@@ -58,8 +58,11 @@ export function OrgJoinBanner() {
           <UserPlus size={20} className="flex-shrink-0" />
           <p className="text-sm font-medium">
             {t('banner.viewing_as_guest', { name: org?.name })}{' '}
+            {/* Login, not signup: this banner shows to people already signed in
+                to the platform but not yet part of this org, so an account
+                almost always exists. The login screen links onward to signup. */}
             <a
-              href={getUriWithOrg(orgslug, '/signup')}
+              href={getUriWithOrg(orgslug, '/login')}
               className="underline hover:no-underline font-bold"
             >
               {t('banner.join_organization')}

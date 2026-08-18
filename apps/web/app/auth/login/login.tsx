@@ -561,7 +561,7 @@ const LoginClient = (props: LoginClientProps) => {
                   <button
                     type="submit"
                     disabled={mfaSubmitting || !mfaCode.trim()}
-                    className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-4 transition-all disabled:opacity-50"
+                    className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-[var(--brand-contrast)] px-[15px] font-bold text-[14px] leading-none mt-4 transition-all disabled:opacity-50"
                   >
                     {mfaSubmitting ? (
                       <span className="flex items-center space-x-2">
@@ -684,7 +684,7 @@ const LoginClient = (props: LoginClientProps) => {
                       <button
                         type="submit"
                         disabled={magicSubmitting || !magicEmail.trim()}
-                        className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-4 transition-all disabled:opacity-50"
+                        className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-[var(--brand-contrast)] px-[15px] font-bold text-[14px] leading-none mt-4 transition-all disabled:opacity-50"
                       >
                         {magicSubmitting ? (
                           <span className="flex items-center space-x-2">
@@ -791,7 +791,7 @@ const LoginClient = (props: LoginClientProps) => {
                 <Form.Submit asChild>
                   <button
                     disabled={isSubmitting || (turnstileRequired && !turnstileToken)}
-                    className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50"
+                    className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-[var(--brand-contrast)] px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center space-x-2">

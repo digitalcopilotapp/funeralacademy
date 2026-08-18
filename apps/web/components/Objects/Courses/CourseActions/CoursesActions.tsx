@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { removeCourse, startCourse } from '@services/courses/activity'
 import { revalidateTags, asArray } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getOffersByResource } from '@services/payments/offers'
@@ -56,6 +56,13 @@ interface CourseActionsProps {
 function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseActionsProps) {
   const { t } = useTranslation()
   const router = useRouter()
+  // Where to send someone who is not signed in. It is the LOGIN screen, not
+  // signup: most people reaching a course already have an account, and the
+  // login page links to signup for those who do not. `next` brings them back to
+  // the exact course they were trying to open. usePathname (not window) so the
+  // value is identical on the server and the client render.
+  const pathname = usePathname() || ''
+  const loginHref = getUriWithOrg(orgslug, `/login?next=${encodeURIComponent(pathname)}`)
   const session = useLHSession() as any
   const [isActionLoading, setIsActionLoading] = useState(false)
   const [isContributeLoading, setIsContributeLoading] = useState(false)
@@ -92,13 +99,13 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
         reason: 'unauthenticated',
         intended_action: isStarted ? 'leave_course' : 'start_course',
       })
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      router.push(loginHref)
       return
     }
 
     // Check if user is part of the organization
     if (!isUserPartOfTheOrg) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      router.push(loginHref)
       return
     }
 
@@ -150,7 +157,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
 
   const handleApplyToContribute = async () => {
     if (!session.data?.user) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      router.push(loginHref)
       return
     }
 
@@ -209,7 +216,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
     if (!session.data?.user) {
       return (
         <button
-          onClick={() => router.push(getUriWithOrg(orgslug, '/signup'))}
+          onClick={() => router.push(loginHref)}
           aria-label={t('auth.sign_up_to_contribute')}
           className="w-full bg-white text-neutral-700 border border-neutral-200 py-3 rounded-lg nice-shadow font-semibold hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2 mt-3 cursor-pointer"
         >
@@ -400,7 +407,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
             </p>
           </div>
           <a
-            href={getUriWithOrg(orgslug, '/signup')}
+            href={loginHref}
             className="w-full bg-neutral-900 text-white py-3 rounded-lg nice-shadow font-semibold hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
           >
             <UserPlus className="w-5 h-5" />

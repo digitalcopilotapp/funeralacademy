@@ -347,6 +347,20 @@
 
 @layer base {
   :root {
+    /* Brand colours.
+       The auth screens used a hardcoded neutral black (#202020 -> #000000) for
+       their panels and a flat `bg-black` for every primary button, so the login
+       looked like a generic template while the rest of the portal carried the
+       organisation's identity.
+       `--brand` defaults to SINDEF-BA navy and is overwritten at runtime with
+       the org's own `customization.general.color`, so a tenant with a different
+       palette themes its own login without another code change. */
+    --brand: #0b2c62;
+    --brand-hover: #0e3a80;
+    --brand-contrast: #ffffff;
+    /* Accent, used sparingly — never as a surface, only for emphasis. */
+    --brand-accent: #e11d2e;
+
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;

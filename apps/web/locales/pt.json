@@ -229,7 +229,15 @@
     "leave_organization_desc": "Você perderá o acesso a {{org}} e será removido dos membros. Poderá entrar novamente depois se receber um convite.",
     "leave_organization_error": "Não foi possível sair desta organização. Tente novamente.",
     "leaving": "Saindo…",
-    "menu": "Menu"
+    "menu": "Menu",
+    "select": "Selecionar…",
+    "continue": "Continuar",
+    "dismiss": "Dispensar",
+    "sign_out": "Sair",
+    "move_up": "Mover para cima",
+    "move_down": "Mover para baixo",
+    "less": "Menos",
+    "more": "Mais"
   },
   "banner": {
     "viewing_as_guest": "Você está visualizando {{name}} como convidado.",
@@ -368,7 +376,31 @@
     "image_title_verify": "Verifique o seu e-mail.",
     "image_subtitle_verify": "Um passo rápido para proteger a sua conta e começar.",
     "turnstile_failed": "Verificação falhou. Tente novamente.",
-    "resend_verification": "Não recebeu? Reenviar email"
+    "resend_verification": "Não recebeu? Reenviar email",
+    "no_sign_up_method_available": "Esta organização restringiu as formas de entrada, então não é possível criar conta por aqui.",
+    "continue_to_dashboard": "Ir para o painel",
+    "mfa_invalid_code": "Esse código não confere. Verifique se o relógio do seu aparelho está no ajuste automático e tente de novo.",
+    "mfa_title": "Verificação em duas etapas",
+    "mfa_subtitle_backup": "Informe um dos códigos de backup que você guardou.",
+    "mfa_subtitle": "Informe o código de 6 dígitos do seu aplicativo autenticador.",
+    "mfa_backup_code": "Código de backup",
+    "mfa_code": "Código de verificação",
+    "mfa_verify": "Verificar",
+    "mfa_use_authenticator": "Usar o aplicativo autenticador",
+    "mfa_use_backup": "Usar um código de backup",
+    "mfa_back_to_login": "Voltar para a entrada",
+    "magic_title": "Entrar com um link",
+    "magic_sent_title": "Confira seu e-mail",
+    "magic_sent_body": "Se existir uma conta para {{email}}, acabamos de enviar um link seguro de acesso.",
+    "magic_back_to_login": "Voltar para a entrada",
+    "magic_subtitle": "Informe seu e-mail e enviamos um link que faz a entrada — sem senha.",
+    "magic_send": "Receber link de acesso por e-mail",
+    "magic_use_password": "Entrar com senha",
+    "choose_sign_in_method": "Escolha como quer entrar.",
+    "no_sign_in_method_available": "Esta organização restringiu as formas de entrada e nenhuma está disponível para você.",
+    "complete_profile": {
+      "title": "Complete seu perfil"
+    }
   },
   "validation": {
     "required": "Obrigatório",
@@ -376,7 +408,9 @@
     "password_min_length": "A senha deve ter pelo menos 8 caracteres",
     "username_min_length": "O nome de usuário deve ter pelo menos 4 caracteres",
     "title_required": "O título é obrigatório",
-    "content_required": "O conteúdo é obrigatório"
+    "content_required": "O conteúdo é obrigatório",
+    "invalid_number": "Precisa ser um número",
+    "invalid_option": "Escolha uma das opções disponíveis"
   },
   "courses": {
     "my_courses": "Meus Cursos",
@@ -986,7 +1020,13 @@
     "save_answers": "Salvar respostas",
     "markdown": "Markdown",
     "custom": "Personalizado",
-    "scorm": "SCORM"
+    "scorm": "SCORM",
+    "grid_columns_2": "2 colunas",
+    "grid_columns_3": "3 colunas",
+    "grid_columns_4": "4 colunas",
+    "add_card": "Adicionar cartão",
+    "ungroup_cards": "Desagrupar cartões",
+    "group_into_grid": "Agrupar em grade"
   },
   "assignments": {
     "submit_assignment": "Enviar Tarefa",
@@ -5465,7 +5505,18 @@
       "drag_to_reorder": "Arraste para reordenar",
       "sort_error": "Não foi possível atualizar a ordem",
       "reorder_error": "Não foi possível salvar a nova ordem"
-    }
+    },
+    "preview": "Pré-visualizar",
+    "no_access": "Você não tem acesso a este arquivo.",
+    "choose_from_library": "Escolher da Biblioteca",
+    "upload_to_library": "Enviar",
+    "upload_to_library_hint": "Os arquivos enviados entram na sua Biblioteca e podem ser reutilizados.",
+    "no_resource_selected": "Nenhum item da biblioteca selecionado.",
+    "private_media_warning": "Privado — alunos sem acesso não verão este item.",
+    "replace_resource": "Substituir",
+    "remove_resource": "Remover",
+    "show_as_card": "Mostrar como cartão",
+    "show_inline": "Mostrar no texto"
   },
   "media": {
     "media": "Media",

@@ -51,7 +51,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
     if (background_type === 'gradient' || !background_image) {
       // Keep the original black gradient
       return {
-        background: 'linear-gradient(041.61deg, #202020 7.15%, #000000 90.96%)',
+        background: 'linear-gradient(041.61deg, var(--brand-hover) 7.15%, var(--brand) 90.96%)',
       }
     }
     if (background_type === 'custom' && background_image) {
@@ -69,15 +69,15 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
       }
     }
     return {
-      background: 'linear-gradient(041.61deg, #202020 7.15%, #000000 90.96%)',
+      background: 'linear-gradient(041.61deg, var(--brand-hover) 7.15%, var(--brand) 90.96%)',
     }
   }
 
   const displayMessage = welcome_message || welcomeText || ''
   // No-org platform copy (defaults mirror the platform login illustration).
-  const noOrgTitle = title || 'Welcome back to Funeral Academy.'
+  const noOrgTitle = title || 'Bem-vindo à SINDEF Academy.'
   const noOrgSubtitle =
-    subtitle || 'Pick up where you left off — your courses, students, and tools are waiting.'
+    subtitle || 'Continue de onde parou — seus cursos e certificações esperam por você.'
   // Treat the no-org illustration like a photo background: dark scrim, no
   // blueprint-grid overlay.
   const hasCustomBackground = noOrg || (background_type !== 'gradient' && background_image)
@@ -181,14 +181,19 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
                 )}>
                   {/* Organization logo */}
                   <Link prefetch href={getUriWithOrg(org?.slug, '/')}>
-                    <div className="w-24 h-24 rounded-2xl ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden">
-                      {org?.logo_image ? (
-                        <img
-                          src={getOrgLogoMediaDirectory(org.org_uuid, org.logo_image)}
-                          alt={org.name}
-                          className="w-full h-full object-contain p-3"
-                        />
-                      ) : (
+                    {org?.logo_image ? (
+                      // Bounded by height only, so a wide wordmark keeps its
+                      // proportions instead of being squeezed into a square and
+                      // rendered unreadably small. The white plate is gone too:
+                      // these logos are drawn for a dark ground (the SINDEF one
+                      // is a white wordmark), and the plate hid it.
+                      <img
+                        src={getOrgLogoMediaDirectory(org.org_uuid, org.logo_image)}
+                        alt={org.name}
+                        className="h-20 w-auto max-w-[280px] object-contain"
+                      />
+                    ) : (
+                      <div className="w-24 h-24 rounded-2xl ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden">
                         <Image
                           quality={100}
                           width={96}
@@ -197,13 +202,19 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
                           alt="Funeral Academy"
                           className="object-contain"
                         />
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </Link>
 
                   {/* Text content */}
                   <div className="space-y-1">
-                    <h1 className="font-black text-3xl tracking-tight">{org?.name || 'Funeral Academy'}</h1>
+                    {/* Suppressed when the logo is a wordmark carrying the same
+                        name — otherwise the panel says "SINDEF Academy" twice,
+                        once as artwork and once as a heading. The name still
+                        reaches assistive tech through the logo's alt text. */}
+                    {!org?.logo_image && (
+                      <h1 className="font-black text-3xl tracking-tight">{org?.name || 'Funeral Academy'}</h1>
+                    )}
                     {displayMessage && (
                       <p className={cn(
                         "text-lg max-w-sm leading-relaxed",

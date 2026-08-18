@@ -96,9 +96,49 @@ self.addEventListener('install', (event) => {
   )
 })
 
+/**
+ * Retire this worker if the origin is no longer served by a production build.
+ *
+ * A worker installed by `next start` on, say, localhost:3010 outlives the
+ * server that installed it. Point a dev server at the same origin later and the
+ * worker is still in control, replaying the previous build's HTML and chunk
+ * URLs — the app hydrates into a blank page that looks like a code bug and
+ * survives reloads, because the page never runs long enough for the app's own
+ * dev-mode cleanup to unregister it.
+ *
+ * Next's dev server always serves /__nextjs_original-stack-frames (404s in
+ * production, since the route does not exist there). A 404 means production; a
+ * 405/400/200 means a dev server is answering, so the worker unregisters itself
+ * and clears its caches, handing the origin back to the page uncontrolled.
+ */
+// Guards the one-shot check on the fetch path below. A worker restarted by the
+// browser re-runs this file, so the check repeats at most once per worker life.
+let retirementChecked = false
+
+async function retireIfDevServer() {
+  try {
+    const res = await fetch('/__nextjs_original-stack-frames', {
+      method: 'POST',
+      credentials: 'omit',
+      cache: 'no-store',
+    })
+    // Production has no such route -> 404. Anything else means dev is serving.
+    if (res.status === 404) return false
+  } catch {
+    // Network failure proves nothing; stay installed rather than self-destruct
+    // on a flaky connection.
+    return false
+  }
+  const names = await caches.keys()
+  await Promise.all(names.map((n) => caches.delete(n)))
+  await self.registration.unregister()
+  return true
+}
+
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
+      if (await retireIfDevServer()) return
       const names = await caches.keys()
       await Promise.all(
         names
@@ -162,8 +202,16 @@ self.addEventListener('fetch', (event) => {
       (async () => {
         try {
           const preload = await event.preloadResponse
-          if (preload) return preload
-          return await fetch(request)
+          const response = preload || (await fetch(request))
+          // An already-activated worker never re-runs `activate`, so a worker
+          // that outlived its production server checks again here — once — on
+          // the first navigation it handles. Fire-and-forget: the current
+          // response is a live network answer and is safe to return either way.
+          if (!retirementChecked) {
+            retirementChecked = true
+            retireIfDevServer().catch(() => {})
+          }
+          return response
         } catch {
           // Offline. Prefer a cached copy of this exact page if the learner has
           // opened it before, otherwise show the branded offline page.

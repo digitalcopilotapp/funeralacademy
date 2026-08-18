@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: UserPageProps): Promise<Metad
     // If no session, return basic metadata (SEO will show generic title)
     if (!access_token) {
       return {
-        title: 'User Profile',
+        title: 'Perfil',
         description: 'View user profile',
       }
     }
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: UserPageProps): Promise<Metad
     }
   } catch {
     return {
-      title: 'User Profile',
+      title: 'Perfil',
     }
   }
 }

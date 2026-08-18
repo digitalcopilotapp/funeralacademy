@@ -25,7 +25,7 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
   const getBackgroundStyle = (): React.CSSProperties => {
     if (background_type === 'gradient' || !background_image) {
       return {
-        background: 'linear-gradient(041.61deg, #202020 7.15%, #000000 90.96%)',
+        background: 'linear-gradient(041.61deg, var(--brand-hover) 7.15%, var(--brand) 90.96%)',
       }
     }
     if (background_type === 'custom' && background_image) {
@@ -43,7 +43,7 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
       }
     }
     return {
-      background: 'linear-gradient(041.61deg, #202020 7.15%, #000000 90.96%)',
+      background: 'linear-gradient(041.61deg, var(--brand-hover) 7.15%, var(--brand) 90.96%)',
     }
   }
 
@@ -58,15 +58,20 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
         <div className="absolute inset-0 bg-black/30" />
       )}
 
-      <Link prefetch href={getUriWithOrg(org?.slug, '/')} className="relative z-10">
-        <div className="w-10 h-10 rounded-lg ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden shrink-0">
-          {org?.logo_image ? (
-            <img
-              src={getOrgLogoMediaDirectory(org.org_uuid, org.logo_image)}
-              alt={org.name}
-              className="w-full h-full object-contain p-1.5"
-            />
-          ) : (
+      <Link prefetch href={getUriWithOrg(org?.slug, '/')} className="relative z-10 min-w-0">
+        {org?.logo_image ? (
+          // Org logos are usually wide wordmarks (the SINDEF one is 729x260).
+          // Forcing one into a 40x40 square shrank it to an illegible ~28x10
+          // smudge, so the logo keeps its own aspect ratio and is bounded by
+          // height alone. `w-auto` lets the width follow, `max-w-[190px]` stops
+          // an extreme banner from pushing the language switcher off screen.
+          <img
+            src={getOrgLogoMediaDirectory(org.org_uuid, org.logo_image)}
+            alt={org.name}
+            className="h-9 w-auto max-w-[190px] object-contain object-left rtl:object-right"
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-lg ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden shrink-0">
             <Image
               quality={100}
               width={40}
@@ -75,13 +80,18 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
               alt="Funeral Academy"
               className="object-contain"
             />
-          )}
-        </div>
+          </div>
+        )}
       </Link>
 
-      <span className="relative z-10 font-semibold text-white text-lg truncate">
-        {org?.name || 'Funeral Academy'}
-      </span>
+      {/* The org name is shown only when there is no logo to carry it —
+          otherwise the header repeats "SINDEF Academy" twice, once as an image
+          and once as text. */}
+      {!org?.logo_image && (
+        <span className="relative z-10 font-semibold text-white text-lg truncate">
+          {org?.name || 'Funeral Academy'}
+        </span>
+      )}
 
       {/* Unsplash attribution (required by Unsplash API guidelines) */}
       {background_type === 'unsplash' && background_image && unsplash_photographer_name && (
